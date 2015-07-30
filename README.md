@@ -12,7 +12,7 @@ Vitamio is already published to Maven Central, and this is also why I create thi
 
 ### for Gradle
 ```
-compile 'com.charon.vitamio:vitamio:4.2.2'
+compile 'com.charonchui.vitamio:vitamio:4.2.2'
 ```
 ### for Maven
 
