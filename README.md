@@ -6,15 +6,26 @@ This project only package ARM arch full version as default.
 
 ## Status
 
-Vitamio is already published to Maven Central, and this is also why I create this repository.
+Vitamio is already published to Maven Central, and this is also why I create this repository.                 
+* [![Maven Central](http://img.shields.io/badge/2015.07.30-com.charonchui.vitamio:vitamio:4.2.2-brightgreen.svg)](https://oss.sonatype.org/content/repositories/releases/com/charonchui/vitamio/vitamio/4.2.2/)
+
 
 ## Usage
 
 ### for Gradle
+
 ```
 compile 'com.charonchui.vitamio:vitamio:4.2.2'
 ```
 ### for Maven
+
+```xml
+<dependency>
+  <groupId>com.charonchui.vitamio</groupId>
+  <artifactId>vitamio</artifactId>
+  <version>4.2.2</version>
+</dependency>
+```
 
 ## Attention  
 
