@@ -27,9 +27,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.BaseColumns;
-
 import io.vov.vitamio.utils.Log;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -73,7 +71,6 @@ public final class MediaStore {
     public static final String MIME_TYPE = "mime_type";
     public static final String AVAILABLE_SIZE = "available_size";
     public static final String PLAY_STATUS = "play_status";
-
   }
 
   public static final class Audio {
@@ -179,7 +176,8 @@ public final class MediaStore {
         return InternalThumbnails.getThumbnail(ctx, cr, origId, InternalThumbnails.DEFAULT_GROUP_ID, kind, options, CONTENT_URI);
       }
 
-      public static Bitmap getThumbnail(Context ctx, ContentResolver cr, long origId, long groupId, int kind, BitmapFactory.Options options) {
+      public static Bitmap getThumbnail(Context ctx, ContentResolver cr, long origId, long groupId, int kind,
+          BitmapFactory.Options options) {
         return InternalThumbnails.getThumbnail(ctx, cr, origId, groupId, kind, options, CONTENT_URI);
       }
 
@@ -197,7 +195,7 @@ public final class MediaStore {
     static final int DEFAULT_GROUP_ID = 0;
     private static final int MINI_KIND = 1;
     private static final int MICRO_KIND = 3;
-    private static final String[] PROJECTION = new String[]{_ID, MediaColumns.DATA};
+    private static final String[] PROJECTION = new String[] { _ID, MediaColumns.DATA };
     private static final Object sThumbBufLock = new Object();
     private static byte[] sThumbBuf;
 
@@ -221,13 +219,16 @@ public final class MediaStore {
     }
 
     static void cancelThumbnailRequest(ContentResolver cr, long origId, Uri baseUri, long groupId) {
-      Uri cancelUri = baseUri.buildUpon().appendQueryParameter("cancel", "1").appendQueryParameter("orig_id", String.valueOf(origId)).appendQueryParameter("group_id", String.valueOf(groupId)).build();
+      Uri cancelUri = baseUri.buildUpon()
+          .appendQueryParameter("cancel", "1")
+          .appendQueryParameter("orig_id", String.valueOf(origId))
+          .appendQueryParameter("group_id", String.valueOf(groupId))
+          .build();
       Cursor c = null;
       try {
         c = cr.query(cancelUri, PROJECTION, null, null, null);
       } finally {
-        if (c != null)
-          c.close();
+        if (c != null) c.close();
       }
     }
 
@@ -241,25 +242,23 @@ public final class MediaStore {
           path = c.getString(c.getColumnIndex(MediaColumns.DATA));
         }
       } finally {
-        if (c != null)
-          c.close();
+        if (c != null) c.close();
       }
       return path;
     }
 
-    static Bitmap getThumbnail(Context ctx, ContentResolver cr, long origId, long groupId, int kind, BitmapFactory.Options options, Uri baseUri) {
+    static Bitmap getThumbnail(Context ctx, ContentResolver cr, long origId, long groupId, int kind, BitmapFactory.Options options,
+        Uri baseUri) {
       Bitmap bitmap = null;
       MiniThumbFile thumbFile = MiniThumbFile.instance(baseUri);
       long magic = thumbFile.getMagic(origId);
       if (magic != 0) {
         if (kind == MICRO_KIND) {
           synchronized (sThumbBufLock) {
-            if (sThumbBuf == null)
-              sThumbBuf = new byte[MiniThumbFile.BYTES_PER_MINTHUMB];
+            if (sThumbBuf == null) sThumbBuf = new byte[MiniThumbFile.BYTES_PER_MINTHUMB];
             if (thumbFile.getMiniThumbFromFile(origId, sThumbBuf) != null) {
               bitmap = BitmapFactory.decodeByteArray(sThumbBuf, 0, sThumbBuf.length);
-              if (bitmap == null)
-                Log.d("couldn't decode byte array.");
+              if (bitmap == null) Log.d("couldn't decode byte array.");
             }
           }
           return bitmap;
@@ -270,47 +269,43 @@ public final class MediaStore {
             c = cr.query(baseUri, PROJECTION, column + origId, null, null);
             if (c != null && c.moveToFirst()) {
               bitmap = getMiniThumbFromFile(c, baseUri, cr, options);
-              if (bitmap != null)
-                return bitmap;
+              if (bitmap != null) return bitmap;
             }
           } finally {
-            if (c != null)
-              c.close();
+            if (c != null) c.close();
           }
         }
       }
 
       Cursor c = null;
       try {
-        Uri blockingUri = baseUri.buildUpon().appendQueryParameter("blocking", "1").appendQueryParameter("orig_id", String.valueOf(origId)).appendQueryParameter("group_id", String.valueOf(groupId)).build();
+        Uri blockingUri = baseUri.buildUpon()
+            .appendQueryParameter("blocking", "1")
+            .appendQueryParameter("orig_id", String.valueOf(origId))
+            .appendQueryParameter("group_id", String.valueOf(groupId))
+            .build();
         c = cr.query(blockingUri, PROJECTION, null, null, null);
-        if (c == null)
-          return null;
+        if (c == null) return null;
 
         if (kind == MICRO_KIND) {
           synchronized (sThumbBufLock) {
-            if (sThumbBuf == null)
-              sThumbBuf = new byte[MiniThumbFile.BYTES_PER_MINTHUMB];
+            if (sThumbBuf == null) sThumbBuf = new byte[MiniThumbFile.BYTES_PER_MINTHUMB];
             if (thumbFile.getMiniThumbFromFile(origId, sThumbBuf) != null) {
               bitmap = BitmapFactory.decodeByteArray(sThumbBuf, 0, sThumbBuf.length);
-              if (bitmap == null)
-                Log.d("couldn't decode byte array.");
+              if (bitmap == null) Log.d("couldn't decode byte array.");
             }
           }
         } else if (kind == MINI_KIND) {
-          if (c.moveToFirst())
-            bitmap = getMiniThumbFromFile(c, baseUri, cr, options);
+          if (c.moveToFirst()) bitmap = getMiniThumbFromFile(c, baseUri, cr, options);
         } else {
           throw new IllegalArgumentException("Unsupported kind: " + kind);
         }
       } catch (SQLiteException ex) {
         Log.e("getThumbnail", ex);
       } finally {
-        if (c != null)
-          c.close();
+        if (c != null) c.close();
       }
       return bitmap;
     }
   }
-
 }

@@ -40,7 +40,6 @@ public class ThumbnailUtils {
   public static final int TARGET_SIZE_MINI_THUMBNAIL_HEIGHT = 320;
   public static final int TARGET_SIZE_MICRO_THUMBNAIL_WIDTH = 212;
   public static final int TARGET_SIZE_MICRO_THUMBNAIL_HEIGHT = 160;
-  
 
   public static Bitmap createVideoThumbnail(Context ctx, String filePath, int kind) {
     if (!Vitamio.isInitialized(ctx)) {
@@ -61,10 +60,11 @@ public class ThumbnailUtils {
     }
 
     if (bitmap != null) {
-      if (kind == Video.Thumbnails.MICRO_KIND)
+      if (kind == Video.Thumbnails.MICRO_KIND) {
         bitmap = extractThumbnail(bitmap, TARGET_SIZE_MICRO_THUMBNAIL_WIDTH, TARGET_SIZE_MICRO_THUMBNAIL_HEIGHT, OPTIONS_RECYCLE_INPUT);
-      else if (kind == Video.Thumbnails.MINI_KIND)
+      } else if (kind == Video.Thumbnails.MINI_KIND) {
         bitmap = extractThumbnail(bitmap, TARGET_SIZE_MINI_THUMBNAIL_WIDTH, TARGET_SIZE_MINI_THUMBNAIL_HEIGHT, OPTIONS_RECYCLE_INPUT);
+      }
     }
     return bitmap;
   }
@@ -74,14 +74,14 @@ public class ThumbnailUtils {
   }
 
   public static Bitmap extractThumbnail(Bitmap source, int width, int height, int options) {
-    if (source == null)
-      return null;
+    if (source == null) return null;
 
     float scale;
-    if (source.getWidth() < source.getHeight())
+    if (source.getWidth() < source.getHeight()) {
       scale = width / (float) source.getWidth();
-    else
+    } else {
       scale = height / (float) source.getHeight();
+    }
     Matrix matrix = new Matrix();
     matrix.setScale(scale, scale);
     Bitmap thumbnail = transform(matrix, source, width, height, OPTIONS_SCALE_UP | options);
@@ -100,13 +100,13 @@ public class ThumbnailUtils {
 
       int deltaXHalf = Math.max(0, deltaX / 2);
       int deltaYHalf = Math.max(0, deltaY / 2);
-      Rect src = new Rect(deltaXHalf, deltaYHalf, deltaXHalf + Math.min(targetWidth, source.getWidth()), deltaYHalf + Math.min(targetHeight, source.getHeight()));
+      Rect src = new Rect(deltaXHalf, deltaYHalf, deltaXHalf + Math.min(targetWidth, source.getWidth()),
+          deltaYHalf + Math.min(targetHeight, source.getHeight()));
       int dstX = (targetWidth - src.width()) / 2;
       int dstY = (targetHeight - src.height()) / 2;
       Rect dst = new Rect(dstX, dstY, targetWidth - dstX, targetHeight - dstY);
       c.drawBitmap(source, src, dst, null);
-      if (recycle)
-        source.recycle();
+      if (recycle) source.recycle();
       return b2;
     }
 
@@ -116,29 +116,28 @@ public class ThumbnailUtils {
     float viewAspect = (float) targetWidth / targetHeight;
 
     float scale = bitmapAspect > viewAspect ? targetHeight / bitmapHeightF : targetWidth / bitmapWidthF;
-    if (scale < .9F || scale > 1F)
+    if (scale < .9F || scale > 1F) {
       scaler.setScale(scale, scale);
-    else
+    } else {
       scaler = null;
+    }
 
     Bitmap b1;
-    if (scaler != null)
+    if (scaler != null) {
       b1 = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), scaler, true);
-    else
+    } else {
       b1 = source;
+    }
 
-    if (recycle && b1 != source)
-      source.recycle();
+    if (recycle && b1 != source) source.recycle();
 
     int dx1 = Math.max(0, b1.getWidth() - targetWidth);
     int dy1 = Math.max(0, b1.getHeight() - targetHeight);
 
     Bitmap b2 = Bitmap.createBitmap(b1, dx1 / 2, dy1 / 2, targetWidth, targetHeight);
 
-    if (b2 != b1 && (recycle || b1 != source))
-      b1.recycle();
+    if (b2 != b1 && (recycle || b1 != source)) b1.recycle();
 
     return b2;
   }
-
 }

@@ -1,4 +1,3 @@
-
 package tv.danmaku.ijk.media.example.activities;
 
 import android.content.Context;
@@ -13,36 +12,32 @@ import tv.danmaku.ijk.media.example.application.AppActivity;
 import tv.danmaku.ijk.media.example.fragments.RecentMediaListFragment;
 
 public class RecentMediaActivity extends AppActivity {
-    public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, RecentMediaActivity.class);
-        return intent;
-    }
+  public static Intent newIntent(Context context) {
+    Intent intent = new Intent(context, RecentMediaActivity.class);
+    return intent;
+  }
 
-    public static void intentTo(Context context) {
-        context.startActivity(newIntent(context));
-    }
+  public static void intentTo(Context context) {
+    context.startActivity(newIntent(context));
+  }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        Fragment newFragment = RecentMediaListFragment.newInstance();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    Fragment newFragment = RecentMediaListFragment.newInstance();
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.body, newFragment);
-        transaction.commit();
-    }
+    transaction.replace(R.id.body, newFragment);
+    transaction.commit();
+  }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean show = super.onPrepareOptionsMenu(menu);
-        if (!show)
-            return show;
+  @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    boolean show = super.onPrepareOptionsMenu(menu);
+    if (!show) return show;
 
-        MenuItem item = menu.findItem(R.id.action_recent);
-        if (item != null)
-            item.setVisible(false);
+    MenuItem item = menu.findItem(R.id.action_recent);
+    if (item != null) item.setVisible(false);
 
-        return true;
-    }
+    return true;
+  }
 }

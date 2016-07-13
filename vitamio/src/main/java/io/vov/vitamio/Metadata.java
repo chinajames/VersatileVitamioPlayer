@@ -18,7 +18,6 @@
 package io.vov.vitamio;
 
 import android.util.SparseArray;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.Map;

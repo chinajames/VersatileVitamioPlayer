@@ -119,17 +119,18 @@ public class OutlineTextView extends TextView {
     initPaint();
   }
 
-  @Override
-  protected void onDraw(Canvas canvas) {
-    Layout layout = new StaticLayout(getText(), mTextPaintOutline, getWidth(), Layout.Alignment.ALIGN_CENTER, mSpacingMult, mSpacingAdd, mIncludePad);
+  @Override protected void onDraw(Canvas canvas) {
+    Layout layout =
+        new StaticLayout(getText(), mTextPaintOutline, getWidth(), Layout.Alignment.ALIGN_CENTER, mSpacingMult, mSpacingAdd, mIncludePad);
     layout.draw(canvas);
     layout = new StaticLayout(getText(), mTextPaint, getWidth(), Layout.Alignment.ALIGN_CENTER, mSpacingMult, mSpacingAdd, mIncludePad);
     layout.draw(canvas);
   }
 
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    Layout layout = new StaticLayout(getText(), mTextPaintOutline, measureWidth(widthMeasureSpec), Layout.Alignment.ALIGN_CENTER, mSpacingMult, mSpacingAdd, mIncludePad);
+  @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    Layout layout =
+        new StaticLayout(getText(), mTextPaintOutline, measureWidth(widthMeasureSpec), Layout.Alignment.ALIGN_CENTER, mSpacingMult,
+            mSpacingAdd, mIncludePad);
     int ex = (int) (mBorderSize * 2 + 1);
     setMeasuredDimension(measureWidth(widthMeasureSpec) + ex, measureHeight(heightMeasureSpec) * layout.getLineCount() + ex);
   }

@@ -1,23 +1,17 @@
-Vitamio
+VitamioDemo
 ---
 
-This is an unofficial mirror for [Vitamio](https://www.vitamio.org/), the source code will synchronize periodically with the official volley repository.
-This project only package ARM arch full version as default. 
-
-## Status
-
-Vitamio is already published to Maven Central, and this is also why I create this repository.                 
-* [![Maven Central](http://img.shields.io/badge/2015.07.30-com.charonchui.vitamio:vitamio:4.2.2-brightgreen.svg)](https://oss.sonatype.org/content/repositories/releases/com/charonchui/vitamio/vitamio/4.2.2/)
+该仓库是[Vitamio](https://www.vitamio.org/)的例子，此播放器具有比ijkplayer更强的解码能力，现在实现了播放本地视频功能和播放线上视频功能。
 
 
-## Usage
+## 用处
 
-### for Gradle
+### Gradle配置
 
 ```
 compile 'com.charonchui.vitamio:vitamio:4.2.2'
 ```
-### for Maven
+### Maven配置
 
 ```xml
 <dependency>
@@ -27,8 +21,7 @@ compile 'com.charonchui.vitamio:vitamio:4.2.2'
 </dependency>
 ```
 
-## Attention  
+## 目的  
 
-This project is just a mirror of vitamio, if you have found any bugs or need some features, please create an issue at [Issue Tracker](https://github.com/yixia/VitamioBundle/issues).
-
+[Vitamio](https://www.vitamio.org/)的例子，欢迎提出意见，提交代码。
 

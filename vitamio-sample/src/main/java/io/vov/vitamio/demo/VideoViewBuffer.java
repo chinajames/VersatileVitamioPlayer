@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
@@ -43,11 +42,9 @@ public class VideoViewBuffer extends Activity implements OnInfoListener, OnBuffe
   private ProgressBar pb;
   private TextView downloadRateView, loadRateView;
 
-  @Override
-  public void onCreate(Bundle icicle) {
+  @Override public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-    if (!LibsChecker.checkVitamioLibs(this))
-      return;
+    if (!LibsChecker.checkVitamioLibs(this)) return;
     setContentView(R.layout.videobuffer);
     mVideoView = (VideoView) findViewById(R.id.buffer);
     pb = (ProgressBar) findViewById(R.id.probar);
@@ -56,10 +53,8 @@ public class VideoViewBuffer extends Activity implements OnInfoListener, OnBuffe
     loadRateView = (TextView) findViewById(R.id.load_rate);
     if (path == "") {
       // Tell the user to provide a media file URL/path.
-      Toast.makeText(
-          VideoViewBuffer.this,
-          "Please edit VideoBuffer Activity, and set path"
-              + " variable to your media file URL/path", Toast.LENGTH_LONG).show();
+      Toast.makeText(VideoViewBuffer.this, "Please edit VideoBuffer Activity, and set path" + " variable to your media file URL/path",
+          Toast.LENGTH_LONG).show();
       return;
     } else {
       /*
@@ -73,46 +68,40 @@ public class VideoViewBuffer extends Activity implements OnInfoListener, OnBuffe
       mVideoView.setOnInfoListener(this);
       mVideoView.setOnBufferingUpdateListener(this);
       mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-        @Override
-        public void onPrepared(MediaPlayer mediaPlayer) {
+        @Override public void onPrepared(MediaPlayer mediaPlayer) {
           // optional need Vitamio 4.0
           mediaPlayer.setPlaybackSpeed(1.0f);
         }
       });
     }
-
   }
 
-  @Override
-  public boolean onInfo(MediaPlayer mp, int what, int extra) {
+  @Override public boolean onInfo(MediaPlayer mp, int what, int extra) {
     switch (what) {
-    case MediaPlayer.MEDIA_INFO_BUFFERING_START:
-      if (mVideoView.isPlaying()) {
-        mVideoView.pause();
-        pb.setVisibility(View.VISIBLE);
-        downloadRateView.setText("");
-        loadRateView.setText("");
-        downloadRateView.setVisibility(View.VISIBLE);
-        loadRateView.setVisibility(View.VISIBLE);
-
-      }
-      break;
-    case MediaPlayer.MEDIA_INFO_BUFFERING_END:
-      mVideoView.start();
-      pb.setVisibility(View.GONE);
-      downloadRateView.setVisibility(View.GONE);
-      loadRateView.setVisibility(View.GONE);
-      break;
-    case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:
-      downloadRateView.setText("" + extra + "kb/s" + "  ");
-      break;
+      case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+        if (mVideoView.isPlaying()) {
+          mVideoView.pause();
+          pb.setVisibility(View.VISIBLE);
+          downloadRateView.setText("");
+          loadRateView.setText("");
+          downloadRateView.setVisibility(View.VISIBLE);
+          loadRateView.setVisibility(View.VISIBLE);
+        }
+        break;
+      case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+        mVideoView.start();
+        pb.setVisibility(View.GONE);
+        downloadRateView.setVisibility(View.GONE);
+        loadRateView.setVisibility(View.GONE);
+        break;
+      case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:
+        downloadRateView.setText("" + extra + "kb/s" + "  ");
+        break;
     }
     return true;
   }
 
-  @Override
-  public void onBufferingUpdate(MediaPlayer mp, int percent) {
+  @Override public void onBufferingUpdate(MediaPlayer mp, int percent) {
     loadRateView.setText(percent + "%");
   }
-
 }

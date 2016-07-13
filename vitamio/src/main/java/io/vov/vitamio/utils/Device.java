@@ -22,7 +22,6 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-
 import java.util.Locale;
 
 public class Device {
@@ -41,14 +40,14 @@ public class Device {
   public static String getDeviceFeatures(Context ctx) {
     return getIdentifiers(ctx) + getSystemFeatures() + getScreenFeatures(ctx);
   }
-  
-  @SuppressLint("NewApi")
-  public static String getIdentifiers(Context ctx) {
+
+  @SuppressLint("NewApi") public static String getIdentifiers(Context ctx) {
     StringBuilder sb = new StringBuilder();
-    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO)
-    	sb.append(getPair("serial", Build.SERIAL));
-    else
-    	sb.append(getPair("serial", "No Serial"));
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
+      sb.append(getPair("serial", Build.SERIAL));
+    } else {
+      sb.append(getPair("serial", "No Serial"));
+    }
     sb.append(getPair("android_id", Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID)));
     TelephonyManager tel = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
     sb.append(getPair("sim_country_iso", tel.getSimCountryIso()));

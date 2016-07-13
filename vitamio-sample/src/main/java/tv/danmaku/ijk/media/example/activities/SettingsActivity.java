@@ -27,26 +27,25 @@ import io.vov.vitamio.demo.R;
 import tv.danmaku.ijk.media.example.fragments.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
-    public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, SettingsActivity.class);
-        return intent;
-    }
+  public static Intent newIntent(Context context) {
+    Intent intent = new Intent(context, SettingsActivity.class);
+    return intent;
+  }
 
-    public static void intentTo(Context context) {
-        context.startActivity(newIntent(context));
-    }
+  public static void intentTo(Context context) {
+    context.startActivity(newIntent(context));
+  }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app);
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_app);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
 
-        Fragment newFragment = SettingsFragment.newInstance();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.body, newFragment);
-        transaction.commit();
-    }
+    Fragment newFragment = SettingsFragment.newInstance();
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    transaction.replace(R.id.body, newFragment);
+    transaction.commit();
+  }
 }

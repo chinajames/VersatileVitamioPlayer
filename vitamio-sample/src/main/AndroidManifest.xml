@@ -1,124 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.vov.vitamio.demo" >
+    package="io.vov.vitamio.demo">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/vitamio_demo_name" >
+  <application
+      android:allowBackup="true"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/vitamio_demo_name">
 
-        <!-- Don't forgot InitActivity -->
-        <activity
-            android:name="io.vov.vitamio.activity.InitActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".VitamioListActivity"
-            android:label="VitamioListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <!-- Don't forgot InitActivity -->
+    <activity
+        android:name="io.vov.vitamio.activity.InitActivity"
+        android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+        android:launchMode="singleTop"
+        android:theme="@android:style/Theme.NoTitleBar"
+        android:windowSoftInputMode="stateAlwaysHidden"/>
+    <activity
+        android:name=".VitamioListActivity"
+        android:label="VitamioListActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MediaPlayerDemo"
-            android:label="Media/MediaPlayerDemo" >
-        </activity>
-        <activity
-            android:name=".VideoViewDemo"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
-            android:label="Media/VideoViewDemo" >
-        </activity>
-        <activity
-            android:name=".MediaPlayerDemo_Video"
-            android:label="Media/MediaPlayerDemo_Video" >
-        </activity>
-        <activity
-            android:name=".MediaPlayerDemo_setSurface"
-            android:label="Media/MediaPlayerDemo_setSurface" >
-        </activity>
-        <activity
-            android:name=".MediaPlayerDemo_Audio"
-            android:label="Media/MediaPlayerDemo_Audio" >
-        </activity>
-        <activity
-            android:name=".MediaMetadataRetrieverDemo"
-            android:label="Media/MediaMetadataRetrieverDemo" >
-        </activity>
-        <activity
-            android:name=".MediaPlayerSubtitle"
-            android:label="@string/title_activity_media_player_subtitle" >
-        </activity>
-        <activity
-            android:name=".VideoViewSubtitle"
-            android:label="@string/title_activity_video_view_subtitle" >
-        </activity>
-        <activity
-            android:name=".VideoSubtitleList"
-            android:label="@string/title_activity_video_subtitle_list" >
-        </activity>
-        <activity
-            android:name=".VideoViewBuffer"
-            android:label="@string/title_activity_video_buffer" >
-        </activity>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".MediaPlayerDemo"
+        android:label="Media/MediaPlayerDemo">
+    </activity>
+    <activity
+        android:name=".VideoViewDemo"
+        android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+        android:label="Media/VideoViewDemo">
+    </activity>
+    <activity
+        android:name=".MediaPlayerDemo_Video"
+        android:label="Media/MediaPlayerDemo_Video">
+    </activity>
+    <activity
+        android:name=".MediaPlayerDemo_setSurface"
+        android:label="Media/MediaPlayerDemo_setSurface">
+    </activity>
+    <activity
+        android:name=".MediaPlayerDemo_Audio"
+        android:label="Media/MediaPlayerDemo_Audio">
+    </activity>
+    <activity
+        android:name=".MediaMetadataRetrieverDemo"
+        android:label="Media/MediaMetadataRetrieverDemo">
+    </activity>
+    <activity
+        android:name=".MediaPlayerSubtitle"
+        android:label="@string/title_activity_media_player_subtitle">
+    </activity>
+    <activity
+        android:name=".VideoViewSubtitle"
+        android:label="@string/title_activity_video_view_subtitle">
+    </activity>
+    <activity
+        android:name=".VideoSubtitleList"
+        android:label="@string/title_activity_video_subtitle_list">
+    </activity>
+    <activity
+        android:name=".VideoViewBuffer"
+        android:label="@string/title_activity_video_buffer">
+    </activity>
 
-        <activity
-            android:name="tv.danmaku.ijk.media.example.activities.FileExplorerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="FileExplorerActivity"
-            android:screenOrientation="user"
-            android:theme="@style/AppTheme">
-        </activity>
-        <activity
-            android:name="tv.danmaku.ijk.media.example.activities.SampleMediaActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="SampleMediaActivity"
-            android:screenOrientation="user"
-            android:theme="@style/AppTheme">
-        </activity>
-        <activity
-            android:name="tv.danmaku.ijk.media.example.activities.RecentMediaActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="RecentMediaActivity"
-            android:screenOrientation="user"
-            android:theme="@style/AppTheme">
-        </activity>
-        <activity
-            android:name="tv.danmaku.ijk.media.example.activities.SettingsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="SettingsActivity"
-            android:screenOrientation="user"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name="tv.danmaku.ijk.media.example.activities.VideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="VideoActivity"
-            android:screenOrientation="user">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="video/*" />
-                <data android:mimeType="audio/*" />
-                <data android:scheme="http" />
-                <data android:scheme="file" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
+    <activity
+        android:name="tv.danmaku.ijk.media.example.activities.FileExplorerActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="FileExplorerActivity"
+        android:screenOrientation="user"
+        android:theme="@style/AppTheme">
+    </activity>
+    <activity
+        android:name="tv.danmaku.ijk.media.example.activities.SampleMediaActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="SampleMediaActivity"
+        android:screenOrientation="user"
+        android:theme="@style/AppTheme">
+    </activity>
+    <activity
+        android:name="tv.danmaku.ijk.media.example.activities.RecentMediaActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="RecentMediaActivity"
+        android:screenOrientation="user"
+        android:theme="@style/AppTheme">
+    </activity>
+    <activity
+        android:name="tv.danmaku.ijk.media.example.activities.SettingsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="SettingsActivity"
+        android:screenOrientation="user"
+        android:theme="@style/AppTheme"/>
+    <activity
+        android:name="tv.danmaku.ijk.media.example.activities.VideoActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="VideoActivity"
+        android:screenOrientation="user">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="video/*" />
-            </intent-filter>
-        </activity>
+        <data android:mimeType="video/*"/>
+        <data android:mimeType="audio/*"/>
+        <data android:scheme="http"/>
+        <data android:scheme="file"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.SEND"/>
+        <category android:name="android.intent.category.DEFAULT"/>
 
-    </application>
+        <data android:mimeType="video/*"/>
+      </intent-filter>
+    </activity>
+
+  </application>
 
 </manifest>

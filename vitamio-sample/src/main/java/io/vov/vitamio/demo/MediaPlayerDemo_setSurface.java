@@ -26,16 +26,14 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.widget.Toast;
-
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 
-@SuppressLint("NewApi")
-public class MediaPlayerDemo_setSurface extends Activity implements OnBufferingUpdateListener,
-    OnCompletionListener, OnPreparedListener, TextureView.SurfaceTextureListener {
+@SuppressLint("NewApi") public class MediaPlayerDemo_setSurface extends Activity
+    implements OnBufferingUpdateListener, OnCompletionListener, OnPreparedListener, TextureView.SurfaceTextureListener {
 
   private static final String TAG = "MediaPlayerDemo";
   private int mVideoWidth;
@@ -44,45 +42,38 @@ public class MediaPlayerDemo_setSurface extends Activity implements OnBufferingU
   private TextureView mTextureView;
   private String path;
   private Surface surf;
-  
+
   private boolean mIsVideoSizeKnown = false;
   private boolean mIsVideoReadyToBePlayed = false;
 
   /**
-   * 
    * Called when the activity is first created.
    */
-  @Override
-  public void onCreate(Bundle icicle) {
+  @Override public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-    if (!LibsChecker.checkVitamioLibs(this))
-      return;
+    if (!LibsChecker.checkVitamioLibs(this)) return;
     setContentView(R.layout.mediaplayer_3);
     mTextureView = (TextureView) findViewById(R.id.surface);
     mTextureView.setSurfaceTextureListener(this);
-
   }
 
-  @SuppressLint("NewApi")
-  private void playVideo(SurfaceTexture surfaceTexture) {
+  @SuppressLint("NewApi") private void playVideo(SurfaceTexture surfaceTexture) {
     doCleanUp();
     try {
 
       path = "";
       if (path == "") {
         // Tell the user to provide a media file URL.
-        Toast.makeText(
-            MediaPlayerDemo_setSurface.this,
-            "Please edit MediaPlayerDemo_setSurface Activity, "
-                + "and set the path variable to your media file path."
-                + " Your media file must be stored on sdcard.", Toast.LENGTH_LONG).show();
+        Toast.makeText(MediaPlayerDemo_setSurface.this, "Please edit MediaPlayerDemo_setSurface Activity, "
+            + "and set the path variable to your media file path."
+            + " Your media file must be stored on sdcard.", Toast.LENGTH_LONG).show();
         return;
       }
       // Create a new media player and set the listeners
       mMediaPlayer = new MediaPlayer(this, true);
       mMediaPlayer.setDataSource(path);
       if (surf == null) {
-          surf = new Surface (surfaceTexture);
+        surf = new Surface(surfaceTexture);
       }
       mMediaPlayer.setSurface(surf);
       mMediaPlayer.prepareAsync();
@@ -90,7 +81,6 @@ public class MediaPlayerDemo_setSurface extends Activity implements OnBufferingU
       mMediaPlayer.setOnCompletionListener(this);
       mMediaPlayer.setOnPreparedListener(this);
       setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
     } catch (Exception e) {
       Log.e(TAG, "error: " + e.getMessage(), e);
     }
@@ -113,15 +103,13 @@ public class MediaPlayerDemo_setSurface extends Activity implements OnBufferingU
     }
   }
 
-  @Override
-  protected void onPause() {
+  @Override protected void onPause() {
     super.onPause();
     releaseMediaPlayer();
     doCleanUp();
   }
 
-  @Override
-  protected void onDestroy() {
+  @Override protected void onDestroy() {
     super.onDestroy();
     releaseMediaPlayer();
     doCleanUp();
@@ -167,8 +155,22 @@ public class MediaPlayerDemo_setSurface extends Activity implements OnBufferingU
     }
     int xoff = (viewWidth - newWidth) / 2;
     int yoff = (viewHeight - newHeight) / 2;
-    Log.v(TAG, "video=" + videoWidth + "x" + videoHeight + " view=" + viewWidth + "x" + viewHeight
-        + " newView=" + newWidth + "x" + newHeight + " off=" + xoff + "," + yoff);
+    Log.v(TAG, "video="
+        + videoWidth
+        + "x"
+        + videoHeight
+        + " view="
+        + viewWidth
+        + "x"
+        + viewHeight
+        + " newView="
+        + newWidth
+        + "x"
+        + newHeight
+        + " off="
+        + xoff
+        + ","
+        + yoff);
 
     Matrix txform = new Matrix();
     mTextureView.getTransform(txform);
@@ -178,24 +180,19 @@ public class MediaPlayerDemo_setSurface extends Activity implements OnBufferingU
     mTextureView.setTransform(txform);
   }
 
-  @Override
-  public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+  @Override public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
     playVideo(surface);
   }
 
-  @Override
-  public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+  @Override public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
 
   }
 
-  @Override
-  public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+  @Override public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
     return false;
   }
 
-  @Override
-  public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+  @Override public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
   }
-
 }

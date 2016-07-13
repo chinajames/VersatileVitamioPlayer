@@ -16,6 +16,8 @@
 
 package io.vov.vitamio;
 
+import android.util.Log;
+import android.view.Surface;
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGL11;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -23,9 +25,6 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL;
-import android.util.Log;
-import android.view.Surface;
-
 
 /**
  * DON'T MODIFY THIS FILE IF YOU'RE NOT FAMILIAR WITH EGL, IT'S USED BY NATIVE CODE!!!
@@ -80,12 +79,9 @@ public class EGL {
   }
 
   public GL createSurface(Surface surface) {
-    if (mEgl == null)
-      throw new RuntimeException("egl not initialized");
-    if (mEglDisplay == null)
-      throw new RuntimeException("eglDisplay not initialized");
-    if (mEglConfig == null)
-      throw new RuntimeException("mEglConfig not initialized");
+    if (mEgl == null) throw new RuntimeException("egl not initialized");
+    if (mEglDisplay == null) throw new RuntimeException("eglDisplay not initialized");
+    if (mEglConfig == null) throw new RuntimeException("mEglConfig not initialized");
 
     if (mEglSurface != null && mEglSurface != EGL10.EGL_NO_SURFACE) {
       mEgl.eglMakeCurrent(mEglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT);
@@ -175,7 +171,7 @@ public class EGL {
     private int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 
     public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig config) {
-      int[] attrib_list = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE};
+      int[] attrib_list = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE };
 
       return egl.eglCreateContext(display, config, EGL10.EGL_NO_CONTEXT, attrib_list);
     }
@@ -241,7 +237,10 @@ public class EGL {
     private int[] mValue;
 
     public ComponentSizeChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize) {
-      super(new int[]{EGL10.EGL_RED_SIZE, redSize, EGL10.EGL_GREEN_SIZE, greenSize, EGL10.EGL_BLUE_SIZE, blueSize, EGL10.EGL_ALPHA_SIZE, alphaSize, EGL10.EGL_DEPTH_SIZE, depthSize, EGL10.EGL_STENCIL_SIZE, stencilSize, EGL10.EGL_NONE});
+      super(new int[] {
+          EGL10.EGL_RED_SIZE, redSize, EGL10.EGL_GREEN_SIZE, greenSize, EGL10.EGL_BLUE_SIZE, blueSize, EGL10.EGL_ALPHA_SIZE, alphaSize,
+          EGL10.EGL_DEPTH_SIZE, depthSize, EGL10.EGL_STENCIL_SIZE, stencilSize, EGL10.EGL_NONE
+      });
       mValue = new int[1];
       mRedSize = redSize;
       mGreenSize = greenSize;
@@ -251,8 +250,7 @@ public class EGL {
       mStencilSize = stencilSize;
     }
 
-    @Override
-    public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs) {
+    @Override public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs) {
       for (EGLConfig config : configs) {
         int d = findConfigAttrib(egl, display, config, EGL10.EGL_DEPTH_SIZE, 0);
         int s = findConfigAttrib(egl, display, config, EGL10.EGL_STENCIL_SIZE, 0);
@@ -283,5 +281,4 @@ public class EGL {
       super(5, 6, 5, 0, 0, 0);
     }
   }
-
 }

@@ -19,10 +19,8 @@ package io.vov.vitamio.provider;
 
 import android.net.Uri;
 import android.os.Environment;
-
 import io.vov.vitamio.provider.MediaStore.Video;
 import io.vov.vitamio.utils.Log;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -85,8 +83,7 @@ public class MiniThumbFile {
       String path = randomAccessFilePath(MINI_THUMB_DATA_FILE_VERSION);
       File directory = new File(path).getParentFile();
       if (!directory.isDirectory()) {
-        if (!directory.mkdirs())
-          Log.e("Unable to create .thumbnails directory %s", directory.toString());
+        if (!directory.mkdirs()) Log.e("Unable to create .thumbnails directory %s", directory.toString());
       }
       File f = new File(path);
       try {
@@ -98,8 +95,7 @@ public class MiniThumbFile {
         }
       }
 
-      if (mMiniThumbFile != null)
-        mChannel = mMiniThumbFile.getChannel();
+      if (mMiniThumbFile != null) mChannel = mMiniThumbFile.getChannel();
     }
     return mMiniThumbFile;
   }
@@ -126,8 +122,7 @@ public class MiniThumbFile {
         lock = mChannel.lock(pos, 1 + 8, true);
         if (mChannel.read(mBuffer, pos) == 9) {
           mBuffer.position(0);
-          if (mBuffer.get() == 1)
-            return mBuffer.getLong();
+          if (mBuffer.get() == 1) return mBuffer.getLong();
         }
       } catch (IOException ex) {
         Log.e("Got exception checking file magic: ", ex);
@@ -135,8 +130,7 @@ public class MiniThumbFile {
         Log.e("Got exception when reading magic, id = %d, disk full or mount read-only? %s", id, ex.getClass().toString());
       } finally {
         try {
-          if (lock != null)
-            lock.release();
+          if (lock != null) lock.release();
         } catch (IOException ex) {
         }
       }
@@ -146,15 +140,13 @@ public class MiniThumbFile {
 
   protected synchronized void saveMiniThumbToFile(byte[] data, long id, long magic) throws IOException {
     RandomAccessFile r = miniThumbDataFile();
-    if (r == null)
-      return;
+    if (r == null) return;
 
     long pos = id * BYTES_PER_MINTHUMB;
     FileLock lock = null;
     try {
       if (data != null) {
-        if (data.length > BYTES_PER_MINTHUMB - HEADER_SIZE)
-          return;
+        if (data.length > BYTES_PER_MINTHUMB - HEADER_SIZE) return;
 
         mBuffer.clear();
         mBuffer.put((byte) 1);
@@ -173,8 +165,7 @@ public class MiniThumbFile {
       Log.e("couldn't save mini thumbnail data for %d, disk full or mount read-only? %s", id, ex.getClass().toString());
     } finally {
       try {
-        if (lock != null)
-          lock.release();
+        if (lock != null) lock.release();
       } catch (IOException ex) {
       }
     }
@@ -182,8 +173,7 @@ public class MiniThumbFile {
 
   protected synchronized byte[] getMiniThumbFromFile(long id, byte[] data) {
     RandomAccessFile r = miniThumbDataFile();
-    if (r == null)
-      return null;
+    if (r == null) return null;
 
     long pos = id * BYTES_PER_MINTHUMB;
     FileLock lock = null;
@@ -206,8 +196,7 @@ public class MiniThumbFile {
       Log.e("Got exception when reading thumbnail, id = %d, disk full or mount read-only? %s", id, ex.getClass().toString());
     } finally {
       try {
-        if (lock != null)
-          lock.release();
+        if (lock != null) lock.release();
       } catch (IOException ex) {
       }
     }

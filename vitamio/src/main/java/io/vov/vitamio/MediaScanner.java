@@ -26,19 +26,17 @@ import android.database.SQLException;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.text.TextUtils;
-
 import io.vov.vitamio.provider.MediaStore;
 import io.vov.vitamio.provider.MediaStore.Video;
 import io.vov.vitamio.utils.ContextUtils;
 import io.vov.vitamio.utils.FileUtils;
 import io.vov.vitamio.utils.Log;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class MediaScanner {
-  private static final String[] VIDEO_PROJECTION = new String[]{Video.Media._ID, Video.Media.DATA, Video.Media.DATE_MODIFIED,};
+  private static final String[] VIDEO_PROJECTION = new String[] { Video.Media._ID, Video.Media.DATA, Video.Media.DATE_MODIFIED, };
   private static final int ID_VIDEO_COLUMN_INDEX = 0;
   private static final int PATH_VIDEO_COLUMN_INDEX = 1;
   private static final int DATE_MODIFIED_VIDEO_COLUMN_INDEX = 2;
@@ -65,15 +63,16 @@ public class MediaScanner {
     String where = null;
     String[] selectionArgs = null;
 
-    if (mFileCache == null)
+    if (mFileCache == null) {
       mFileCache = new HashMap<String, FileCacheEntry>();
-    else
+    } else {
       mFileCache.clear();
+    }
 
     try {
       if (filePath != null) {
         where = Video.Media.DATA + "=?";
-        selectionArgs = new String[]{filePath};
+        selectionArgs = new String[] { filePath };
       }
 
       c = mProvider.query(Video.Media.CONTENT_URI, VIDEO_PROJECTION, where, selectionArgs, null);
@@ -131,8 +130,7 @@ public class MediaScanner {
 
   private boolean inScanDirectory(String path, String[] directories) {
     for (int i = 0; i < directories.length; i++) {
-      if (path.startsWith(directories[i]))
-        return true;
+      if (path.startsWith(directories[i])) return true;
     }
     return false;
   }
@@ -198,8 +196,7 @@ public class MediaScanner {
 
   private native final void native_finalize();
 
-  @Override
-  protected void finalize() throws Throwable {
+  @Override protected void finalize() throws Throwable {
     try {
       native_finalize();
     } finally {
@@ -224,8 +221,7 @@ public class MediaScanner {
       mLastModifiedChanged = false;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
       return mPath;
     }
   }
@@ -247,15 +243,15 @@ public class MediaScanner {
     public FileCacheEntry beginFile(String path, long lastModified, long fileSize) {
       int lastSlash = path.lastIndexOf('/');
       if (lastSlash >= 0 && lastSlash + 2 < path.length()) {
-        if (path.regionMatches(lastSlash + 1, "._", 0, 2))
-          return null;
+        if (path.regionMatches(lastSlash + 1, "._", 0, 2)) return null;
 
         if (path.regionMatches(true, path.length() - 4, ".jpg", 0, 4)) {
           if (path.regionMatches(true, lastSlash + 1, "AlbumArt_{", 0, 10) || path.regionMatches(true, lastSlash + 1, "AlbumArt.", 0, 9)) {
             return null;
           }
           int length = path.length() - lastSlash - 1;
-          if ((length == 17 && path.regionMatches(true, lastSlash + 1, "AlbumArtSmall", 0, 13)) || (length == 10 && path.regionMatches(true, lastSlash + 1, "Folder", 0, 6))) {
+          if ((length == 17 && path.regionMatches(true, lastSlash + 1, "AlbumArtSmall", 0, 13)) || (length == 10 && path.regionMatches(true,
+              lastSlash + 1, "Folder", 0, 6))) {
             return null;
           }
         }
@@ -268,8 +264,7 @@ public class MediaScanner {
       }
 
       String key = FileUtils.getCanonical(new File(path));
-      if (mCaseInsensitivePaths)
-        key = path.toLowerCase();
+      if (mCaseInsensitivePaths) key = path.toLowerCase();
       FileCacheEntry entry = mFileCache.get(key);
       if (entry == null) {
         entry = new FileCacheEntry(null, 0, path, 0);
@@ -305,10 +300,11 @@ public class MediaScanner {
           if (processFile(path, null)) {
             result = endFile(entry);
           } else {
-            if (mCaseInsensitivePaths)
+            if (mCaseInsensitivePaths) {
               mFileCache.remove(path.toLowerCase());
-            else
+            } else {
               mFileCache.remove(path);
+            }
           }
         }
       } catch (RemoteException e) {
@@ -319,18 +315,15 @@ public class MediaScanner {
 
     private int parseSubstring(String s, int start, int defaultValue) {
       int length = s.length();
-      if (start == length)
-        return defaultValue;
+      if (start == length) return defaultValue;
 
       char ch = s.charAt(start++);
-      if (ch < '0' || ch > '9')
-        return defaultValue;
+      if (ch < '0' || ch > '9') return defaultValue;
 
       int result = ch - '0';
       while (start < length) {
         ch = s.charAt(start++);
-        if (ch < '0' || ch > '9')
-          return result;
+        if (ch < '0' || ch > '9') return result;
         result = result * 10 + (ch - '0');
       }
 
@@ -352,8 +345,7 @@ public class MediaScanner {
       } else if (name.equalsIgnoreCase("artist")) {
         mArtist = value.trim();
       } else if (name.equalsIgnoreCase("albumartist")) {
-        if (TextUtils.isEmpty(mArtist))
-          mArtist = value.trim();
+        if (TextUtils.isEmpty(mArtist)) mArtist = value.trim();
       } else if (name.equalsIgnoreCase("album")) {
         mAlbum = value.trim();
       } else if (name.equalsIgnoreCase("language")) {
@@ -411,12 +403,10 @@ public class MediaScanner {
         int lastSlash = title.lastIndexOf('/');
         if (lastSlash >= 0) {
           lastSlash++;
-          if (lastSlash < title.length())
-            title = title.substring(lastSlash);
+          if (lastSlash < title.length()) title = title.substring(lastSlash);
         }
         int lastDot = title.lastIndexOf('.');
-        if (lastDot > 0)
-          title = title.substring(0, lastDot);
+        if (lastDot > 0) title = title.substring(0, lastDot);
         values.put(MediaStore.MediaColumns.TITLE, title);
       }
 
@@ -440,7 +430,7 @@ public class MediaScanner {
     public void addNoMediaFolder(String path) {
       ContentValues values = new ContentValues();
       values.put(MediaStore.MediaColumns.DATA, "");
-      String[] pathSpec = new String[]{path + '%'};
+      String[] pathSpec = new String[] { path + '%' };
       try {
         mProvider.update(Video.Media.CONTENT_URI, values, MediaStore.MediaColumns.DATA + " LIKE ?", pathSpec);
       } catch (RemoteException e) {

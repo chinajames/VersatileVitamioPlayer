@@ -22,8 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RemoteViews.RemoteView;
 
-@RemoteView
-public class CenterLayout extends ViewGroup {
+@RemoteView public class CenterLayout extends ViewGroup {
   private int mPaddingLeft = 0;
   private int mPaddingRight = 0;
   private int mPaddingTop = 0;
@@ -42,8 +41,7 @@ public class CenterLayout extends ViewGroup {
     super(context, attrs, defStyle);
   }
 
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+  @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     int count = getChildCount();
 
     int maxHeight = 0;
@@ -76,8 +74,7 @@ public class CenterLayout extends ViewGroup {
     setMeasuredDimension(resolveSize(maxWidth, widthMeasureSpec), resolveSize(maxHeight, heightMeasureSpec));
   }
 
-  @Override
-  protected void onLayout(boolean changed, int l, int t, int r, int b) {
+  @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
     int count = getChildCount();
     mWidth = getMeasuredWidth();
     mHeight = getMeasuredHeight();
@@ -86,27 +83,27 @@ public class CenterLayout extends ViewGroup {
       if (child.getVisibility() != GONE) {
         CenterLayout.LayoutParams lp = (CenterLayout.LayoutParams) child.getLayoutParams();
         int childLeft = mPaddingLeft + lp.x;
-        if (lp.width > 0)
+        if (lp.width > 0) {
           childLeft += (int) ((mWidth - lp.width) / 2.0);
-        else
+        } else {
           childLeft += (int) ((mWidth - child.getMeasuredWidth()) / 2.0);
+        }
         int childTop = mPaddingTop + lp.y;
-        if (lp.height > 0)
+        if (lp.height > 0) {
           childTop += (int) ((mHeight - lp.height) / 2.0);
-        else
+        } else {
           childTop += (int) ((mHeight - child.getMeasuredHeight()) / 2.0);
+        }
         child.layout(childLeft, childTop, childLeft + child.getMeasuredWidth(), childTop + child.getMeasuredHeight());
       }
     }
   }
 
-  @Override
-  protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
+  @Override protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
     return p instanceof CenterLayout.LayoutParams;
   }
 
-  @Override
-  protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+  @Override protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
     return new LayoutParams(p);
   }
 

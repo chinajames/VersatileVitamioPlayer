@@ -38,11 +38,9 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
-import java.lang.reflect.Method;
-
 import io.vov.vitamio.utils.Log;
 import io.vov.vitamio.utils.StringUtils;
+import java.lang.reflect.Method;
 
 /**
  * A view containing controls for a MediaPlayer. Typically contains the buttons
@@ -97,10 +95,8 @@ public class MediaController extends FrameLayout {
   private AudioManager mAM;
   private OnShownListener mShownListener;
   private OnHiddenListener mHiddenListener;
-  @SuppressLint("HandlerLeak")
-  private Handler mHandler = new Handler() {
-    @Override
-    public void handleMessage(Message msg) {
+  @SuppressLint("HandlerLeak") private Handler mHandler = new Handler() {
+    @Override public void handleMessage(Message msg) {
       long pos;
       switch (msg.what) {
         case FADE_OUT:
@@ -128,8 +124,7 @@ public class MediaController extends FrameLayout {
       mDragging = true;
       show(3600000);
       mHandler.removeMessages(SHOW_PROGRESS);
-      if (mInstantSeeking)
-        mAM.setStreamMute(AudioManager.STREAM_MUSIC, true);
+      if (mInstantSeeking) mAM.setStreamMute(AudioManager.STREAM_MUSIC, true);
       if (mInfoView != null) {
         mInfoView.setText("");
         mInfoView.setVisibility(View.VISIBLE);
@@ -137,22 +132,17 @@ public class MediaController extends FrameLayout {
     }
 
     public void onProgressChanged(SeekBar bar, int progress, boolean fromuser) {
-      if (!fromuser)
-        return;
+      if (!fromuser) return;
 
       long newposition = (mDuration * progress) / 1000;
       String time = StringUtils.generateTime(newposition);
-      if (mInstantSeeking)
-        mPlayer.seekTo(newposition);
-      if (mInfoView != null)
-        mInfoView.setText(time);
-      if (mCurrentTime != null)
-        mCurrentTime.setText(time);
+      if (mInstantSeeking) mPlayer.seekTo(newposition);
+      if (mInfoView != null) mInfoView.setText(time);
+      if (mCurrentTime != null) mCurrentTime.setText(time);
     }
 
     public void onStopTrackingTouch(SeekBar bar) {
-      if (!mInstantSeeking)
-        mPlayer.seekTo((mDuration * bar.getProgress()) / 1000);
+      if (!mInstantSeeking) mPlayer.seekTo((mDuration * bar.getProgress()) / 1000);
       if (mInfoView != null) {
         mInfoView.setText("");
         mInfoView.setVisibility(View.GONE);
@@ -174,8 +164,7 @@ public class MediaController extends FrameLayout {
 
   public MediaController(Context context) {
     super(context);
-    if (!mFromXml && initController(context))
-      initFloatingWindow();
+    if (!mFromXml && initController(context)) initFloatingWindow();
   }
 
   private boolean initController(Context context) {
@@ -184,10 +173,8 @@ public class MediaController extends FrameLayout {
     return true;
   }
 
-  @Override
-  public void onFinishInflate() {
-    if (mRoot != null)
-      initControllerView(mRoot);
+  @Override public void onFinishInflate() {
+    if (mRoot != null) initControllerView(mRoot);
   }
 
   private void initFloatingWindow() {
@@ -197,19 +184,18 @@ public class MediaController extends FrameLayout {
     mWindow.setOutsideTouchable(true);
     mAnimStyle = android.R.style.Animation;
   }
-  
-  @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	public void setWindowLayoutType() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			try {
-				mAnchor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-				Method setWindowLayoutType = PopupWindow.class.getMethod("setWindowLayoutType", new Class[] { int.class });
-				setWindowLayoutType.invoke(mWindow, WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
-			} catch (Exception e) {
-				Log.e("setWindowLayoutType", e);
-			}
-		}
-	}
+
+  @TargetApi(Build.VERSION_CODES.JELLY_BEAN) public void setWindowLayoutType() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+      try {
+        mAnchor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        Method setWindowLayoutType = PopupWindow.class.getMethod("setWindowLayoutType", new Class[] { int.class });
+        setWindowLayoutType.invoke(mWindow, WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+      } catch (Exception e) {
+        Log.e("setWindowLayoutType", e);
+      }
+    }
+  }
 
   /**
    * Set the view that acts as the anchor for the control view. This can for
@@ -236,11 +222,13 @@ public class MediaController extends FrameLayout {
    * @return The controller view.
    */
   protected View makeControllerView() {
-    return ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(getResources().getIdentifier("mediacontroller", "layout", mContext.getPackageName()), this);
+    return ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
+        getResources().getIdentifier("mediacontroller", "layout", mContext.getPackageName()), this);
   }
 
   private void initControllerView(View v) {
-    mPauseButton = (ImageButton) v.findViewById(getResources().getIdentifier("mediacontroller_play_pause", "id", mContext.getPackageName()));
+    mPauseButton =
+        (ImageButton) v.findViewById(getResources().getIdentifier("mediacontroller_play_pause", "id", mContext.getPackageName()));
     if (mPauseButton != null) {
       mPauseButton.requestFocus();
       mPauseButton.setOnClickListener(mPauseListener);
@@ -258,8 +246,7 @@ public class MediaController extends FrameLayout {
     mEndTime = (TextView) v.findViewById(getResources().getIdentifier("mediacontroller_time_total", "id", mContext.getPackageName()));
     mCurrentTime = (TextView) v.findViewById(getResources().getIdentifier("mediacontroller_time_current", "id", mContext.getPackageName()));
     mFileName = (TextView) v.findViewById(getResources().getIdentifier("mediacontroller_file_name", "id", mContext.getPackageName()));
-    if (mFileName != null)
-      mFileName.setText(mTitle);
+    if (mFileName != null) mFileName.setText(mTitle);
   }
 
   public void setMediaPlayer(MediaPlayerControl player) {
@@ -282,20 +269,15 @@ public class MediaController extends FrameLayout {
 
   /**
    * Set the content of the file_name TextView
-   *
-   * @param name
    */
   public void setFileName(String name) {
     mTitle = name;
-    if (mFileName != null)
-      mFileName.setText(mTitle);
+    if (mFileName != null) mFileName.setText(mTitle);
   }
 
   /**
    * Set the View to hold some information when interact with the
    * MediaController
-   *
-   * @param v
    */
   public void setInfoView(OutlineTextView v) {
     mInfoView = v;
@@ -312,8 +294,8 @@ public class MediaController extends FrameLayout {
    * </p>
    *
    * @param animationStyle animation style to use when the controller appears
-   *                       and disappears. Set to -1 for the default animation, 0 for no animation, or
-   *                       a resource identifier for an explicit animation.
+   * and disappears. Set to -1 for the default animation, 0 for no animation, or
+   * a resource identifier for an explicit animation.
    */
   public void setAnimationStyle(int animationStyle) {
     mAnimStyle = animationStyle;
@@ -324,12 +306,11 @@ public class MediaController extends FrameLayout {
    * 'timeout' milliseconds of inactivity.
    *
    * @param timeout The timeout in milliseconds. Use 0 to show the controller
-   *                until hide() is called.
+   * until hide() is called.
    */
   public void show(int timeout) {
     if (!mShowing && mAnchor != null && mAnchor.getWindowToken() != null) {
-      if (mPauseButton != null)
-        mPauseButton.requestFocus();
+      if (mPauseButton != null) mPauseButton.requestFocus();
 
       if (mFromXml) {
         setVisibility(View.VISIBLE);
@@ -344,8 +325,7 @@ public class MediaController extends FrameLayout {
         mWindow.showAtLocation(mAnchor, Gravity.NO_GRAVITY, anchorRect.left, anchorRect.bottom);
       }
       mShowing = true;
-      if (mShownListener != null)
-        mShownListener.onShown();
+      if (mShownListener != null) mShownListener.onShown();
     }
     updatePausePlay();
     mHandler.sendEmptyMessage(SHOW_PROGRESS);
@@ -361,22 +341,21 @@ public class MediaController extends FrameLayout {
   }
 
   public void hide() {
-    if (mAnchor == null)
-      return;
+    if (mAnchor == null) return;
 
     if (mShowing) {
       try {
         mHandler.removeMessages(SHOW_PROGRESS);
-        if (mFromXml)
+        if (mFromXml) {
           setVisibility(View.GONE);
-        else
+        } else {
           mWindow.dismiss();
+        }
       } catch (IllegalArgumentException ex) {
         Log.d("MediaController already removed");
       }
       mShowing = false;
-      if (mHiddenListener != null)
-        mHiddenListener.onHidden();
+      if (mHiddenListener != null) mHiddenListener.onHidden();
     }
   }
 
@@ -389,8 +368,7 @@ public class MediaController extends FrameLayout {
   }
 
   private long setProgress() {
-    if (mPlayer == null || mDragging)
-      return 0;
+    if (mPlayer == null || mDragging) return 0;
 
     long position = mPlayer.getCurrentPosition();
     long duration = mPlayer.getDuration();
@@ -405,34 +383,30 @@ public class MediaController extends FrameLayout {
 
     mDuration = duration;
 
-    if (mEndTime != null)
-      mEndTime.setText(StringUtils.generateTime(mDuration));
-    if (mCurrentTime != null)
-      mCurrentTime.setText(StringUtils.generateTime(position));
+    if (mEndTime != null) mEndTime.setText(StringUtils.generateTime(mDuration));
+    if (mCurrentTime != null) mCurrentTime.setText(StringUtils.generateTime(position));
 
     return position;
   }
 
-  @Override
-  public boolean onTouchEvent(MotionEvent event) {
+  @Override public boolean onTouchEvent(MotionEvent event) {
     show(sDefaultTimeout);
     return true;
   }
 
-  @Override
-  public boolean onTrackballEvent(MotionEvent ev) {
+  @Override public boolean onTrackballEvent(MotionEvent ev) {
     show(sDefaultTimeout);
     return false;
   }
 
-  @Override
-  public boolean dispatchKeyEvent(KeyEvent event) {
+  @Override public boolean dispatchKeyEvent(KeyEvent event) {
     int keyCode = event.getKeyCode();
-    if (event.getRepeatCount() == 0 && (keyCode == KeyEvent.KEYCODE_HEADSETHOOK || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE || keyCode == KeyEvent.KEYCODE_SPACE)) {
+    if (event.getRepeatCount() == 0 && (keyCode == KeyEvent.KEYCODE_HEADSETHOOK
+        || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE
+        || keyCode == KeyEvent.KEYCODE_SPACE)) {
       doPauseResume();
       show(sDefaultTimeout);
-      if (mPauseButton != null)
-        mPauseButton.requestFocus();
+      if (mPauseButton != null) mPauseButton.requestFocus();
       return true;
     } else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP) {
       if (mPlayer.isPlaying()) {
@@ -450,29 +424,27 @@ public class MediaController extends FrameLayout {
   }
 
   private void updatePausePlay() {
-    if (mRoot == null || mPauseButton == null)
-      return;
+    if (mRoot == null || mPauseButton == null) return;
 
-    if (mPlayer.isPlaying())
+    if (mPlayer.isPlaying()) {
       mPauseButton.setImageResource(getResources().getIdentifier("mediacontroller_pause", "drawable", mContext.getPackageName()));
-    else
+    } else {
       mPauseButton.setImageResource(getResources().getIdentifier("mediacontroller_play", "drawable", mContext.getPackageName()));
+    }
   }
 
   private void doPauseResume() {
-    if (mPlayer.isPlaying())
+    if (mPlayer.isPlaying()) {
       mPlayer.pause();
-    else
+    } else {
       mPlayer.start();
+    }
     updatePausePlay();
   }
 
-  @Override
-  public void setEnabled(boolean enabled) {
-    if (mPauseButton != null)
-      mPauseButton.setEnabled(enabled);
-    if (mProgress != null)
-      mProgress.setEnabled(enabled);
+  @Override public void setEnabled(boolean enabled) {
+    if (mPauseButton != null) mPauseButton.setEnabled(enabled);
+    if (mProgress != null) mProgress.setEnabled(enabled);
     super.setEnabled(enabled);
   }
 
@@ -499,5 +471,4 @@ public class MediaController extends FrameLayout {
 
     int getBufferPercentage();
   }
-
 }

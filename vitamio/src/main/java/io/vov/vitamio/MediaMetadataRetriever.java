@@ -23,16 +23,14 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
-
 import io.vov.vitamio.utils.FileUtils;
-
 import java.io.FileDescriptor;
 import java.io.IOException;
 
 /**
  * MediaMetadataRetriever is used to get meta data from any media file
  * <p/>
- * 
+ *
  * <pre>
  * MediaMetadataRetriever mmr = new MediaMetadataRetriever(this);
  * mmr.setDataSource(this, mediaUri);
@@ -61,10 +59,9 @@ public class MediaMetadataRetriever {
 
   private static native boolean loadFFmpeg_native(String ffmpegPath);
 
-  public void setDataSource(Context context, Uri uri) throws IOException, IllegalArgumentException,
-      SecurityException, IllegalStateException {
-    if (context == null || uri == null)
-      throw new IllegalArgumentException();
+  public void setDataSource(Context context, Uri uri)
+      throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+    if (context == null || uri == null) throw new IllegalArgumentException();
     String scheme = uri.getScheme();
     if (scheme == null || scheme.equals("file")) {
       setDataSource(FileUtils.getPath(uri.toString()));
@@ -74,8 +71,7 @@ public class MediaMetadataRetriever {
     try {
       ContentResolver resolver = context.getContentResolver();
       mFD = resolver.openAssetFileDescriptor(uri, "r");
-      if (mFD == null)
-        return;
+      if (mFD == null) return;
       setDataSource(mFD.getParcelFileDescriptor().getFileDescriptor());
       return;
     } catch (Exception e) {
@@ -86,19 +82,17 @@ public class MediaMetadataRetriever {
     return;
   }
 
-  public native void setDataSource(String path) throws IOException, IllegalArgumentException,
-      IllegalStateException;
+  public native void setDataSource(String path) throws IOException, IllegalArgumentException, IllegalStateException;
 
-  public native void setDataSource(FileDescriptor fd) throws IOException, IllegalArgumentException,
-      IllegalStateException;
+  public native void setDataSource(FileDescriptor fd) throws IOException, IllegalArgumentException, IllegalStateException;
 
   /**
    * Call this method after setDataSource(). This method retrieves the meta data
    * value associated with the keyCode.
-   * 
+   *
    * The keyCode currently supported is listed below as METADATA_XXX constants.
    * With any other value, it returns a null pointer.
-   * 
+   *
    * @param keyCode One of the constants listed below at the end of the class.
    * @return The meta data value associate with the given keyCode on success;
    * null on failure.
@@ -111,7 +105,7 @@ public class MediaMetadataRetriever {
    * Call this method after setDataSource(). This method finds the optional
    * graphic or album/cover art associated associated with the data source. If
    * there are more than one pictures, (any) one of them is returned.
-   * 
+   *
    * @return null if no such graphic is found.
    */
   public native byte[] getEmbeddedPicture() throws IllegalStateException;
@@ -129,8 +123,7 @@ public class MediaMetadataRetriever {
     closeFD();
   }
 
-  @Override
-  protected void finalize() throws Throwable {
+  @Override protected void finalize() throws Throwable {
     try {
       native_finalize();
     } finally {
@@ -299,5 +292,4 @@ public class MediaMetadataRetriever {
    * 1.
    */
   public static final String METADATA_KEY_HAS_VIDEO = "has_video";
-
 }

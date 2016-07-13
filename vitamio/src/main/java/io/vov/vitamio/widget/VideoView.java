@@ -36,7 +36,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-
 import io.vov.vitamio.MediaFormat;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
@@ -51,7 +50,6 @@ import io.vov.vitamio.MediaPlayer.TrackInfo;
 import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.utils.Log;
 import io.vov.vitamio.utils.ScreenResolution;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -88,8 +86,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       mVideoWidth = mp.getVideoWidth();
       mVideoHeight = mp.getVideoHeight();
       mVideoAspectRatio = mp.getVideoAspectRatio();
-      if (mVideoWidth != 0 && mVideoHeight != 0)
-        setVideoLayout(mVideoLayout, mAspectRatio);
+      if (mVideoWidth != 0 && mVideoHeight != 0) setVideoLayout(mVideoLayout, mAspectRatio);
     }
   };
   OnPreparedListener mPreparedListener = new OnPreparedListener() {
@@ -101,28 +98,23 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       // Get the capabilities of the player for this stream
       //TODO mCanPause
 
-      if (mOnPreparedListener != null)
-        mOnPreparedListener.onPrepared(mMediaPlayer);
-      if (mMediaController != null)
-        mMediaController.setEnabled(true);
+      if (mOnPreparedListener != null) mOnPreparedListener.onPrepared(mMediaPlayer);
+      if (mMediaController != null) mMediaController.setEnabled(true);
       mVideoWidth = mp.getVideoWidth();
       mVideoHeight = mp.getVideoHeight();
       mVideoAspectRatio = mp.getVideoAspectRatio();
 
       long seekToPosition = mSeekWhenPrepared;
-      if (seekToPosition != 0)
-        seekTo(seekToPosition);
+      if (seekToPosition != 0) seekTo(seekToPosition);
 
       if (mVideoWidth != 0 && mVideoHeight != 0) {
         setVideoLayout(mVideoLayout, mAspectRatio);
         if (mSurfaceWidth == mVideoWidth && mSurfaceHeight == mVideoHeight) {
           if (mTargetState == STATE_PLAYING) {
             start();
-            if (mMediaController != null)
-              mMediaController.show();
+            if (mMediaController != null) mMediaController.show();
           } else if (!isPlaying() && (seekToPosition != 0 || getCurrentPosition() > 0)) {
-            if (mMediaController != null)
-              mMediaController.show(0);
+            if (mMediaController != null) mMediaController.show(0);
           }
         }
       } else if (mTargetState == STATE_PLAYING) {
@@ -137,12 +129,10 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       boolean isValidState = (mTargetState == STATE_PLAYING);
       boolean hasValidSize = (mVideoWidth == w && mVideoHeight == h);
       if (mMediaPlayer != null && isValidState && hasValidSize) {
-        if (mSeekWhenPrepared != 0)
-          seekTo(mSeekWhenPrepared);
+        if (mSeekWhenPrepared != 0) seekTo(mSeekWhenPrepared);
         start();
         if (mMediaController != null) {
-          if (mMediaController.isShowing())
-            mMediaController.hide();
+          if (mMediaController.isShowing()) mMediaController.hide();
           mMediaController.show();
         }
       }
@@ -198,10 +188,8 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       Log.d("onCompletion");
       mCurrentState = STATE_PLAYBACK_COMPLETED;
       mTargetState = STATE_PLAYBACK_COMPLETED;
-      if (mMediaController != null)
-        mMediaController.hide();
-      if (mOnCompletionListener != null)
-        mOnCompletionListener.onCompletion(mMediaPlayer);
+      if (mMediaController != null) mMediaController.hide();
+      if (mOnCompletionListener != null) mOnCompletionListener.onCompletion(mMediaPlayer);
     }
   };
   private OnErrorListener mErrorListener = new OnErrorListener() {
@@ -209,23 +197,28 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       Log.d("Error: %d, %d", framework_err, impl_err);
       mCurrentState = STATE_ERROR;
       mTargetState = STATE_ERROR;
-      if (mMediaController != null)
-        mMediaController.hide();
+      if (mMediaController != null) mMediaController.hide();
 
       if (mOnErrorListener != null) {
-        if (mOnErrorListener.onError(mMediaPlayer, framework_err, impl_err))
-          return true;
+        if (mOnErrorListener.onError(mMediaPlayer, framework_err, impl_err)) return true;
       }
 
       if (getWindowToken() != null) {
-        int message = framework_err == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK ? getResources().getIdentifier("VideoView_error_text_invalid_progressive_playback", "string", mContext.getPackageName()): getResources().getIdentifier("VideoView_error_text_unknown", "string", mContext.getPackageName());
+        int message = framework_err == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK ? getResources().getIdentifier(
+            "VideoView_error_text_invalid_progressive_playback", "string", mContext.getPackageName())
+            : getResources().getIdentifier("VideoView_error_text_unknown", "string", mContext.getPackageName());
 
-        new AlertDialog.Builder(mContext).setTitle(getResources().getIdentifier("VideoView_error_title", "string", mContext.getPackageName())).setMessage(message).setPositiveButton(getResources().getIdentifier("VideoView_error_button", "string", mContext.getPackageName()), new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            if (mOnCompletionListener != null)
-              mOnCompletionListener.onCompletion(mMediaPlayer);
-          }
-        }).setCancelable(false).show();
+        new AlertDialog.Builder(mContext).setTitle(
+            getResources().getIdentifier("VideoView_error_title", "string", mContext.getPackageName()))
+            .setMessage(message)
+            .setPositiveButton(getResources().getIdentifier("VideoView_error_button", "string", mContext.getPackageName()),
+                new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialog, int whichButton) {
+                    if (mOnCompletionListener != null) mOnCompletionListener.onCompletion(mMediaPlayer);
+                  }
+                })
+            .setCancelable(false)
+            .show();
       }
       return true;
     }
@@ -233,51 +226,41 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   private OnBufferingUpdateListener mBufferingUpdateListener = new OnBufferingUpdateListener() {
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
       mCurrentBufferPercentage = percent;
-      if (mOnBufferingUpdateListener != null)
-        mOnBufferingUpdateListener.onBufferingUpdate(mp, percent);
+      if (mOnBufferingUpdateListener != null) mOnBufferingUpdateListener.onBufferingUpdate(mp, percent);
     }
   };
   private OnInfoListener mInfoListener = new OnInfoListener() {
-    @Override
-    public boolean onInfo(MediaPlayer mp, int what, int extra) {
+    @Override public boolean onInfo(MediaPlayer mp, int what, int extra) {
       Log.d("onInfo: (%d, %d)", what, extra);
       if (mOnInfoListener != null) {
         mOnInfoListener.onInfo(mp, what, extra);
       } else if (mMediaPlayer != null) {
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
           mMediaPlayer.pause();
-          if (mMediaBufferingIndicator != null)
-            mMediaBufferingIndicator.setVisibility(View.VISIBLE);
+          if (mMediaBufferingIndicator != null) mMediaBufferingIndicator.setVisibility(View.VISIBLE);
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
           mMediaPlayer.start();
-          if (mMediaBufferingIndicator != null)
-            mMediaBufferingIndicator.setVisibility(View.GONE);
+          if (mMediaBufferingIndicator != null) mMediaBufferingIndicator.setVisibility(View.GONE);
         }
       }
       return true;
     }
   };
   private OnSeekCompleteListener mSeekCompleteListener = new OnSeekCompleteListener() {
-    @Override
-    public void onSeekComplete(MediaPlayer mp) {
+    @Override public void onSeekComplete(MediaPlayer mp) {
       Log.d("onSeekComplete");
-      if (mOnSeekCompleteListener != null)
-        mOnSeekCompleteListener.onSeekComplete(mp);
+      if (mOnSeekCompleteListener != null) mOnSeekCompleteListener.onSeekComplete(mp);
     }
   };
   private OnTimedTextListener mTimedTextListener = new OnTimedTextListener() {
-    @Override
-    public void onTimedTextUpdate(byte[] pixels, int width, int height) {
+    @Override public void onTimedTextUpdate(byte[] pixels, int width, int height) {
       Log.i("onSubtitleUpdate: bitmap subtitle, %dx%d", width, height);
-      if (mOnTimedTextListener != null)
-        mOnTimedTextListener.onTimedTextUpdate(pixels, width, height);
+      if (mOnTimedTextListener != null) mOnTimedTextListener.onTimedTextUpdate(pixels, width, height);
     }
 
-    @Override
-    public void onTimedText(String text) {
+    @Override public void onTimedText(String text) {
       Log.i("onSubtitleUpdate: %s", text);
-      if (mOnTimedTextListener != null)
-        mOnTimedTextListener.onTimedText(text);
+      if (mOnTimedTextListener != null) mOnTimedTextListener.onTimedText(text);
     }
   };
 
@@ -296,8 +279,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
     initVideoView(context);
   }
 
-  @Override
-  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+  @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     int width = getDefaultSize(mVideoWidth, widthMeasureSpec);
     int height = getDefaultSize(mVideoHeight, heightMeasureSpec);
     setMeasuredDimension(width, height);
@@ -306,13 +288,13 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   /**
    * Set the display options
    *
-   * @param layout      <ul>
-   *                    <li>{@link #VIDEO_LAYOUT_ORIGIN}
-   *                    <li>{@link #VIDEO_LAYOUT_SCALE}
-   *                    <li>{@link #VIDEO_LAYOUT_STRETCH}
-   *                    <li>{@link #VIDEO_LAYOUT_ZOOM}
-   *                    <li>{@link #VIDEO_LAYOUT_FIT_PARENT}
-   *                    </ul>
+   * @param layout <ul>
+   * <li>{@link #VIDEO_LAYOUT_ORIGIN}
+   * <li>{@link #VIDEO_LAYOUT_SCALE}
+   * <li>{@link #VIDEO_LAYOUT_STRETCH}
+   * <li>{@link #VIDEO_LAYOUT_ZOOM}
+   * <li>{@link #VIDEO_LAYOUT_FIT_PARENT}
+   * </ul>
    * @param aspectRatio video aspect ratio, will audo detect if 0.
    */
   public void setVideoLayout(int layout, float aspectRatio) {
@@ -341,13 +323,13 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
     }
     setLayoutParams(lp);
     getHolder().setFixedSize(mSurfaceWidth, mSurfaceHeight);
-    Log.d("VIDEO: %dx%dx%f, Surface: %dx%d, LP: %dx%d, Window: %dx%dx%f", mVideoWidth, mVideoHeight, mVideoAspectRatio, mSurfaceWidth, mSurfaceHeight, lp.width, lp.height, windowWidth, windowHeight, windowRatio);
+    Log.d("VIDEO: %dx%dx%f, Surface: %dx%d, LP: %dx%d, Window: %dx%dx%f", mVideoWidth, mVideoHeight, mVideoAspectRatio, mSurfaceWidth,
+        mSurfaceHeight, lp.width, lp.height, windowWidth, windowHeight, windowRatio);
     mVideoLayout = layout;
     mAspectRatio = aspectRatio;
   }
 
-  @SuppressWarnings("deprecation")
-  private void initVideoView(Context ctx) {
+  @SuppressWarnings("deprecation") private void initVideoView(Context ctx) {
     mContext = ctx;
     mVideoWidth = 0;
     mVideoHeight = 0;
@@ -362,8 +344,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
     requestFocus();
     mCurrentState = STATE_IDLE;
     mTargetState = STATE_IDLE;
-    if (ctx instanceof Activity)
-      ((Activity) ctx).setVolumeControlStream(AudioManager.STREAM_MUSIC);
+    if (ctx instanceof Activity) ((Activity) ctx).setVolumeControlStream(AudioManager.STREAM_MUSIC);
   }
 
   public boolean isValid() {
@@ -398,8 +379,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   }
 
   private void openVideo() {
-    if (mUri == null || mSurfaceHolder == null || !Vitamio.isInitialized(mContext))
-      return;
+    if (mUri == null || mSurfaceHolder == null || !Vitamio.isInitialized(mContext)) return;
 
     Intent i = new Intent("com.android.music.musicservicecommand");
     i.putExtra("command", "pause");
@@ -421,7 +401,8 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       mMediaPlayer.setDataSource(mContext, mUri, mHeaders);
       mMediaPlayer.setDisplay(mSurfaceHolder);
       mMediaPlayer.setBufferSize(mBufSize);
-      mMediaPlayer.setVideoChroma(mVideoChroma == MediaPlayer.VIDEOCHROMA_RGB565 ? MediaPlayer.VIDEOCHROMA_RGB565 : MediaPlayer.VIDEOCHROMA_RGBA);
+      mMediaPlayer.setVideoChroma(
+          mVideoChroma == MediaPlayer.VIDEOCHROMA_RGB565 ? MediaPlayer.VIDEOCHROMA_RGB565 : MediaPlayer.VIDEOCHROMA_RGBA);
       mMediaPlayer.setScreenOnWhilePlaying(true);
       mMediaPlayer.prepareAsync();
       mCurrentState = STATE_PREPARING;
@@ -442,15 +423,13 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   }
 
   public void setMediaController(MediaController controller) {
-    if (mMediaController != null)
-      mMediaController.hide();
+    if (mMediaController != null) mMediaController.hide();
     mMediaController = controller;
     attachMediaController();
   }
 
   public void setMediaBufferingIndicator(View mediaBufferingIndicator) {
-    if (mMediaBufferingIndicator != null)
-      mMediaBufferingIndicator.setVisibility(View.GONE);
+    if (mMediaBufferingIndicator != null) mMediaBufferingIndicator.setVisibility(View.GONE);
     mMediaBufferingIndicator = mediaBufferingIndicator;
   }
 
@@ -503,28 +482,27 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       mMediaPlayer.release();
       mMediaPlayer = null;
       mCurrentState = STATE_IDLE;
-      if (cleartargetstate)
-        mTargetState = STATE_IDLE;
+      if (cleartargetstate) mTargetState = STATE_IDLE;
     }
   }
 
-  @Override
-  public boolean onTouchEvent(MotionEvent ev) {
-    if (isInPlaybackState() && mMediaController != null)
-      toggleMediaControlsVisiblity();
+  @Override public boolean onTouchEvent(MotionEvent ev) {
+    if (isInPlaybackState() && mMediaController != null) toggleMediaControlsVisiblity();
     return false;
   }
 
-  @Override
-  public boolean onTrackballEvent(MotionEvent ev) {
-    if (isInPlaybackState() && mMediaController != null)
-      toggleMediaControlsVisiblity();
+  @Override public boolean onTrackballEvent(MotionEvent ev) {
+    if (isInPlaybackState() && mMediaController != null) toggleMediaControlsVisiblity();
     return false;
   }
 
-  @Override
-  public boolean onKeyDown(int keyCode, KeyEvent event) {
-    boolean isKeyCodeSupported = keyCode != KeyEvent.KEYCODE_BACK && keyCode != KeyEvent.KEYCODE_VOLUME_UP && keyCode != KeyEvent.KEYCODE_VOLUME_DOWN && keyCode != KeyEvent.KEYCODE_MENU && keyCode != KeyEvent.KEYCODE_CALL && keyCode != KeyEvent.KEYCODE_ENDCALL;
+  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+    boolean isKeyCodeSupported = keyCode != KeyEvent.KEYCODE_BACK
+        && keyCode != KeyEvent.KEYCODE_VOLUME_UP
+        && keyCode != KeyEvent.KEYCODE_VOLUME_DOWN
+        && keyCode != KeyEvent.KEYCODE_MENU
+        && keyCode != KeyEvent.KEYCODE_CALL
+        && keyCode != KeyEvent.KEYCODE_ENDCALL;
     if (isInPlaybackState() && isKeyCodeSupported && mMediaController != null) {
       if (keyCode == KeyEvent.KEYCODE_HEADSETHOOK || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE || keyCode == KeyEvent.KEYCODE_SPACE) {
         if (mMediaPlayer.isPlaying()) {
@@ -537,8 +515,8 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
         return true;
       } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY) {
         if (!mMediaPlayer.isPlaying()) {
-            start();
-            mMediaController.hide();
+          start();
+          mMediaController.hide();
         }
         return true;
       } else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP || keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
@@ -599,8 +577,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
 
   public long getDuration() {
     if (isInPlaybackState()) {
-      if (mDuration > 0)
-        return mDuration;
+      if (mDuration > 0) return mDuration;
       mDuration = mMediaPlayer.getDuration();
       return mDuration;
     }
@@ -609,8 +586,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   }
 
   public long getCurrentPosition() {
-    if (isInPlaybackState())
-      return mMediaPlayer.getCurrentPosition();
+    if (isInPlaybackState()) return mMediaPlayer.getCurrentPosition();
     return 0;
   }
 
@@ -628,14 +604,12 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   }
 
   public int getBufferPercentage() {
-    if (mMediaPlayer != null)
-      return mCurrentBufferPercentage;
+    if (mMediaPlayer != null) return mCurrentBufferPercentage;
     return 0;
   }
 
   public void setVolume(float leftVolume, float rightVolume) {
-    if (mMediaPlayer != null)
-      mMediaPlayer.setVolume(leftVolume, rightVolume);
+    if (mMediaPlayer != null) mMediaPlayer.setVolume(leftVolume, rightVolume);
   }
 
   public int getVideoWidth() {
@@ -652,7 +626,6 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
 
   /**
    * Must set before {@link #setVideoURI}
-   * @param chroma
    */
   public void setVideoChroma(int chroma) {
     getHolder().setFormat(chroma == MediaPlayer.VIDEOCHROMA_RGB565 ? PixelFormat.RGB_565 : PixelFormat.RGBA_8888); // PixelFormat.RGB_565
@@ -660,12 +633,11 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   }
 
   public void setHardwareDecoder(boolean hardware) {
-    mHardwareDecoder= hardware;
+    mHardwareDecoder = hardware;
   }
 
   public void setVideoQuality(int quality) {
-    if (mMediaPlayer != null)
-      mMediaPlayer.setVideoQuality(quality);
+    if (mMediaPlayer != null) mMediaPlayer.setVideoQuality(quality);
   }
 
   public void setBufferSize(int bufSize) {
@@ -673,80 +645,70 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
   }
 
   public boolean isBuffering() {
-    if (mMediaPlayer != null)
-      return mMediaPlayer.isBuffering();
+    if (mMediaPlayer != null) return mMediaPlayer.isBuffering();
     return false;
   }
 
   public String getMetaEncoding() {
-    if (mMediaPlayer != null)
-      return mMediaPlayer.getMetaEncoding();
+    if (mMediaPlayer != null) return mMediaPlayer.getMetaEncoding();
     return null;
   }
 
   public void setMetaEncoding(String encoding) {
-    if (mMediaPlayer != null)
-      mMediaPlayer.setMetaEncoding(encoding);
+    if (mMediaPlayer != null) mMediaPlayer.setMetaEncoding(encoding);
   }
 
   public SparseArray<MediaFormat> getAudioTrackMap(String encoding) {
-    if (mMediaPlayer != null)
+    if (mMediaPlayer != null) {
       return mMediaPlayer.findTrackFromTrackInfo(TrackInfo.MEDIA_TRACK_TYPE_AUDIO, mMediaPlayer.getTrackInfo(encoding));
+    }
     return null;
   }
 
   public int getAudioTrack() {
-    if (mMediaPlayer != null)
-      return mMediaPlayer.getAudioTrack();
+    if (mMediaPlayer != null) return mMediaPlayer.getAudioTrack();
     return -1;
   }
 
   public void setAudioTrack(int audioIndex) {
-    if (mMediaPlayer != null)
-      mMediaPlayer.selectTrack(audioIndex);
+    if (mMediaPlayer != null) mMediaPlayer.selectTrack(audioIndex);
   }
 
   public void setTimedTextShown(boolean shown) {
-    if (mMediaPlayer != null)
-      mMediaPlayer.setTimedTextShown(shown);
+    if (mMediaPlayer != null) mMediaPlayer.setTimedTextShown(shown);
   }
 
   public void setTimedTextEncoding(String encoding) {
-    if (mMediaPlayer != null)
-      mMediaPlayer.setTimedTextEncoding(encoding);
+    if (mMediaPlayer != null) mMediaPlayer.setTimedTextEncoding(encoding);
   }
 
   public int getTimedTextLocation() {
-    if (mMediaPlayer != null)
-      return mMediaPlayer.getTimedTextLocation();
+    if (mMediaPlayer != null) return mMediaPlayer.getTimedTextLocation();
     return -1;
   }
 
   public void addTimedTextSource(String subPath) {
-    if (mMediaPlayer != null)
-      mMediaPlayer.addTimedTextSource(subPath);
+    if (mMediaPlayer != null) mMediaPlayer.addTimedTextSource(subPath);
   }
 
   public String getTimedTextPath() {
-    if (mMediaPlayer != null)
-      return mMediaPlayer.getTimedTextPath();
+    if (mMediaPlayer != null) return mMediaPlayer.getTimedTextPath();
     return null;
   }
 
   public void setSubTrack(int trackId) {
-    if (mMediaPlayer != null)
-      mMediaPlayer.selectTrack(trackId);
+    if (mMediaPlayer != null) mMediaPlayer.selectTrack(trackId);
   }
 
   public int getTimedTextTrack() {
-    if (mMediaPlayer != null)
-      return mMediaPlayer.getTimedTextTrack();
+    if (mMediaPlayer != null) return mMediaPlayer.getTimedTextTrack();
     return -1;
   }
 
   public SparseArray<MediaFormat> getSubTrackMap(String encoding) {
-    if (mMediaPlayer != null)
+    if (mMediaPlayer != null) {
       return mMediaPlayer.findTrackFromTrackInfo(TrackInfo.MEDIA_TRACK_TYPE_TIMEDTEXT, mMediaPlayer.getTrackInfo(encoding));
+    }
     return null;
   }
 

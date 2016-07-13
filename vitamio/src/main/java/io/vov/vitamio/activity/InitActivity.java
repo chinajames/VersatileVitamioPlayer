@@ -25,9 +25,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.WindowManager;
-
 import io.vov.vitamio.Vitamio;
-
 import java.lang.ref.WeakReference;
 
 public class InitActivity extends Activity {
@@ -41,26 +39,22 @@ public class InitActivity extends Activity {
     uiHandler = new UIHandler(this);
 
     new AsyncTask<Object, Object, Boolean>() {
-      @Override
-      protected void onPreExecute() {
+      @Override protected void onPreExecute() {
         mPD = new ProgressDialog(InitActivity.this);
         mPD.setCancelable(false);
         mPD.setMessage(InitActivity.this.getString(getResources().getIdentifier("vitamio_init_decoders", "string", getPackageName())));
         mPD.show();
       }
 
-      @Override
-      protected Boolean doInBackground(Object... params) {
+      @Override protected Boolean doInBackground(Object... params) {
         return Vitamio.initialize(InitActivity.this, getResources().getIdentifier("libarm", "raw", getPackageName()));
       }
 
-      @Override
-      protected void onPostExecute(Boolean inited) {
+      @Override protected void onPostExecute(Boolean inited) {
         if (inited) {
           uiHandler.sendEmptyMessage(0);
         }
       }
-
     }.execute();
   }
 
