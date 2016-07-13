@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="pref_title_using_media_codec_auto_rotate">Using MediaCodec auto rotate</string>
+  <string name="vitamio_demo_name">Vitamio全能视频播放器</string>
   <string name="recent">记录</string>
   <string name="sample">例子</string>
+  <string name="choose_local_video">运行程序第一步,选择本地的视频</string>
   <string name="local_audio">播放本地音频</string>
   <string name="local_video">播放本地视频</string>
+  <string name="stream_video">播放视频流</string>
   <string name="openvideo1">打开视频1</string>
   <string name="openvideo2">打开视频2</string>
 </resources>

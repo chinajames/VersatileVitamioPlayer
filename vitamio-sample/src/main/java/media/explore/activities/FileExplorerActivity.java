@@ -1,12 +1,15 @@
 package media.explore.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import com.squareup.otto.Subscribe;
 import io.vov.vitamio.demo.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
+import io.vov.vitamio.demo.VitamioMainActivity;
 import java.io.File;
 import java.io.IOException;
 import media.explore.application.AppActivity;
@@ -69,6 +72,9 @@ public class FileExplorerActivity extends AppActivity {
       mSettings.setLastDirectory(path);
       doOpenDirectory(path, true);
     } else if (f.exists()) {
+      SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+      SharedPreferences.Editor editor = settings.edit();
+      editor.putString(VitamioMainActivity.LOCAL_VIDEO,f.getPath()).apply();
       MediaPlayerDemo_Video.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
     }
   }

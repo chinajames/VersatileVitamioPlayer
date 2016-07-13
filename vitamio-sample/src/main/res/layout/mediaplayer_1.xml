@@ -26,18 +26,4 @@
       android:text="@string/stream_video"
       />
 
-  <Button
-      android:id="@+id/localaudio"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/local_audio"
-      />
-  <!--
-      <Button
-          android:id="@+id/resourcesaudio"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/res_audio" />
-  -->
-
 </LinearLayout>

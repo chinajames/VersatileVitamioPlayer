@@ -11,11 +11,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import media.explore.activities.FileExplorerActivity;
 
 /**
  * List
  */
-public class VitamioListActivity extends ListActivity {
+public class VitamioMainActivity extends ListActivity {
+
+  public static final String LOCAL_VIDEO = "LOCAL_VIDEO";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -26,6 +29,7 @@ public class VitamioListActivity extends ListActivity {
 
   protected List<Map<String, Object>> getData() {
     List<Map<String, Object>> myData = new ArrayList<Map<String, Object>>();
+    addItem(myData, "ChooseLocalVideo", new Intent(this, FileExplorerActivity.class));
     addItem(myData, "MediaPlayer", new Intent(this, MediaPlayerDemo.class));
     addItem(myData, "VideoView", new Intent(this, VideoViewDemo.class));
     addItem(myData, "MediaMetadataRetriever", new Intent(this, MediaMetadataRetrieverDemo.class));

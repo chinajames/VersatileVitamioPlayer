@@ -19,7 +19,7 @@
         android:theme="@android:style/Theme.NoTitleBar"
         android:windowSoftInputMode="stateAlwaysHidden"/>
     <activity
-        android:name=".VitamioListActivity"
+        android:name=".VitamioMainActivity"
         android:label="VitamioListActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -44,10 +44,6 @@
     <activity
         android:name=".MediaPlayerDemo_setSurface"
         android:label="Media/MediaPlayerDemo_setSurface">
-    </activity>
-    <activity
-        android:name=".MediaPlayerDemo_Audio"
-        android:label="Media/MediaPlayerDemo_Audio">
     </activity>
     <activity
         android:name=".MediaMetadataRetrieverDemo"

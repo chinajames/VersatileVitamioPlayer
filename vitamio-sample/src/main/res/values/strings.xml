@@ -2,6 +2,7 @@
 <resources>
 
   <string name="vitamio_demo_name">VitamioDemo</string>
+  <string name="choose_local_video">First ,Choose Local Video File</string>
   <string name="local_video">Play Video from Local File</string>
   <string name="local_video_setsurface">Play Video use setSurface</string>
   <string name="stream_video">Play Streaming Video</string>

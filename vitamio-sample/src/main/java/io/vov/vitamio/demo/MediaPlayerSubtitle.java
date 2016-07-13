@@ -1,9 +1,11 @@
 package io.vov.vitamio.demo;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -36,6 +38,8 @@ public class MediaPlayerSubtitle extends Activity implements Callback, OnPrepare
   }
 
   private void playVideo() {
+    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+    path = settings.getString(VitamioMainActivity.LOCAL_VIDEO, "");
     try {
       if (TextUtils.isEmpty(path)) {
         Toast.makeText(MediaPlayerSubtitle.this, "Please edit MediaPlayer Activity, "

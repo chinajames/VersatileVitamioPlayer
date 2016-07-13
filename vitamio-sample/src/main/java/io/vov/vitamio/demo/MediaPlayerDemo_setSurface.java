@@ -2,10 +2,13 @@ package io.vov.vitamio.demo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
@@ -45,9 +48,9 @@ import io.vov.vitamio.MediaPlayer.OnPreparedListener;
     doCleanUp();
     try {
 
-      path = "";
-      if (path == "") {
-        // Tell the user to provide a media file URL.
+      SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+      path = settings.getString(VitamioMainActivity.LOCAL_VIDEO, "");
+      if (TextUtils.isEmpty(path)) {
         Toast.makeText(MediaPlayerDemo_setSurface.this, "Please edit MediaPlayerDemo_setSurface Activity, "
             + "and set the path variable to your media file path."
             + " Your media file must be stored on sdcard.", Toast.LENGTH_LONG).show();
@@ -71,7 +74,7 @@ import io.vov.vitamio.MediaPlayer.OnPreparedListener;
   }
 
   public void onBufferingUpdate(MediaPlayer arg0, int percent) {
-    // Log.d(TAG, "onBufferingUpdate percent:" + percent);
+     Log.d(TAG, "onBufferingUpdate percent:" + percent);
 
   }
 
@@ -141,19 +144,19 @@ import io.vov.vitamio.MediaPlayer.OnPreparedListener;
     int yoff = (viewHeight - newHeight) / 2;
     Log.v(TAG, "video="
         + videoWidth
-        + "x"
+        + "\nx"
         + videoHeight
-        + " view="
+        + "\nview="
         + viewWidth
-        + "x"
+        + "\nx"
         + viewHeight
-        + " newView="
+        + "\n newView="
         + newWidth
-        + "x"
+        + "\nx"
         + newHeight
-        + " off="
+        + "\noff="
         + xoff
-        + ","
+        + "\n,"
         + yoff);
 
     Matrix txform = new Matrix();
