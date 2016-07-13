@@ -22,21 +22,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import tv.danmaku.ijk.media.example.activities.FileExplorerActivity;
 
 public class MediaPlayerDemo extends Activity {
-	private Button mlocalvideo;
-	private Button mlocalvideoSurface;
-	private Button mstreamvideo;
-	private Button mlocalaudio;
-	private Button mresourcesaudio;
-	private static final String MEDIA = "media";
-	private static final int LOCAL_AUDIO = 1;
-	private static final int STREAM_AUDIO = 2;
-	private static final int RESOURCES_AUDIO = 3;
-	private static final int LOCAL_VIDEO = 4;
-	private static final int STREAM_VIDEO = 5;
-	private static final int RESOURCES_VIDEO = 6;
-	private static final int LOCAL_VIDEO_SURFACE = 7;
+	public Button mlocalvideo;
+	public Button mlocalvideoSurface;
+	public Button mstreamvideo;
+	public Button mlocalaudio;
+	public Button mresourcesaudio;
+	public static final String MEDIA = "media";
+	public static final int LOCAL_AUDIO = 1;
+	public static final int STREAM_AUDIO = 2;
+	public static final int RESOURCES_AUDIO = 3;
+	public static final int LOCAL_VIDEO = 4;
+	public static final int STREAM_VIDEO = 5;
+	public static final int RESOURCES_VIDEO = 6;
+	public static final int LOCAL_VIDEO_SURFACE = 7;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -74,8 +75,7 @@ public class MediaPlayerDemo extends Activity {
 
 	private OnClickListener mLocalVideoListener = new OnClickListener() {
 		public void onClick(View v) {
-			Intent intent = new Intent(MediaPlayerDemo.this, MediaPlayerDemo_Video.class);
-			intent.putExtra(MEDIA, LOCAL_VIDEO);
+			Intent intent = new Intent(MediaPlayerDemo.this, FileExplorerActivity.class);
 			startActivity(intent);
 
 		}

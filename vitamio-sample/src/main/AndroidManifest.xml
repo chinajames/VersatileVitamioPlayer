@@ -19,7 +19,8 @@
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".VitamioListActivity" >
+        <activity android:name=".VitamioListActivity"
+            android:label="VitamioListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,28 +30,28 @@
         </activity>
         <activity
             android:name=".MediaPlayerDemo"
-            android:label="Media/MediaPlayer" >
+            android:label="Media/MediaPlayerDemo" >
         </activity>
         <activity
             android:name=".VideoViewDemo"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
-            android:label="Media/VideoView" >
+            android:label="Media/VideoViewDemo" >
         </activity>
         <activity
             android:name=".MediaPlayerDemo_Video"
-            android:label="Media/MediaPlayer" >
+            android:label="Media/MediaPlayerDemo_Video" >
         </activity>
         <activity
             android:name=".MediaPlayerDemo_setSurface"
-            android:label="Media/MediaPlayer" >
+            android:label="Media/MediaPlayerDemo_setSurface" >
         </activity>
         <activity
             android:name=".MediaPlayerDemo_Audio"
-            android:label="Media/MediaPlayer" >
+            android:label="Media/MediaPlayerDemo_Audio" >
         </activity>
         <activity
             android:name=".MediaMetadataRetrieverDemo"
-            android:label="Media/MediaMetadata" >
+            android:label="Media/MediaMetadataRetrieverDemo" >
         </activity>
         <activity
             android:name=".MediaPlayerSubtitle"
@@ -67,6 +68,55 @@
         <activity
             android:name=".VideoViewBuffer"
             android:label="@string/title_activity_video_buffer" >
+        </activity>
+
+        <activity
+            android:name="tv.danmaku.ijk.media.example.activities.FileExplorerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="FileExplorerActivity"
+            android:screenOrientation="user"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name="tv.danmaku.ijk.media.example.activities.SampleMediaActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="SampleMediaActivity"
+            android:screenOrientation="user"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name="tv.danmaku.ijk.media.example.activities.RecentMediaActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="RecentMediaActivity"
+            android:screenOrientation="user"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name="tv.danmaku.ijk.media.example.activities.SettingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="SettingsActivity"
+            android:screenOrientation="user"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="tv.danmaku.ijk.media.example.activities.VideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="VideoActivity"
+            android:screenOrientation="user">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
+                <data android:scheme="http" />
+                <data android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="video/*" />
+            </intent-filter>
         </activity>
 
     </application>
