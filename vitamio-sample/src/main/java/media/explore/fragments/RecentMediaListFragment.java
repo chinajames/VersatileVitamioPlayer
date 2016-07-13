@@ -1,4 +1,4 @@
-package tv.danmaku.ijk.media.example.fragments;
+package media.explore.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import io.vov.vitamio.demo.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
-import tv.danmaku.ijk.media.example.content.RecentMediaStorage;
+import media.explore.content.RecentMediaStorage;
 
 public class RecentMediaListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
   private ListView mFileListView;
@@ -44,7 +45,8 @@ public class RecentMediaListFragment extends Fragment implements LoaderManager.L
       @Override public void onItemClick(AdapterView<?> parent, View view, final int position, final long id) {
         String url = mAdapter.getUrl(position);
         String name = mAdapter.getName(position);
-        MediaPlayerDemo_Video.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_AUDIO);
+        Log.w("hanjh","url: "+url+"\nname: "+name);
+        MediaPlayerDemo_Video.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
       }
     });
 

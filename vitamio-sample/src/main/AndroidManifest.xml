@@ -12,7 +12,6 @@
       android:icon="@mipmap/ic_launcher"
       android:label="@string/vitamio_demo_name">
 
-    <!-- Don't forgot InitActivity -->
     <activity
         android:name="io.vov.vitamio.activity.InitActivity"
         android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
@@ -73,52 +72,25 @@
 
 
     <activity
-        android:name="tv.danmaku.ijk.media.example.activities.FileExplorerActivity"
+        android:name="media.explore.activities.FileExplorerActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:label="FileExplorerActivity"
         android:screenOrientation="user"
         android:theme="@style/AppTheme">
     </activity>
     <activity
-        android:name="tv.danmaku.ijk.media.example.activities.SampleMediaActivity"
+        android:name="media.explore.activities.SampleMediaActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:label="SampleMediaActivity"
         android:screenOrientation="user"
         android:theme="@style/AppTheme">
     </activity>
     <activity
-        android:name="tv.danmaku.ijk.media.example.activities.RecentMediaActivity"
+        android:name="media.explore.activities.RecentMediaActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:label="RecentMediaActivity"
         android:screenOrientation="user"
         android:theme="@style/AppTheme">
-    </activity>
-    <activity
-        android:name="tv.danmaku.ijk.media.example.activities.SettingsActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:label="SettingsActivity"
-        android:screenOrientation="user"
-        android:theme="@style/AppTheme"/>
-    <activity
-        android:name="tv.danmaku.ijk.media.example.activities.VideoActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:label="VideoActivity"
-        android:screenOrientation="user">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-
-        <data android:mimeType="video/*"/>
-        <data android:mimeType="audio/*"/>
-        <data android:scheme="http"/>
-        <data android:scheme="file"/>
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.SEND"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-
-        <data android:mimeType="video/*"/>
-      </intent-filter>
     </activity>
 
   </application>

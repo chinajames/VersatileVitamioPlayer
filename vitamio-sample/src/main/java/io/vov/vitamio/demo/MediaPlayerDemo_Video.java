@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2013 yixia.com
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package io.vov.vitamio.demo;
 
 import android.app.Activity;
@@ -36,23 +20,23 @@ import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.MediaPlayer.OnVideoSizeChangedListener;
-import tv.danmaku.ijk.media.example.content.RecentMediaStorage;
+import media.explore.content.RecentMediaStorage;
 
 public class MediaPlayerDemo_Video extends Activity
     implements OnBufferingUpdateListener, OnCompletionListener, OnPreparedListener, OnVideoSizeChangedListener, SurfaceHolder.Callback {
 
-  private static final String TAG = "MediaPlayerDemo";
+  private static final String TAG = "MediaPlayerDemo_Video";
   private int mVideoWidth;
   private int mVideoHeight;
   private MediaPlayer mMediaPlayer;
   private SurfaceView mPreview;
   private SurfaceHolder holder;
   private static final String MEDIA = "media";
-  public static final int LOCAL_AUDIO = 1;
-  public static final int STREAM_AUDIO = 2;
-  public static final int RESOURCES_AUDIO = 3;
-  public static final int LOCAL_VIDEO = 4;
-  public static final int STREAM_VIDEO = 5;
+  public static final int LOCAL_AUDIO = MediaPlayerDemo.LOCAL_AUDIO;
+  public static final int STREAM_AUDIO = MediaPlayerDemo.STREAM_AUDIO;
+  public static final int RESOURCES_AUDIO = MediaPlayerDemo.RESOURCES_AUDIO;
+  public static final int LOCAL_VIDEO = MediaPlayerDemo.LOCAL_VIDEO;
+  public static final int STREAM_VIDEO = MediaPlayerDemo.STREAM_VIDEO;
   private boolean mIsVideoSizeKnown = false;
   private boolean mIsVideoReadyToBePlayed = false;
 
@@ -90,20 +74,13 @@ public class MediaPlayerDemo_Video extends Activity
 
       switch (Media) {
         case LOCAL_VIDEO:
-        /*
-				 * TODO: Set the path variable to a local media file path.
-				 */
           mVideoPath = getIntent().getStringExtra("videoPath");
           if (TextUtils.isEmpty(mVideoPath)) {
-            // Tell the user to provide a media file URL.
-            Toast.makeText(MediaPlayerDemo_Video.this, "Please edit MediaPlayerDemo_Video Activity, "
-                + "and set the path variable to your media file path."
-                + " Your media file must be stored on sdcard.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MediaPlayerDemo_Video.this,
+                "Please edit MediaPlayerDemo_Video Activity, and set the path variable to your media file path. Your media file must be stored on sdcard.",
+                Toast.LENGTH_LONG).show();
             return;
           }
-
-          // handle arguments
-          mVideoPath = getIntent().getStringExtra("videoPath");
 
           Intent intent = getIntent();
           String intentAction = intent.getAction();
@@ -138,58 +115,34 @@ public class MediaPlayerDemo_Video extends Activity
             new RecentMediaStorage(this).saveUrlAsync(mVideoPath);
           }
 
-          // Create a new media player and set the listeners
-          mMediaPlayer = new MediaPlayer(this);
-          Log.w("hanjh", "mVideoPath: " + mVideoPath);//"/storage/emulated/0/JQuery实战视频教程[王兴魁]/02.[jQuery]第1章 jQuery入门[下].avi"
-          mMediaPlayer.setDataSource(mVideoPath);
-          mMediaPlayer.setDisplay(holder);
-          mMediaPlayer.prepareAsync();
-          mMediaPlayer.setOnBufferingUpdateListener(this);
-          mMediaPlayer.setOnCompletionListener(this);
-          mMediaPlayer.setOnPreparedListener(this);
-          mMediaPlayer.setOnVideoSizeChangedListener(this);
-          setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
           break;
         case STREAM_VIDEO:
-				/*
-				 * TODO: Set path variable to progressive streamable mp4 or
-				 * 3gpp format URL. Http protocol should be used.
-				 * Mediaplayer can only play "progressive streamable
-				 * contents" which basically means: 1. the movie atom has to
-				 * precede all the media data atoms. 2. The clip has to be
-				 * reasonably interleaved.
-				 * 
-				 */
-          mVideoPath = "http://video19.ifeng.com/video06/2012/04/11/629da9ec-60d4-4814-a940-997e6487804a.mp4";
-          if (mVideoPath == "") {
-            // Tell the user to provide a media file URL.
+          mVideoPath = getIntent().getStringExtra("videoPath");
+          if (TextUtils.isEmpty(mVideoPath)) {
             Toast.makeText(MediaPlayerDemo_Video.this,
-                "Please edit MediaPlayerDemo_Video Activity," + " and set the path variable to your media file URL.", Toast.LENGTH_LONG)
-                .show();
+                "Please edit MediaPlayerDemo_Video Activity, and set the path variable to your media file URL.", Toast.LENGTH_LONG).show();
             return;
           }
-
-          // Create a new media player and set the listeners
-          mMediaPlayer = new MediaPlayer(this);
-          mMediaPlayer.setDataSource(mVideoPath);
-          mMediaPlayer.setDisplay(holder);
-          mMediaPlayer.prepareAsync();
-          mMediaPlayer.setOnBufferingUpdateListener(this);
-          mMediaPlayer.setOnCompletionListener(this);
-          mMediaPlayer.setOnPreparedListener(this);
-          mMediaPlayer.setOnVideoSizeChangedListener(this);
-          setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
           break;
       }
+
+      mMediaPlayer = new MediaPlayer(this);
+      Log.w("hanjh", "mVideoPath: " + mVideoPath);//"/storage/emulated/0/JQuery实战视频教程[王兴魁]/02.[jQuery]第1章 jQuery入门[下].avi"
+      mMediaPlayer.setDataSource(mVideoPath);
+      mMediaPlayer.setDisplay(holder);
+      mMediaPlayer.prepareAsync();
+      mMediaPlayer.setOnBufferingUpdateListener(this);
+      mMediaPlayer.setOnCompletionListener(this);
+      mMediaPlayer.setOnPreparedListener(this);
+      mMediaPlayer.setOnVideoSizeChangedListener(this);
+      setVolumeControlStream(AudioManager.STREAM_MUSIC);
     } catch (Exception e) {
       Log.e(TAG, "error: " + e.getMessage(), e);
     }
   }
 
   public void onBufferingUpdate(MediaPlayer arg0, int percent) {
-    // Log.d(TAG, "onBufferingUpdate percent:" + percent);
+     Log.d(TAG, "onBufferingUpdate percent:" + percent);
 
   }
 

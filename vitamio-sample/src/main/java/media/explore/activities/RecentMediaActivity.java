@@ -1,4 +1,4 @@
-package tv.danmaku.ijk.media.example.activities;
+package media.explore.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +8,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import io.vov.vitamio.demo.R;
-import tv.danmaku.ijk.media.example.application.AppActivity;
-import tv.danmaku.ijk.media.example.fragments.SampleMediaListFragment;
+import media.explore.application.AppActivity;
+import media.explore.fragments.RecentMediaListFragment;
 
-public class SampleMediaActivity extends AppActivity {
+public class RecentMediaActivity extends AppActivity {
   public static Intent newIntent(Context context) {
-    Intent intent = new Intent(context, SampleMediaActivity.class);
+    Intent intent = new Intent(context, RecentMediaActivity.class);
     return intent;
   }
 
@@ -24,7 +24,7 @@ public class SampleMediaActivity extends AppActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    Fragment newFragment = SampleMediaListFragment.newInstance();
+    Fragment newFragment = RecentMediaListFragment.newInstance();
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
     transaction.replace(R.id.body, newFragment);

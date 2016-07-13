@@ -1,24 +1,9 @@
-/*
- * Copyright (C) 2013 yixia.com
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package io.vov.vitamio.demo;
 
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,7 +21,7 @@ public class VideoViewBuffer extends Activity implements OnInfoListener, OnBuffe
    * TODO: Set the path variable to a streaming video URL or a local media file
    * path.
    */
-  private String path = "http://pl.youku.com/playlist/m3u8?ts=1394676342&keyframe=0&vid=XNjU4MTc0Mjky&type=mp4";
+  private String path = "http://video19.ifeng.com/video06/2012/04/11/629da9ec-60d4-4814-a940-997e6487804a.mp4";
   private Uri uri;
   private VideoView mVideoView;
   private ProgressBar pb;
@@ -51,16 +36,11 @@ public class VideoViewBuffer extends Activity implements OnInfoListener, OnBuffe
 
     downloadRateView = (TextView) findViewById(R.id.download_rate);
     loadRateView = (TextView) findViewById(R.id.load_rate);
-    if (path == "") {
-      // Tell the user to provide a media file URL/path.
+    if (TextUtils.isEmpty(path)) {
       Toast.makeText(VideoViewBuffer.this, "Please edit VideoBuffer Activity, and set path" + " variable to your media file URL/path",
           Toast.LENGTH_LONG).show();
       return;
     } else {
-      /*
-       * Alternatively,for streaming media you can use
-       * mVideoView.setVideoURI(Uri.parse(URLstring));
-       */
       uri = Uri.parse(path);
       mVideoView.setVideoURI(uri);
       mVideoView.setMediaController(new MediaController(this));

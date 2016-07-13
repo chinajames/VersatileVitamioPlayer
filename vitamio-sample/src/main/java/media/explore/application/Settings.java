@@ -1,4 +1,4 @@
-package tv.danmaku.ijk.media.example.application;
+package media.explore.application;
 
 import android.content.Context;
 import android.content.SharedPreferences;

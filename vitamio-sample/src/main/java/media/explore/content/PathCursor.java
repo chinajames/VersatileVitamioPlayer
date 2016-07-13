@@ -1,4 +1,4 @@
-package tv.danmaku.ijk.media.example.content;
+package media.explore.content;
 
 import android.database.AbstractCursor;
 import android.provider.BaseColumns;

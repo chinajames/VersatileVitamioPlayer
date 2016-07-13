@@ -1,4 +1,4 @@
-package tv.danmaku.ijk.media.example.eventbus;
+package media.explore.eventbus;
 
 import com.squareup.otto.Bus;
 import java.io.File;

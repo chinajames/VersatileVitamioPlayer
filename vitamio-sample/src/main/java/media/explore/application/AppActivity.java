@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tv.danmaku.ijk.media.example.application;
+package media.explore.application;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -27,9 +27,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import io.vov.vitamio.demo.R;
-import tv.danmaku.ijk.media.example.activities.RecentMediaActivity;
-import tv.danmaku.ijk.media.example.activities.SampleMediaActivity;
-import tv.danmaku.ijk.media.example.activities.SettingsActivity;
+import media.explore.activities.RecentMediaActivity;
+import media.explore.activities.SampleMediaActivity;
 
 @SuppressLint("Registered") public class AppActivity extends AppCompatActivity {
   private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
@@ -43,7 +42,6 @@ import tv.danmaku.ijk.media.example.activities.SettingsActivity;
 
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
       if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-        // TODO: show explanation
       } else {
         ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
             MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
@@ -70,10 +68,7 @@ import tv.danmaku.ijk.media.example.activities.SettingsActivity;
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
-    if (id == R.id.action_settings) {
-      SettingsActivity.intentTo(this);
-      return true;
-    } else if (id == R.id.action_recent) {
+    if (id == R.id.action_recent) {
       RecentMediaActivity.intentTo(this);
     } else if (id == R.id.action_sample) {
       SampleMediaActivity.intentTo(this);

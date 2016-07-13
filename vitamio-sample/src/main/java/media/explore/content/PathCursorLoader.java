@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tv.danmaku.ijk.media.example.content;
+package media.explore.content;
 
 import android.content.Context;
 import android.database.Cursor;

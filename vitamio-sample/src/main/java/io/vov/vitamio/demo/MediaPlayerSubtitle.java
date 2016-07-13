@@ -1,25 +1,10 @@
-/*
- * Copyright (C) 2013 yixia.com
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package io.vov.vitamio.demo;
 
 import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -52,8 +37,7 @@ public class MediaPlayerSubtitle extends Activity implements Callback, OnPrepare
 
   private void playVideo() {
     try {
-      if (path == "") {
-        // Tell the user to provide an audio file URL.
+      if (TextUtils.isEmpty(path)) {
         Toast.makeText(MediaPlayerSubtitle.this, "Please edit MediaPlayer Activity, "
             + "and set the path variable to your media file path."
             + " Your media file must be stored on sdcard.", Toast.LENGTH_LONG).show();
@@ -67,34 +51,27 @@ public class MediaPlayerSubtitle extends Activity implements Callback, OnPrepare
 
       mediaPlayer.setOnTimedTextListener(this);
 
-      // TODO Auto-generated catch block
     } catch (IllegalArgumentException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IllegalStateException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (SecurityException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
 
   @Override public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-    // TODO Auto-generated method stub
 
   }
 
   @Override public void surfaceCreated(SurfaceHolder holder) {
-    // TODO Auto-generated method stub
     playVideo();
   }
 
   @Override public void surfaceDestroyed(SurfaceHolder holder) {
-    // TODO Auto-generated method stub
+
 
   }
 
@@ -105,20 +82,20 @@ public class MediaPlayerSubtitle extends Activity implements Callback, OnPrepare
 
   @Override public void onPrepared(MediaPlayer arg0) {
 
-    // TODO Auto-generated method stub
+
     startVPback();
     mediaPlayer.addTimedTextSource(Environment.getExternalStorageDirectory() + "/12.srt");
     mediaPlayer.setTimedTextShown(true);
   }
 
   @Override protected void onPause() {
-    // TODO Auto-generated method stub
+
     super.onPause();
     relaMediaPlay();
   }
 
   private void relaMediaPlay() {
-    // TODO Auto-generated method stub
+
     if (mediaPlayer != null) {
       mediaPlayer.release();
       mediaPlayer = null;
@@ -126,18 +103,18 @@ public class MediaPlayerSubtitle extends Activity implements Callback, OnPrepare
   }
 
   @Override protected void onDestroy() {
-    // TODO Auto-generated method stub
+
     super.onDestroy();
     relaMediaPlay();
   }
 
   @Override public void onTimedText(String text) {
-    // TODO Auto-generated method stub
+
     tv.setText(text);
   }
 
   @Override public void onTimedTextUpdate(byte[] pixels, int width, int height) {
-    // TODO Auto-generated method stub
+
 
   }
 }

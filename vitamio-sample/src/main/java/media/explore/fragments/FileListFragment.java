@@ -1,4 +1,4 @@
-package tv.danmaku.ijk.media.example.fragments;
+package media.explore.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,9 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import io.vov.vitamio.demo.R;
 import java.io.File;
-import tv.danmaku.ijk.media.example.content.PathCursor;
-import tv.danmaku.ijk.media.example.content.PathCursorLoader;
-import tv.danmaku.ijk.media.example.eventbus.FileExplorerEvents;
+import media.explore.content.PathCursor;
+import media.explore.content.PathCursorLoader;
+import media.explore.eventbus.FileExplorerEvents;
 
 public class FileListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
   public static final String ARG_PATH = "path";

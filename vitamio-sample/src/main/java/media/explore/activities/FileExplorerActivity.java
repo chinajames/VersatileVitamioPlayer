@@ -1,4 +1,4 @@
-package tv.danmaku.ijk.media.example.activities;
+package media.explore.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,10 +9,10 @@ import io.vov.vitamio.demo.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
 import java.io.File;
 import java.io.IOException;
-import tv.danmaku.ijk.media.example.application.AppActivity;
-import tv.danmaku.ijk.media.example.application.Settings;
-import tv.danmaku.ijk.media.example.eventbus.FileExplorerEvents;
-import tv.danmaku.ijk.media.example.fragments.FileListFragment;
+import media.explore.application.AppActivity;
+import media.explore.application.Settings;
+import media.explore.eventbus.FileExplorerEvents;
+import media.explore.fragments.FileListFragment;
 
 public class FileExplorerActivity extends AppActivity {
   private Settings mSettings;
