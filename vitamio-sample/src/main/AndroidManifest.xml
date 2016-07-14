@@ -20,7 +20,8 @@
         android:windowSoftInputMode="stateAlwaysHidden"/>
     <activity
         android:name=".VitamioMainActivity"
-        android:label="VitamioListActivity">
+        android:label="VitamioMainActivity"
+        android:theme="@style/AppCompatTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -29,42 +30,55 @@
       </intent-filter>
     </activity>
     <activity
+        android:name=".VideoSubtitleList"
+        android:label="@string/title_activity_video_subtitle_list"
+        android:theme="@style/AppCompatTheme">
+    </activity>
+
+
+
+    <activity
         android:name=".MediaPlayerDemo"
-        android:label="Media/MediaPlayerDemo">
+        android:label="MediaPlayerDemo"
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name=".VideoViewDemo"
         android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
-        android:label="Media/VideoViewDemo">
+        android:label="VideoViewDemo"
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name=".MediaPlayerDemo_Video"
-        android:label="Media/MediaPlayerDemo_Video">
+        android:label="MediaPlayerDemo_Video"
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name=".MediaPlayerDemo_setSurface"
-        android:label="Media/MediaPlayerDemo_setSurface">
+        android:label="MediaPlayerDemo_setSurface"
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name=".MediaMetadataRetrieverDemo"
-        android:label="Media/MediaMetadataRetrieverDemo">
+        android:label="MediaMetadataRetrieverDemo"
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name=".MediaPlayerSubtitle"
-        android:label="@string/title_activity_media_player_subtitle">
+        android:label="@string/title_activity_media_player_subtitle"
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name=".VideoViewSubtitle"
-        android:label="@string/title_activity_video_view_subtitle">
-    </activity>
-    <activity
-        android:name=".VideoSubtitleList"
-        android:label="@string/title_activity_video_subtitle_list">
+        android:label="@string/title_activity_video_view_subtitle"
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name=".VideoViewBuffer"
-        android:label="@string/title_activity_video_buffer">
+        android:label="@string/title_activity_video_buffer"
+        android:theme="@style/AppCompatTheme">
     </activity>
+
 
 
     <activity
@@ -72,21 +86,21 @@
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:label="FileExplorerActivity"
         android:screenOrientation="user"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name="media.explore.activities.SampleMediaActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:label="SampleMediaActivity"
         android:screenOrientation="user"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppCompatTheme">
     </activity>
     <activity
         android:name="media.explore.activities.RecentMediaActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:label="RecentMediaActivity"
         android:screenOrientation="user"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppCompatTheme">
     </activity>
 
   </application>

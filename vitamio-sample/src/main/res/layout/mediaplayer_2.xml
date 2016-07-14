@@ -5,6 +5,8 @@
     android:orientation="vertical"
     >
 
+  <include layout="@layout/widget_toolbar"/>
+
   <io.vov.vitamio.widget.CenterLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"

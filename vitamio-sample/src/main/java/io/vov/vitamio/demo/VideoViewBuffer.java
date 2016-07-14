@@ -1,6 +1,5 @@
 package io.vov.vitamio.demo;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
@@ -15,7 +15,7 @@ import io.vov.vitamio.MediaPlayer.OnInfoListener;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
-public class VideoViewBuffer extends Activity implements OnInfoListener, OnBufferingUpdateListener {
+public class VideoViewBuffer extends AppActivity implements OnInfoListener, OnBufferingUpdateListener {
 
   /**
    * TODO: Set the path variable to a streaming video URL or a local media file

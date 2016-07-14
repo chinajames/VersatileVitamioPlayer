@@ -5,6 +5,8 @@
     android:orientation="vertical"
     >
 
+  <include layout="@layout/widget_toolbar"/>
+
   <Button
       android:id="@+id/localvideo"
       android:layout_width="match_parent"

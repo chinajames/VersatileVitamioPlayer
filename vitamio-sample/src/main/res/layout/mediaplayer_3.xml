@@ -5,6 +5,8 @@
     android:orientation="vertical"
     >
 
+  <include layout="@layout/widget_toolbar"/>
+
   <TextureView
       android:id="@+id/surface"
       android:layout_width="wrap_content"

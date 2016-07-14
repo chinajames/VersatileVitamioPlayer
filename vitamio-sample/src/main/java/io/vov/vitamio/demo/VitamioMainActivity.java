@@ -3,6 +3,10 @@ package io.vov.vitamio.demo;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatCallback;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.view.ActionMode;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -25,6 +29,30 @@ public class VitamioMainActivity extends ListActivity {
     if (!LibsChecker.checkVitamioLibs(this)) return;
     setListAdapter(new SimpleAdapter(this, getData(), android.R.layout.simple_list_item_1, new String[] { "title" },
         new int[] { android.R.id.text1 }));
+
+    AppCompatCallback callback = new AppCompatCallback() {
+      @Override
+      public void onSupportActionModeStarted(ActionMode actionMode) {
+      }
+
+      @Override
+      public void onSupportActionModeFinished(ActionMode actionMode) {
+      }
+
+      @Override
+      public ActionMode onWindowStartingSupportActionMode(ActionMode.Callback callback) {
+        return null;
+      }
+    };
+
+    AppCompatDelegate delegate = AppCompatDelegate.create(this, callback);
+
+    delegate.onCreate(savedInstanceState);
+    delegate.setContentView(R.layout.activity_list);
+
+    Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+    delegate.setSupportActionBar(toolbar);
+    delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
   }
 
   protected List<Map<String, Object>> getData() {

@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     >
+
+  <include layout="@layout/widget_toolbar"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
 
   <io.vov.vitamio.widget.CenterLayout
       android:layout_width="match_parent"
@@ -39,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text=""
+        tools:text="11%"
         />
 
     <TextView
@@ -47,8 +56,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text=""
+        tools:text="100k/s"
         />
   </LinearLayout>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

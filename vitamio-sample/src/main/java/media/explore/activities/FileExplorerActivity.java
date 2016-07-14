@@ -6,13 +6,15 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import com.app.AppActivity;
 import com.squareup.otto.Subscribe;
 import io.vov.vitamio.demo.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
 import io.vov.vitamio.demo.VitamioMainActivity;
 import java.io.File;
 import java.io.IOException;
-import media.explore.application.AppActivity;
 import media.explore.application.Settings;
 import media.explore.eventbus.FileExplorerEvents;
 import media.explore.fragments.FileListFragment;
@@ -77,5 +79,18 @@ public class FileExplorerActivity extends AppActivity {
       editor.putString(VitamioMainActivity.LOCAL_VIDEO,f.getPath()).apply();
       MediaPlayerDemo_Video.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
     }
+  }
+
+  @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    boolean show = super.onPrepareOptionsMenu(menu);
+    if (!show) return show;
+
+    MenuItem item = menu.findItem(R.id.action_recent);
+    if (item != null) item.setVisible(true);
+
+    MenuItem item2 = menu.findItem(R.id.action_sample);
+    if (item2 != null) item2.setVisible(true);
+
+    return true;
   }
 }

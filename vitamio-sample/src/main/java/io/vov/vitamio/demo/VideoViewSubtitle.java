@@ -1,16 +1,16 @@
 package io.vov.vitamio.demo;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnTimedTextListener;
 import io.vov.vitamio.widget.VideoView;
 
-public class VideoViewSubtitle extends Activity {
+public class VideoViewSubtitle extends AppActivity {
 
   private String path = "http://video19.ifeng.com/video06/2012/04/11/629da9ec-60d4-4814-a940-997e6487804a.mp4";
   private String subtitle_path = "";

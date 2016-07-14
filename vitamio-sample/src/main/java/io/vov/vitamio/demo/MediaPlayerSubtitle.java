@@ -1,6 +1,5 @@
 package io.vov.vitamio.demo;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -12,13 +11,14 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.MediaPlayer.OnTimedTextListener;
 import java.io.IOException;
 
-public class MediaPlayerSubtitle extends Activity implements Callback, OnPreparedListener, OnTimedTextListener {
+public class MediaPlayerSubtitle extends AppActivity implements Callback, OnPreparedListener, OnTimedTextListener {
 
   SurfaceView splayer;
   SurfaceHolder sholder;

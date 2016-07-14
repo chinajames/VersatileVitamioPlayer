@@ -1,15 +1,15 @@
 
 package io.vov.vitamio.demo;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import com.app.AppActivity;
 import media.explore.activities.FileExplorerActivity;
 
-public class MediaPlayerDemo extends Activity {
+public class MediaPlayerDemo extends AppActivity {
   public Button mlocalvideo;
   public Button mlocalvideoSurface;
   public Button mstreamvideo;

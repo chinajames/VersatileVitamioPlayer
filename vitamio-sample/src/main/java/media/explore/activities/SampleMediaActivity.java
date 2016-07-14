@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.app.AppActivity;
 import io.vov.vitamio.demo.R;
-import media.explore.application.AppActivity;
 import media.explore.fragments.SampleMediaListFragment;
 
 public class SampleMediaActivity extends AppActivity {
@@ -31,16 +29,4 @@ public class SampleMediaActivity extends AppActivity {
     transaction.commit();
   }
 
-  @Override public boolean onPrepareOptionsMenu(Menu menu) {
-    boolean show = super.onPrepareOptionsMenu(menu);
-    if (!show) return show;
-
-    MenuItem item = menu.findItem(R.id.action_recent);
-    if (item != null) item.setVisible(false);
-
-    MenuItem item2 = menu.findItem(R.id.action_sample);
-    if (item2 != null) item2.setVisible(false);
-
-    return true;
-  }
 }

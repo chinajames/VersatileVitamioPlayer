@@ -1,7 +1,6 @@
 package io.vov.vitamio.demo;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
@@ -13,13 +12,14 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.widget.Toast;
+import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 
-@SuppressLint("NewApi") public class MediaPlayerDemo_setSurface extends Activity
+@SuppressLint("NewApi") public class MediaPlayerDemo_setSurface extends AppActivity
     implements OnBufferingUpdateListener, OnCompletionListener, OnPreparedListener, TextureView.SurfaceTextureListener {
 
   private static final String TAG = "MediaPlayerDemo";

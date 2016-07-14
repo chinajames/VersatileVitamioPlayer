@@ -1,16 +1,16 @@
 package io.vov.vitamio.demo;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.app.AppActivity;
 import io.vov.vitamio.MediaMetadataRetriever;
 import java.io.IOException;
 
-public class MediaMetadataRetrieverDemo extends Activity {
+public class MediaMetadataRetrieverDemo extends AppActivity {
 
   private String path = "";
 

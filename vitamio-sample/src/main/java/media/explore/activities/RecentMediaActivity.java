@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.app.AppActivity;
 import io.vov.vitamio.demo.R;
-import media.explore.application.AppActivity;
 import media.explore.fragments.RecentMediaListFragment;
 
 public class RecentMediaActivity extends AppActivity {
@@ -35,8 +35,8 @@ public class RecentMediaActivity extends AppActivity {
     boolean show = super.onPrepareOptionsMenu(menu);
     if (!show) return show;
 
-    MenuItem item = menu.findItem(R.id.action_recent);
-    if (item != null) item.setVisible(false);
+    MenuItem item = menu.findItem(R.id.action_sample);
+    if (item != null) item.setVisible(true);
 
     return true;
   }
