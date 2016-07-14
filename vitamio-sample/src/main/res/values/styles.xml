@@ -1,8 +1,5 @@
 <resources>
 
-  <style name="ListActivityLight" parent="android:Theme.Holo.Light">
-  </style>
-
   <style name="AppCompatTheme" parent="Theme.AppCompat.Light.NoActionBar">
   </style>
 

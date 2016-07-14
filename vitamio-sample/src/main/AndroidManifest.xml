@@ -20,7 +20,7 @@
         android:windowSoftInputMode="stateAlwaysHidden"/>
     <activity
         android:name=".VitamioMainActivity"
-        android:label="VitamioMainActivity"
+        android:label="@string/vitamio_demo_name"
         android:theme="@style/AppCompatTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
