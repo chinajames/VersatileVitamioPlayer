@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import io.vov.vitamio.demo.R;
 import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
+import io.vov.vitamio.demo.videosubtitle.MediaPlayerSubtitle;
+import io.vov.vitamio.demo.videosubtitle.VideoViewSubtitle;
 import io.vov.vitamio.demo.videoview.VideoViewDemo;
 import media.explore.activities.FileExplorerActivity;
 
@@ -55,6 +57,10 @@ public class SampleMediaListFragment extends Fragment {
         String url = item.mUrl;
         if (VideoActivity.equals(FileExplorerActivity.MediaPlayer)) {
           MediaPlayerDemo_Video.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        } else if (VideoActivity.equals(FileExplorerActivity.MediaPlayerSubtitles)) {
+          MediaPlayerSubtitle.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        } else if (VideoActivity.equals(FileExplorerActivity.VideoViewSubtitles)) {
+          VideoViewSubtitle.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
         } else {
           VideoViewDemo.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
         }

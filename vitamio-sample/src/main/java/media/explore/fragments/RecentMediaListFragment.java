@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import io.vov.vitamio.demo.R;
 import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
+import io.vov.vitamio.demo.videosubtitle.MediaPlayerSubtitle;
+import io.vov.vitamio.demo.videosubtitle.VideoViewSubtitle;
 import io.vov.vitamio.demo.videoview.VideoViewDemo;
 import media.explore.activities.FileExplorerActivity;
 import media.explore.content.RecentMediaStorage;
@@ -59,6 +61,10 @@ public class RecentMediaListFragment extends Fragment implements LoaderManager.L
         Log.w("hanjh", "url: " + url + "\nname: " + name);
         if (VideoActivity.equals(FileExplorerActivity.MediaPlayer)) {
           MediaPlayerDemo_Video.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        } else if (VideoActivity.equals(FileExplorerActivity.MediaPlayerSubtitles)) {
+          MediaPlayerSubtitle.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        } else if (VideoActivity.equals(FileExplorerActivity.VideoViewSubtitles)) {
+          VideoViewSubtitle.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
         } else {
           VideoViewDemo.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
         }

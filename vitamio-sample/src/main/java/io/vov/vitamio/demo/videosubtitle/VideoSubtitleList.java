@@ -63,7 +63,11 @@ public class VideoSubtitleList extends ListActivity {
 
   protected List<Map<String, Object>> getData() {
     List<Map<String, Object>> myData = new ArrayList<Map<String, Object>>();
-    addItem(myData, "MediaPlayerSubtitleLocal", new Intent(this, MediaPlayerSubtitle.class));
+
+    Intent intent0 = new Intent(this, FileExplorerActivity.class);
+    intent0.putExtra(FileExplorerActivity.ActionFileExplore, FileExplorerActivity.MediaPlayerSubtitles);
+    startActivity(intent0);
+    addItem(myData, "MediaPlayerSubtitleLocal", intent0);
 
     Intent intent1 = new Intent(this, FileExplorerActivity.class);
     intent1.putExtra(FileExplorerActivity.ActionFileExplore, FileExplorerActivity.VideoViewSubtitles);
