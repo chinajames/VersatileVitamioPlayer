@@ -1,4 +1,4 @@
-package io.vov.vitamio.demo;
+package io.vov.vitamio.demo.mediaplayers;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Toast;
 import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
@@ -20,23 +21,24 @@ import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.MediaPlayer.OnVideoSizeChangedListener;
+import io.vov.vitamio.demo.R;
 import media.explore.content.RecentMediaStorage;
 
 public class MediaPlayerDemo_Video extends AppActivity
     implements OnBufferingUpdateListener, OnCompletionListener, OnPreparedListener, OnVideoSizeChangedListener, SurfaceHolder.Callback {
 
-  private static final String TAG = "MediaPlayerDemo_Video";
   private int mVideoWidth;
   private int mVideoHeight;
   private MediaPlayer mMediaPlayer;
   private SurfaceView mPreview;
   private SurfaceHolder holder;
   private static final String MEDIA = "media";
-  public static final int LOCAL_AUDIO = MediaPlayerDemo.LOCAL_AUDIO;
-  public static final int STREAM_AUDIO = MediaPlayerDemo.STREAM_AUDIO;
-  public static final int RESOURCES_AUDIO = MediaPlayerDemo.RESOURCES_AUDIO;
-  public static final int LOCAL_VIDEO = MediaPlayerDemo.LOCAL_VIDEO;
-  public static final int STREAM_VIDEO = MediaPlayerDemo.STREAM_VIDEO;
+  public static final int LOCAL_AUDIO = MediaPlayerDemoList.LOCAL_AUDIO;
+  public static final int STREAM_AUDIO = MediaPlayerDemoList.STREAM_AUDIO;
+  public static final int RESOURCES_AUDIO = MediaPlayerDemoList.RESOURCES_AUDIO;
+  public static final int LOCAL_VIDEO = MediaPlayerDemoList.LOCAL_VIDEO;
+  public static final int STREAM_VIDEO = MediaPlayerDemoList.STREAM_VIDEO;
+  public static final int STREAM_RTMP = MediaPlayerDemoList.STREAM_RTMP;
   private boolean mIsVideoSizeKnown = false;
   private boolean mIsVideoReadyToBePlayed = false;
 
@@ -49,7 +51,7 @@ public class MediaPlayerDemo_Video extends AppActivity
   @Override public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
     if (!LibsChecker.checkVitamioLibs(this)) return;
-    setContentView(R.layout.mediaplayer_2);
+    setContentView(R.layout.mediaplayer_video);
     mPreview = (SurfaceView) findViewById(R.id.surface);
     holder = mPreview.getHolder();
     holder.addCallback(this);
@@ -116,6 +118,7 @@ public class MediaPlayerDemo_Video extends AppActivity
           }
 
           break;
+        case STREAM_RTMP:
         case STREAM_VIDEO:
           mVideoPath = getIntent().getStringExtra("videoPath");
           if (TextUtils.isEmpty(mVideoPath)) {
@@ -142,8 +145,19 @@ public class MediaPlayerDemo_Video extends AppActivity
   }
 
   public void onBufferingUpdate(MediaPlayer arg0, int percent) {
-     Log.d(TAG, "onBufferingUpdate percent:" + percent);
-
+    Log.d(TAG, "onBufferingUpdate percent:" + percent);
+    if (null != pb && null != downloadRateView && null != loadRateView) {
+      if (percent < 100) {
+        loadRateView.setText(percent + "%");
+        pb.setVisibility(View.VISIBLE);
+        downloadRateView.setVisibility(View.VISIBLE);
+        loadRateView.setVisibility(View.VISIBLE);
+      } else {
+        pb.setVisibility(View.GONE);
+        downloadRateView.setVisibility(View.GONE);
+        loadRateView.setVisibility(View.GONE);
+      }
+    }
   }
 
   public void onCompletion(MediaPlayer arg0) {
@@ -161,6 +175,14 @@ public class MediaPlayerDemo_Video extends AppActivity
     mVideoHeight = height;
     if (mIsVideoReadyToBePlayed && mIsVideoSizeKnown) {
       startVideoPlayback();
+    }
+    if (null != pb && null != downloadRateView && null != loadRateView) {
+      pb.setVisibility(View.GONE);
+      downloadRateView.setVisibility(View.GONE);
+      loadRateView.setVisibility(View.GONE);
+      pb = null;
+      downloadRateView = null;
+      loadRateView = null;
     }
   }
 

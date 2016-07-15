@@ -10,12 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import io.vov.vitamio.demo.R;
 import media.explore.activities.RecentMediaActivity;
 import media.explore.activities.SampleMediaActivity;
 
 @SuppressLint("Registered") public abstract class AppActivity extends BaseActivity {
   private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+  public ProgressBar pb;
+  public TextView downloadRateView, loadRateView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -24,6 +28,9 @@ import media.explore.activities.SampleMediaActivity;
 
   @Override protected void onStart() {
     super.onStart();
+    pb = (ProgressBar) findViewById(R.id.probar);
+    downloadRateView = (TextView) findViewById(R.id.download_rate);
+    loadRateView = (TextView) findViewById(R.id.load_rate);
     setToolBar();
   }
 

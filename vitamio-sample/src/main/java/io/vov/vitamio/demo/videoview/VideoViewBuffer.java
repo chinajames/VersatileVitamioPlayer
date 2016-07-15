@@ -1,17 +1,16 @@
-package io.vov.vitamio.demo;
+package io.vov.vitamio.demo.videoview;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnInfoListener;
+import io.vov.vitamio.demo.R;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
@@ -24,18 +23,13 @@ public class VideoViewBuffer extends AppActivity implements OnInfoListener, OnBu
   private String path = "http://video19.ifeng.com/video06/2012/04/11/629da9ec-60d4-4814-a940-997e6487804a.mp4";
   private Uri uri;
   private VideoView mVideoView;
-  private ProgressBar pb;
-  private TextView downloadRateView, loadRateView;
 
   @Override public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
     if (!LibsChecker.checkVitamioLibs(this)) return;
     setContentView(R.layout.videobuffer);
     mVideoView = (VideoView) findViewById(R.id.buffer);
-    pb = (ProgressBar) findViewById(R.id.probar);
 
-    downloadRateView = (TextView) findViewById(R.id.download_rate);
-    loadRateView = (TextView) findViewById(R.id.load_rate);
     if (TextUtils.isEmpty(path)) {
       Toast.makeText(VideoViewBuffer.this, "Please edit VideoBuffer Activity, and set path" + " variable to your media file URL/path",
           Toast.LENGTH_LONG).show();

@@ -1,5 +1,7 @@
-package io.vov.vitamio.demo;
+package io.vov.vitamio.demo.videoview;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.widget.Toast;
 import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
+import io.vov.vitamio.demo.R;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemoList;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
@@ -15,8 +19,28 @@ public class VideoViewDemo extends AppActivity {
 
 
   private String path = "http://video19.ifeng.com/video06/2012/04/11/629da9ec-60d4-4814-a940-997e6487804a.mp4";
+  private static final String MEDIA = "media";
+  public static final int LOCAL_AUDIO = MediaPlayerDemoList.LOCAL_AUDIO;
+  public static final int STREAM_AUDIO = MediaPlayerDemoList.STREAM_AUDIO;
+  public static final int RESOURCES_AUDIO = MediaPlayerDemoList.RESOURCES_AUDIO;
+  public static final int LOCAL_VIDEO = MediaPlayerDemoList.LOCAL_VIDEO;
+  public static final int STREAM_VIDEO = MediaPlayerDemoList.STREAM_VIDEO;
+  public static final int STREAM_RTMP = MediaPlayerDemoList.STREAM_RTMP;
+
   private VideoView mVideoView;
   private EditText mEditText;
+
+  public static Intent newIntent(Context context, String videoPath, String videoTitle, int mediaType) {
+    Intent intent = new Intent(context, VideoViewDemo.class);
+    intent.putExtra("videoPath", videoPath);
+    intent.putExtra("videoTitle", videoTitle);
+    intent.putExtra(MEDIA, mediaType);
+    return intent;
+  }
+
+  public static void intentTo(Context context, String videoPath, String videoTitle, int mediaType) {
+    context.startActivity(newIntent(context, videoPath, videoTitle, mediaType));
+  }
 
   @Override public void onCreate(Bundle icicle) {
     super.onCreate(icicle);

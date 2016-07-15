@@ -12,8 +12,9 @@
   <string name="choose_local_video">运行程序第一步,选择本地的视频</string>
   <string name="local_audio">播放本地音频</string>
   <string name="local_video">播放本地视频</string>
-  <string name="stream_video">播放视频流</string>
+  <string name="stream_video">播放在线视频</string>
+  <string name="stream_rtmp">播放在线RTMP直播流</string>
   <string name="openvideo1">打开视频1</string>
   <string name="openvideo2">打开视频2</string>
-  <string name="local_video_setsurface">设置surface播放视频</string>
+  <string name="local_video_set_textureview">自定义Textureview</string>
 </resources>

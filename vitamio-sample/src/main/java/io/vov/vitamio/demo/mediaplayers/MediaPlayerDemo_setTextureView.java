@@ -1,4 +1,4 @@
-package io.vov.vitamio.demo;
+package io.vov.vitamio.demo.mediaplayers;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
+import android.view.View;
 import android.widget.Toast;
 import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
@@ -18,11 +19,13 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
+import io.vov.vitamio.demo.R;
+import io.vov.vitamio.demo.VitamioMainActivity;
 
-@SuppressLint("NewApi") public class MediaPlayerDemo_setSurface extends AppActivity
+@SuppressLint("NewApi") public class MediaPlayerDemo_setTextureView extends AppActivity
     implements OnBufferingUpdateListener, OnCompletionListener, OnPreparedListener, TextureView.SurfaceTextureListener {
 
-  private static final String TAG = "MediaPlayerDemo";
+  private static final String TAG = "MediaPlayerDemoList";
   private int mVideoWidth;
   private int mVideoHeight;
   private MediaPlayer mMediaPlayer;
@@ -39,8 +42,8 @@ import io.vov.vitamio.MediaPlayer.OnPreparedListener;
   @Override public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
     if (!LibsChecker.checkVitamioLibs(this)) return;
-    setContentView(R.layout.mediaplayer_3);
-    mTextureView = (TextureView) findViewById(R.id.surface);
+    setContentView(R.layout.mediaplayer_set_textureview);
+    mTextureView = (TextureView) findViewById(R.id.textureView);
     mTextureView.setSurfaceTextureListener(this);
   }
 
@@ -51,7 +54,7 @@ import io.vov.vitamio.MediaPlayer.OnPreparedListener;
       SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
       path = settings.getString(VitamioMainActivity.LOCAL_VIDEO, "");
       if (TextUtils.isEmpty(path)) {
-        Toast.makeText(MediaPlayerDemo_setSurface.this, "Please edit MediaPlayerDemo_setSurface Activity, "
+        Toast.makeText(MediaPlayerDemo_setTextureView.this, "Please edit MediaPlayerDemo_setTextureView Activity, "
             + "and set the path variable to your media file path."
             + " Your media file must be stored on sdcard.", Toast.LENGTH_LONG).show();
         return;
@@ -74,8 +77,19 @@ import io.vov.vitamio.MediaPlayer.OnPreparedListener;
   }
 
   public void onBufferingUpdate(MediaPlayer arg0, int percent) {
-     Log.d(TAG, "onBufferingUpdate percent:" + percent);
-
+    Log.d(TAG, "onBufferingUpdate percent:" + percent);
+    if (null != pb && null != downloadRateView && null != loadRateView) {
+      if (percent < 100) {
+        loadRateView.setText(percent + "%");
+        pb.setVisibility(View.VISIBLE);
+        downloadRateView.setVisibility(View.VISIBLE);
+        loadRateView.setVisibility(View.VISIBLE);
+      } else {
+        pb.setVisibility(View.GONE);
+        downloadRateView.setVisibility(View.GONE);
+        loadRateView.setVisibility(View.GONE);
+      }
+    }
   }
 
   public void onCompletion(MediaPlayer arg0) {

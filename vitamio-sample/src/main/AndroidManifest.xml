@@ -38,23 +38,28 @@
 
 
     <activity
-        android:name=".MediaPlayerDemo"
+        android:name=".mediaplayers.MediaPlayerDemoList"
         android:label="MediaPlayerDemo"
         android:theme="@style/AppCompatTheme">
     </activity>
     <activity
-        android:name=".VideoViewDemo"
+        android:name=".videoview.VideoViewDemoList"
+        android:label="MediaPlayerDemo"
+        android:theme="@style/AppCompatTheme">
+    </activity>
+    <activity
+        android:name=".videoview.VideoViewDemo"
         android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
         android:label="VideoViewDemo"
         android:theme="@style/AppCompatTheme">
     </activity>
     <activity
-        android:name=".MediaPlayerDemo_Video"
+        android:name=".mediaplayers.MediaPlayerDemo_Video"
         android:label="MediaPlayerDemo_Video"
         android:theme="@style/AppCompatTheme">
     </activity>
     <activity
-        android:name=".MediaPlayerDemo_setSurface"
+        android:name=".mediaplayers.MediaPlayerDemo_setTextureView"
         android:label="MediaPlayerDemo_setSurface"
         android:theme="@style/AppCompatTheme">
     </activity>
@@ -74,7 +79,7 @@
         android:theme="@style/AppCompatTheme">
     </activity>
     <activity
-        android:name=".VideoViewBuffer"
+        android:name=".videoview.VideoViewBuffer"
         android:label="@string/title_activity_video_buffer"
         android:theme="@style/AppCompatTheme">
     </activity>

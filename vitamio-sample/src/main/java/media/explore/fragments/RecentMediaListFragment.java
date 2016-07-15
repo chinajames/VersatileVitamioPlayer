@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import io.vov.vitamio.demo.MediaPlayerDemo_Video;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
 import media.explore.content.RecentMediaStorage;
 

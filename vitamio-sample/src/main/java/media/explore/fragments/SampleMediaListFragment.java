@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import io.vov.vitamio.demo.MediaPlayerDemo_Video;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
 
 public class SampleMediaListFragment extends Fragment {

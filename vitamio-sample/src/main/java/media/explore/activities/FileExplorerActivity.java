@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.app.AppActivity;
 import com.squareup.otto.Subscribe;
-import io.vov.vitamio.demo.MediaPlayerDemo_Video;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
 import io.vov.vitamio.demo.VitamioMainActivity;
 import java.io.File;

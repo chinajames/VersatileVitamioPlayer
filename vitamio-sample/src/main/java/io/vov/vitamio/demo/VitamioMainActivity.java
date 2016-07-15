@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import io.vov.vitamio.LibsChecker;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemoList;
+import io.vov.vitamio.demo.videoview.VideoViewBuffer;
+import io.vov.vitamio.demo.videoview.VideoViewDemoList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,8 +61,8 @@ public class VitamioMainActivity extends ListActivity {
   protected List<Map<String, Object>> getData() {
     List<Map<String, Object>> myData = new ArrayList<Map<String, Object>>();
     addItem(myData, getResources().getString(R.string.choose_local_video), new Intent(this, FileExplorerActivity.class));
-    addItem(myData, "MediaPlayer", new Intent(this, MediaPlayerDemo.class));
-    addItem(myData, "VideoView", new Intent(this, VideoViewDemo.class));
+    addItem(myData, "MediaPlayer", new Intent(this, MediaPlayerDemoList.class));
+    addItem(myData, "VideoView", new Intent(this, VideoViewDemoList.class));
     addItem(myData, "MediaMetadataRetriever", new Intent(this, MediaMetadataRetrieverDemo.class));
     addItem(myData, "VideoSubtitle", new Intent(this, VideoSubtitleList.class));
     addItem(myData, getResources().getString(R.string.title_activity_video_buffer), new Intent(this, VideoViewBuffer.class));
