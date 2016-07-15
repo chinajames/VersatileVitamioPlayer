@@ -48,6 +48,7 @@ public class VideoViewDemoList extends AppActivity {
   private OnClickListener mLocalVideoListener = new OnClickListener() {
     public void onClick(View v) {
       Intent intent = new Intent(VideoViewDemoList.this, FileExplorerActivity.class);
+      intent.putExtra(FileExplorerActivity.ActionFileExplore,FileExplorerActivity.VideoView);
       startActivity(intent);
     }
   };
@@ -61,13 +62,12 @@ public class VideoViewDemoList extends AppActivity {
   private OnClickListener mStreamRtmpListener = new OnClickListener() {
     public void onClick(View v) {
       VideoViewDemo.intentTo(VideoViewDemoList.this, "rtmp://live.hkstv.hk.lxdns.com/live/hks", "RTMP香港电视台", STREAM_RTMP);
-
     }
   };
 
   private OnClickListener mSetSurfaceVideoListener = new OnClickListener() {
     public void onClick(View v) {
-      Intent intent = new Intent(VideoViewDemoList.this, MediaPlayerDemo_setTextureView.class);
+      Intent intent = new Intent(VideoViewDemoList.this, VideoViewBuffer.class);
       intent.putExtra(MEDIA, LOCAL_VIDEO_SURFACE);
       startActivity(intent);
     }

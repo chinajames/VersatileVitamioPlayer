@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.app.AppActivity;
 import io.vov.vitamio.LibsChecker;
@@ -17,8 +18,7 @@ import io.vov.vitamio.widget.VideoView;
 
 public class VideoViewDemo extends AppActivity {
 
-
-  private String path = "http://video19.ifeng.com/video06/2012/04/11/629da9ec-60d4-4814-a940-997e6487804a.mp4";
+  private String mVideoPath, mVideoTitle;
   private static final String MEDIA = "media";
   public static final int LOCAL_AUDIO = MediaPlayerDemoList.LOCAL_AUDIO;
   public static final int STREAM_AUDIO = MediaPlayerDemoList.STREAM_AUDIO;
@@ -28,7 +28,8 @@ public class VideoViewDemo extends AppActivity {
   public static final int STREAM_RTMP = MediaPlayerDemoList.STREAM_RTMP;
 
   private VideoView mVideoView;
-  private EditText mEditText;
+  private EditText mEtVideoPath;
+  private TextView mTvVideoTitle;
 
   public static Intent newIntent(Context context, String videoPath, String videoTitle, int mediaType) {
     Intent intent = new Intent(context, VideoViewDemo.class);
@@ -46,18 +47,23 @@ public class VideoViewDemo extends AppActivity {
     super.onCreate(icicle);
     if (!LibsChecker.checkVitamioLibs(this)) return;
     setContentView(R.layout.videoview);
-    mEditText = (EditText) findViewById(R.id.url);
+    mTvVideoTitle = (TextView) findViewById(R.id.video_title);
+    mEtVideoPath = (EditText) findViewById(R.id.video_path);
     mVideoView = (VideoView) findViewById(R.id.surface_view);
-    if (TextUtils.isEmpty(path)) {
+    mVideoPath = getIntent().getStringExtra("videoPath");
+    mVideoTitle = getIntent().getStringExtra("videoTitle");
+    if (TextUtils.isEmpty(mVideoPath)) {
       Toast.makeText(VideoViewDemo.this, "Please edit VideoViewDemo Activity, and set path variable to your media file URL/path",
           Toast.LENGTH_LONG).show();
       return;
     } else {
+      mTvVideoTitle.setText(TextUtils.isEmpty(mVideoTitle) ? "" : mVideoTitle);
+      mEtVideoPath.setText(mVideoPath);
       /*
-			 * Alternatively,for streaming media you can use
+       * Alternatively,for streaming media you can use
 			 * mVideoView.setVideoURI(Uri.parse(URLstring));
 			 */
-      mVideoView.setVideoPath(path);
+      mVideoView.setVideoPath(mVideoPath);
       mVideoView.setMediaController(new MediaController(this));
       mVideoView.requestFocus();
 
@@ -71,14 +77,14 @@ public class VideoViewDemo extends AppActivity {
   }
 
   public void startPlay(View view) {
-    String url = mEditText.getText().toString();
-    path = url;
+    String url = mEtVideoPath.getText().toString();
+    mVideoPath = url;
     if (!TextUtils.isEmpty(url)) {
       mVideoView.setVideoPath(url);
     }
   }
 
   public void openVideo(View View) {
-    mVideoView.setVideoPath(path);
+    mVideoView.setVideoPath(mVideoPath);
   }
 }

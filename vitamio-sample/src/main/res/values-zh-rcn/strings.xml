@@ -17,4 +17,6 @@
   <string name="openvideo1">打开视频1</string>
   <string name="openvideo2">打开视频2</string>
   <string name="local_video_set_textureview">自定义Textureview</string>
+  <string name="videoview_buffer">边播放边缓存</string>
+  <string name="play">播放</string>
 </resources>

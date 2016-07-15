@@ -46,6 +46,7 @@ public class MediaPlayerDemoList extends AppActivity {
   private OnClickListener mLocalVideoListener = new OnClickListener() {
     public void onClick(View v) {
       Intent intent = new Intent(MediaPlayerDemoList.this, FileExplorerActivity.class);
+      intent.putExtra(FileExplorerActivity.ActionFileExplore,FileExplorerActivity.MediaPlayer);
       startActivity(intent);
     }
   };

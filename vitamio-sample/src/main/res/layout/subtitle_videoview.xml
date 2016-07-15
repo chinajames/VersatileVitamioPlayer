@@ -27,7 +27,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
       android:layout_centerInParent="true"
-      android:text="@string/res_audio"
+      android:text="@string/local_video"
       />
 
   <Button

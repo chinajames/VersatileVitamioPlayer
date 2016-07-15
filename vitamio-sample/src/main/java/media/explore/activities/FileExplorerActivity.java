@@ -1,5 +1,6 @@
 package media.explore.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -10,9 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.app.AppActivity;
 import com.squareup.otto.Subscribe;
+import io.vov.vitamio.demo.MediaMetadataRetrieverDemo;
 import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
 import io.vov.vitamio.demo.VitamioMainActivity;
+import io.vov.vitamio.demo.videosubtitle.MediaPlayerSubtitle;
+import io.vov.vitamio.demo.videosubtitle.VideoViewSubtitle;
+import io.vov.vitamio.demo.videoview.VideoViewDemo;
 import java.io.File;
 import java.io.IOException;
 import media.explore.application.Settings;
@@ -21,6 +26,13 @@ import media.explore.fragments.FileListFragment;
 
 public class FileExplorerActivity extends AppActivity {
   private Settings mSettings;
+  public static final String ActionFileExplore = "ActionFileExplore";
+  public static final String MediaPlayer = "1";
+  public static final String VideoView = "2";
+  public static final String MediaMetadataRetriever = "3";
+  public static final String MediaPlayerSubtitles = "4";
+  public static final String VideoViewSubtitles = "5";
+  private String VideoActivity = MediaPlayer;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -35,6 +47,7 @@ public class FileExplorerActivity extends AppActivity {
     } else {
       doOpenDirectory("/", false);
     }
+    VideoActivity = getIntent().getStringExtra(ActionFileExplore);
   }
 
   @Override protected void onResume() {
@@ -77,7 +90,19 @@ public class FileExplorerActivity extends AppActivity {
       SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
       SharedPreferences.Editor editor = settings.edit();
       editor.putString(VitamioMainActivity.LOCAL_VIDEO,f.getPath()).apply();
-      MediaPlayerDemo_Video.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
+      if(VideoActivity.equals(MediaPlayer)) {
+        MediaPlayerDemo_Video.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
+      } else if(VideoActivity.equals(MediaMetadataRetriever)){
+        MediaMetadataRetrieverDemo.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
+      } else if(VideoActivity.equals(MediaPlayerSubtitles)){
+        MediaPlayerSubtitle.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
+      } else if(VideoActivity.equals(VideoViewSubtitles)){
+        VideoViewSubtitle.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
+      } else {
+        VideoViewDemo.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
+      }
+
+      finish();
     }
   }
 

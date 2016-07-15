@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemoList;
-import io.vov.vitamio.demo.videoview.VideoViewBuffer;
+import io.vov.vitamio.demo.videosubtitle.VideoSubtitleList;
 import io.vov.vitamio.demo.videoview.VideoViewDemoList;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,9 +63,13 @@ public class VitamioMainActivity extends ListActivity {
     addItem(myData, getResources().getString(R.string.choose_local_video), new Intent(this, FileExplorerActivity.class));
     addItem(myData, "MediaPlayer", new Intent(this, MediaPlayerDemoList.class));
     addItem(myData, "VideoView", new Intent(this, VideoViewDemoList.class));
-    addItem(myData, "MediaMetadataRetriever", new Intent(this, MediaMetadataRetrieverDemo.class));
+
+    //Intent intent = new Intent(this, FileExplorerActivity.class);
+    //intent.putExtra(FileExplorerActivity.ActionFileExplore,FileExplorerActivity.MediaMetadataRetriever);
+    //startActivity(intent);
+    //addItem(myData, "MediaMetadataRetriever",intent);
+
     addItem(myData, "VideoSubtitle", new Intent(this, VideoSubtitleList.class));
-    addItem(myData, getResources().getString(R.string.title_activity_video_buffer), new Intent(this, VideoViewBuffer.class));
     return myData;
   }
 

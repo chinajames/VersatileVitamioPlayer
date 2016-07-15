@@ -38,21 +38,22 @@ import media.explore.activities.SampleMediaActivity;
     Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
     if (null != mToolbar) {
       setSupportActionBar(mToolbar);
-    }
-    mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
-    mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        finish();
-      }
-    });
+      mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+      mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          finish();
+        }
+      });
 
-    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-      if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-      } else {
-        ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
-            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+      if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        } else {
+          ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
+              MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
       }
     }
+
   }
 
   @Override public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

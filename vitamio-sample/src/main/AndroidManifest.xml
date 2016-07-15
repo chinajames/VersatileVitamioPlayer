@@ -30,7 +30,7 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".VideoSubtitleList"
+        android:name=".videosubtitle.VideoSubtitleList"
         android:label="@string/title_activity_video_subtitle_list"
         android:theme="@style/AppCompatTheme">
     </activity>
@@ -69,12 +69,12 @@
         android:theme="@style/AppCompatTheme">
     </activity>
     <activity
-        android:name=".MediaPlayerSubtitle"
+        android:name=".videosubtitle.MediaPlayerSubtitle"
         android:label="@string/title_activity_media_player_subtitle"
         android:theme="@style/AppCompatTheme">
     </activity>
     <activity
-        android:name=".VideoViewSubtitle"
+        android:name=".videosubtitle.VideoViewSubtitle"
         android:label="@string/title_activity_video_view_subtitle"
         android:theme="@style/AppCompatTheme">
     </activity>

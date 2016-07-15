@@ -1,9 +1,8 @@
-package io.vov.vitamio.demo;
+package io.vov.vitamio.demo.videosubtitle;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
@@ -12,10 +11,12 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import io.vov.vitamio.LibsChecker;
+import io.vov.vitamio.demo.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import media.explore.activities.FileExplorerActivity;
 
 public class VideoSubtitleList extends ListActivity {
 
@@ -62,8 +63,17 @@ public class VideoSubtitleList extends ListActivity {
 
   protected List<Map<String, Object>> getData() {
     List<Map<String, Object>> myData = new ArrayList<Map<String, Object>>();
-    addItem(myData, "MediaPlayerSubtitle", new Intent(this, MediaPlayerSubtitle.class));
-    addItem(myData, "VideoViewSubtitle", new Intent(this, VideoViewSubtitle.class));
+    addItem(myData, "MediaPlayerSubtitleLocal", new Intent(this, MediaPlayerSubtitle.class));
+
+    Intent intent1 = new Intent(this, FileExplorerActivity.class);
+    intent1.putExtra(FileExplorerActivity.ActionFileExplore, FileExplorerActivity.VideoViewSubtitles);
+    startActivity(intent1);
+    addItem(myData, "VideoViewSubtitleLocal",intent1);
+
+    Intent intent2 = new Intent(this, VideoViewSubtitle.class);
+    intent2.putExtra("videoPath", "http://video19.ifeng.com/video06/2012/04/11/629da9ec-60d4-4814-a940-997e6487804a.mp4");
+    intent2.putExtra("videoTitle", "陈思成");
+    addItem(myData, "VideoViewSubtitleOnline", intent2);
     return myData;
   }
 

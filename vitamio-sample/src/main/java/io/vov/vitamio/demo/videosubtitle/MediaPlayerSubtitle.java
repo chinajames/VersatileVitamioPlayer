@@ -1,5 +1,7 @@
-package io.vov.vitamio.demo;
+package io.vov.vitamio.demo.videosubtitle;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -16,6 +18,9 @@ import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.MediaPlayer.OnTimedTextListener;
+import io.vov.vitamio.demo.R;
+import io.vov.vitamio.demo.VitamioMainActivity;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemoList;
 import java.io.IOException;
 
 public class MediaPlayerSubtitle extends AppActivity implements Callback, OnPreparedListener, OnTimedTextListener {
@@ -25,11 +30,30 @@ public class MediaPlayerSubtitle extends AppActivity implements Callback, OnPrep
   TextView tv;
   private MediaPlayer mediaPlayer;
   private String path = "";
+  private static final String MEDIA = "media";
+  public static final int LOCAL_AUDIO = MediaPlayerDemoList.LOCAL_AUDIO;
+  public static final int STREAM_AUDIO = MediaPlayerDemoList.STREAM_AUDIO;
+  public static final int RESOURCES_AUDIO = MediaPlayerDemoList.RESOURCES_AUDIO;
+  public static final int LOCAL_VIDEO = MediaPlayerDemoList.LOCAL_VIDEO;
+  public static final int STREAM_VIDEO = MediaPlayerDemoList.STREAM_VIDEO;
+  public static final int STREAM_RTMP = MediaPlayerDemoList.STREAM_RTMP;
+
+  public static Intent newIntent(Context context, String videoPath, String videoTitle, int mediaType) {
+    Intent intent = new Intent(context, MediaPlayerSubtitle.class);
+    intent.putExtra("videoPath", videoPath);
+    intent.putExtra("videoTitle", videoTitle);
+    intent.putExtra(MEDIA, mediaType);
+    return intent;
+  }
+
+  public static void intentTo(Context context, String videoPath, String videoTitle, int mediaType) {
+    context.startActivity(newIntent(context, videoPath, videoTitle, mediaType));
+  }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (!LibsChecker.checkVitamioLibs(this)) return;
-    setContentView(R.layout.subtitle1);
+    setContentView(R.layout.subtitle_mediaplayer);
     tv = (TextView) findViewById(R.id.sub1);
     splayer = (SurfaceView) findViewById(R.id.surface);
     sholder = splayer.getHolder();
@@ -38,8 +62,7 @@ public class MediaPlayerSubtitle extends AppActivity implements Callback, OnPrep
   }
 
   private void playVideo() {
-    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-    path = settings.getString(VitamioMainActivity.LOCAL_VIDEO, "");
+    path = getIntent().getStringExtra("videoPath");
     try {
       if (TextUtils.isEmpty(path)) {
         Toast.makeText(MediaPlayerSubtitle.this, "Please edit MediaPlayer Activity, "
