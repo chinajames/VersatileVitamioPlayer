@@ -12,21 +12,32 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
+import io.vov.vitamio.demo.videoview.VideoViewDemo;
+import media.explore.activities.FileExplorerActivity;
 
 public class SampleMediaListFragment extends Fragment {
   private ListView mFileListView;
   private SampleMediaAdapter mAdapter;
+  public static final String ActionFileExplore = "ActionFileExplore";
+  private String VideoActivity = FileExplorerActivity.MediaPlayer;
 
-  public static SampleMediaListFragment newInstance() {
+  public static SampleMediaListFragment newInstance(String videoActivitys) {
     SampleMediaListFragment f = new SampleMediaListFragment();
+    Bundle bundle = new Bundle();
+    bundle.putString(ActionFileExplore, videoActivitys);
+    //向detailFragment传入参数
+    f.setArguments(bundle);
     return f;
   }
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_file_list, container, false);
     mFileListView = (ListView) viewGroup.findViewById(R.id.file_list_view);
+    if (getArguments().containsKey(ActionFileExplore)) {
+      VideoActivity = getArguments().getString(ActionFileExplore);
+    }
     return viewGroup;
   }
 
@@ -42,7 +53,11 @@ public class SampleMediaListFragment extends Fragment {
         SampleMediaItem item = mAdapter.getItem(position);
         String name = item.mName;
         String url = item.mUrl;
-        MediaPlayerDemo_Video.intentTo(activity, url, name, MediaPlayerDemo_Video.STREAM_VIDEO);
+        if (VideoActivity.equals(FileExplorerActivity.MediaPlayer)) {
+          MediaPlayerDemo_Video.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        } else {
+          VideoViewDemo.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        }
       }
     });
     mAdapter.addItem("http://video19.ifeng.com/video06/2012/04/11/629da9ec-60d4-4814-a940-997e6487804a.mp4", "陈思成");

@@ -60,7 +60,7 @@ public class VitamioMainActivity extends ListActivity {
 
   protected List<Map<String, Object>> getData() {
     List<Map<String, Object>> myData = new ArrayList<Map<String, Object>>();
-    addItem(myData, getResources().getString(R.string.choose_local_video), new Intent(this, FileExplorerActivity.class));
+    //addItem(myData, getResources().getString(R.string.choose_local_video), new Intent(this, FileExplorerActivity.class));
     addItem(myData, "MediaPlayer", new Intent(this, MediaPlayerDemoList.class));
     addItem(myData, "VideoView", new Intent(this, VideoViewDemoList.class));
 

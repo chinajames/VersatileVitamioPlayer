@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import io.vov.vitamio.demo.R;
+import media.explore.activities.FileExplorerActivity;
 import media.explore.activities.RecentMediaActivity;
 import media.explore.activities.SampleMediaActivity;
 
@@ -71,17 +72,6 @@ import media.explore.activities.SampleMediaActivity;
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_app, menu);
     return true;
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-    if (id == R.id.action_recent) {
-      RecentMediaActivity.intentTo(this);
-    } else if (id == R.id.action_sample) {
-      SampleMediaActivity.intentTo(this);
-    }
-
-    return super.onOptionsItemSelected(item);
   }
 
   @Override public boolean onPrepareOptionsMenu(Menu menu) {

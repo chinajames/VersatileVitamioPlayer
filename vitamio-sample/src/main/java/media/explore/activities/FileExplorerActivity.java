@@ -1,6 +1,5 @@
 package media.explore.activities;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,9 +11,9 @@ import android.view.MenuItem;
 import com.app.AppActivity;
 import com.squareup.otto.Subscribe;
 import io.vov.vitamio.demo.MediaMetadataRetrieverDemo;
-import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
 import io.vov.vitamio.demo.VitamioMainActivity;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.videosubtitle.MediaPlayerSubtitle;
 import io.vov.vitamio.demo.videosubtitle.VideoViewSubtitle;
 import io.vov.vitamio.demo.videoview.VideoViewDemo;
@@ -89,14 +88,14 @@ public class FileExplorerActivity extends AppActivity {
     } else if (f.exists()) {
       SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
       SharedPreferences.Editor editor = settings.edit();
-      editor.putString(VitamioMainActivity.LOCAL_VIDEO,f.getPath()).apply();
-      if(VideoActivity.equals(MediaPlayer)) {
+      editor.putString(VitamioMainActivity.LOCAL_VIDEO, f.getPath()).apply();
+      if (VideoActivity.equals(MediaPlayer)) {
         MediaPlayerDemo_Video.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
-      } else if(VideoActivity.equals(MediaMetadataRetriever)){
+      } else if (VideoActivity.equals(MediaMetadataRetriever)) {
         MediaMetadataRetrieverDemo.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
-      } else if(VideoActivity.equals(MediaPlayerSubtitles)){
+      } else if (VideoActivity.equals(MediaPlayerSubtitles)) {
         MediaPlayerSubtitle.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
-      } else if(VideoActivity.equals(VideoViewSubtitles)){
+      } else if (VideoActivity.equals(VideoViewSubtitles)) {
         VideoViewSubtitle.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
       } else {
         VideoViewDemo.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
@@ -104,6 +103,17 @@ public class FileExplorerActivity extends AppActivity {
 
       finish();
     }
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+    if (id == R.id.action_recent) {
+      RecentMediaActivity.intentTo(this, VideoActivity);
+    } else if (id == R.id.action_sample) {
+      SampleMediaActivity.intentTo(this, VideoActivity);
+    }
+
+    return super.onOptionsItemSelected(item);
   }
 
   @Override public boolean onPrepareOptionsMenu(Menu menu) {

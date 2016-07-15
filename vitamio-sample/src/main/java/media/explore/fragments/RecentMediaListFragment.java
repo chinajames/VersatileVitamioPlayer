@@ -15,22 +15,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.R;
+import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
+import io.vov.vitamio.demo.videoview.VideoViewDemo;
+import media.explore.activities.FileExplorerActivity;
 import media.explore.content.RecentMediaStorage;
 
 public class RecentMediaListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
   private ListView mFileListView;
   private RecentMediaAdapter mAdapter;
+  public static final String ActionFileExplore = "ActionFileExplore";
+  private String VideoActivity = FileExplorerActivity.MediaPlayer;
 
-  public static RecentMediaListFragment newInstance() {
+  public static RecentMediaListFragment newInstance(String videoActivitys) {
     RecentMediaListFragment f = new RecentMediaListFragment();
+    Bundle bundle = new Bundle();
+    bundle.putString(ActionFileExplore, videoActivitys);
+    //向detailFragment传入参数
+    f.setArguments(bundle);
     return f;
   }
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_file_list, container, false);
     mFileListView = (ListView) viewGroup.findViewById(R.id.file_list_view);
+    if (getArguments().containsKey(ActionFileExplore)) {
+      VideoActivity = getArguments().getString(ActionFileExplore);
+    }
     return viewGroup;
   }
 
@@ -45,8 +56,12 @@ public class RecentMediaListFragment extends Fragment implements LoaderManager.L
       @Override public void onItemClick(AdapterView<?> parent, View view, final int position, final long id) {
         String url = mAdapter.getUrl(position);
         String name = mAdapter.getName(position);
-        Log.w("hanjh","url: "+url+"\nname: "+name);
-        MediaPlayerDemo_Video.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        Log.w("hanjh", "url: " + url + "\nname: " + name);
+        if (VideoActivity.equals(FileExplorerActivity.MediaPlayer)) {
+          MediaPlayerDemo_Video.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        } else {
+          VideoViewDemo.intentTo(activity, url, name, MediaPlayerDemo_Video.LOCAL_VIDEO);
+        }
       }
     });
 
