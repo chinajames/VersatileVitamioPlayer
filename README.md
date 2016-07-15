@@ -1,7 +1,7 @@
-VitamioDemo
+VersatileVitamioPlayer
 ---
 
-该仓库是[Vitamio](https://www.vitamio.org/)的例子，此播放器具有比ijkplayer更强的解码能力，现在实现了播放本地视频功能和播放线上视频功能。
+该仓库是[Vitamio](https://www.vitamio.org/)的例子，此播放器具有全格式的解码能力，现在实现了播放本地视频功能和播放线上视频功能。
 
 
 ## 用处
