@@ -22,6 +22,7 @@ import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.MediaPlayer.OnVideoSizeChangedListener;
 import io.vov.vitamio.demo.R;
+import io.vov.vitamio.widget.MediaController;
 import media.explore.content.RecentMediaStorage;
 
 public class MediaPlayerDemo_Video extends AppActivity

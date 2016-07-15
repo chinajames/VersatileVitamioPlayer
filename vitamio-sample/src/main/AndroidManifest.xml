@@ -108,6 +108,11 @@
         android:theme="@style/AppCompatTheme">
     </activity>
 
+    <service
+        android:name=".floating.VideoPlayerService"
+        android:enabled="true"
+        />
+
   </application>
 
 </manifest>

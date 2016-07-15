@@ -11,6 +11,7 @@
   <string name="choose_local_video">First ,Choose Local Video File</string>
   <string name="local_video">Play Video from Local File</string>
   <string name="local_video_set_textureview">Play Video use set Textureview</string>
+  <string name="local_video_floating">Play Video floating</string>
   <string name="stream_video">Play Streaming Video</string>
   <string name="stream_rtmp">Play Streaming RTMP</string>
   <string name="title_activity_video_subtitle_demo">VideoSubtitleDemo</string>

@@ -13,6 +13,7 @@ import com.squareup.otto.Subscribe;
 import io.vov.vitamio.demo.MediaMetadataRetrieverDemo;
 import io.vov.vitamio.demo.R;
 import io.vov.vitamio.demo.VitamioMainActivity;
+import io.vov.vitamio.demo.floating.VideoPlayerService;
 import io.vov.vitamio.demo.mediaplayers.MediaPlayerDemo_Video;
 import io.vov.vitamio.demo.videosubtitle.MediaPlayerSubtitle;
 import io.vov.vitamio.demo.videosubtitle.VideoViewSubtitle;
@@ -31,6 +32,7 @@ public class FileExplorerActivity extends AppActivity {
   public static final String MediaMetadataRetriever = "3";
   public static final String MediaPlayerSubtitles = "4";
   public static final String VideoViewSubtitles = "5";
+  public static final String MediaPlayerFloating = "6";
   private String VideoActivity = MediaPlayer;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,8 @@ public class FileExplorerActivity extends AppActivity {
         MediaPlayerSubtitle.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
       } else if (VideoActivity.equals(VideoViewSubtitles)) {
         VideoViewSubtitle.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
+      } else if (VideoActivity.equals(MediaPlayerFloating)) {
+        VideoPlayerService.startService(this,f.getPath());
       } else {
         VideoViewDemo.intentTo(this, f.getPath(), f.getName(), MediaPlayerDemo_Video.LOCAL_VIDEO);
       }

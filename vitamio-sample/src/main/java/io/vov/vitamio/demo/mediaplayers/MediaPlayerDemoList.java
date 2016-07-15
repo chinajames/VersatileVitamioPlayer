@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import com.app.AppActivity;
 import io.vov.vitamio.demo.R;
+import io.vov.vitamio.demo.floating.VideoPlayerService;
 import media.explore.activities.FileExplorerActivity;
 
 public class MediaPlayerDemoList extends AppActivity {
@@ -15,6 +16,7 @@ public class MediaPlayerDemoList extends AppActivity {
   public Button mlocalvideoSurface;
   public Button mstream_rtmp;
   public Button mstreamvideo;
+  public Button mfloatingvideo;
   public static final String MEDIA = "media";
   public static final int LOCAL_AUDIO = 1;
   public static final int STREAM_AUDIO = 2;
@@ -41,6 +43,10 @@ public class MediaPlayerDemoList extends AppActivity {
 
     mlocalvideoSurface = (Button) findViewById(R.id.localvideo_set_textureview);
     mlocalvideoSurface.setOnClickListener(mSetSurfaceVideoListener);
+
+    mfloatingvideo = (Button) findViewById(R.id.localvideo_floating);
+    mfloatingvideo.setOnClickListener(mFloatingVideoListener);
+
   }
 
   private OnClickListener mLocalVideoListener = new OnClickListener() {
@@ -68,6 +74,14 @@ public class MediaPlayerDemoList extends AppActivity {
     public void onClick(View v) {
       Intent intent = new Intent(MediaPlayerDemoList.this, MediaPlayerDemo_setTextureView.class);
       intent.putExtra(MEDIA, LOCAL_VIDEO_SURFACE);
+      startActivity(intent);
+    }
+  };
+
+  private OnClickListener mFloatingVideoListener = new OnClickListener() {
+    public void onClick(View v) {
+      Intent intent = new Intent(MediaPlayerDemoList.this, FileExplorerActivity.class);
+      intent.putExtra(FileExplorerActivity.ActionFileExplore,FileExplorerActivity.MediaPlayerFloating);
       startActivity(intent);
     }
   };
