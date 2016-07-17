@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.view.Gravity;
@@ -18,7 +17,6 @@ public class VideoPlayerService extends Service implements IServiceHelper {
   public static FloatPlayerUI mFloatPlayerUI;
   public static WindowManager mWindowManager = null;
   public static WindowManager.LayoutParams wmParams = null;
-  private FloatPlayerController mFloatLayout;
   private static String videoPath;
 
   @Override public IBinder onBind(Intent intent) {
@@ -49,9 +47,9 @@ public class VideoPlayerService extends Service implements IServiceHelper {
         new RelativeLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.float_window_root_width),
             getResources().getDimensionPixelSize(R.dimen.float_window_root_height));
     mFloatPlayerUI = new FloatPlayerUI(mActivity, this, videoPath);
-    mFloatPlayerUI.setLayoutParams(params);
-    mFloatPlayerUI.setBackgroundColor(Color.BLACK);
-    mFloatPlayerUI.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+    //mFloatPlayerUI.setLayoutParams(params);
+    //mFloatPlayerUI.setBackgroundColor(Color.BLACK);
+    mFloatPlayerUI.mlayoutView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
 
     wmParams = new WindowManager.LayoutParams();
     mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
@@ -72,11 +70,11 @@ public class VideoPlayerService extends Service implements IServiceHelper {
     wmParams.x = (width - wmParams.width) / 2;
     wmParams.y = (height - wmParams.height) / 2;
     wmParams.alpha = 1.0f;
-    wmParams.token = mFloatPlayerUI.getApplicationWindowToken();
-    mWindowManager.addView(mFloatPlayerUI, wmParams);
+    wmParams.token = mFloatPlayerUI.mlayoutView.getApplicationWindowToken();
+    mWindowManager.addView(mFloatPlayerUI.mlayoutView, wmParams);
   }
 
-  public static void startService(Activity activity,String videoPaths) {
+  public static void startService(Activity activity, String videoPaths) {
     videoPath = videoPaths;
     mActivity = activity;
     if (mActivity != null) {
@@ -95,8 +93,8 @@ public class VideoPlayerService extends Service implements IServiceHelper {
   @Override public void closeFloatWindow() {
     if (mFloatPlayerUI != null) {
       mFloatPlayerUI.exitFloatWindow();
-      if (mFloatPlayerUI.isAttachedToWindow()) {
-        mWindowManager.removeView(mFloatPlayerUI);
+      if (mFloatPlayerUI.mlayoutView.isAttachedToWindow()) {
+        mWindowManager.removeView(mFloatPlayerUI.mlayoutView);
         mFloatPlayerUI = null;
       }
     }

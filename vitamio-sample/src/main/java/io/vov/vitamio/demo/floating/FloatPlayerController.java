@@ -18,7 +18,7 @@ public class FloatPlayerController extends FrameLayout {
   private LayoutInflater mInflater;
   private IMediaPlayer mPlayer;
 
-  private RelativeLayout mRoot;
+  private RelativeLayout mControllerRoot;
   private RelativeLayout mLoadingLayout;
   private RelativeLayout mFloatWindowBtnControllLayout;
   private ImageView mCloseFloatWindowBtn;
@@ -50,19 +50,19 @@ public class FloatPlayerController extends FrameLayout {
   }
 
   private void initFloatView() {
-    mRoot = (RelativeLayout) mInflater.inflate(R.layout.floatwindow_controller, null);
-    mFloatWindowBtnControllLayout = (RelativeLayout) mRoot.findViewById(R.id.float_window_btn_controll_layout);
-    mLoadingLayout = (RelativeLayout) mRoot.findViewById(R.id.float_loading_layout);
-    mCloseFloatWindowBtn = (ImageView) mRoot.findViewById(R.id.close_float_window);
+    mControllerRoot = (RelativeLayout) mInflater.inflate(R.layout.floatwindow_controller, null);
+    mFloatWindowBtnControllLayout = (RelativeLayout) mControllerRoot.findViewById(R.id.float_window_btn_controll_layout);
+    mLoadingLayout = (RelativeLayout) mControllerRoot.findViewById(R.id.float_loading_layout);
+    mCloseFloatWindowBtn = (ImageView) mControllerRoot.findViewById(R.id.close_float_window);
     mCloseFloatWindowBtn.setOnClickListener(mOnClickListener);
-    mPlayPauseBtn = (ImageView) mRoot.findViewById(R.id.float_play_pause);
+    mPlayPauseBtn = (ImageView) mControllerRoot.findViewById(R.id.float_play_pause);
     mPlayPauseBtn.setOnClickListener(mOnClickListener);
-    mFloatToFullScreenBtn = (ImageView) mRoot.findViewById(R.id.float_to_fullscreen);
+    mFloatToFullScreenBtn = (ImageView) mControllerRoot.findViewById(R.id.float_to_fullscreen);
     mFloatToFullScreenBtn.setOnClickListener(mOnClickListener);
     FrameLayout.LayoutParams mFloatLayoutLP =
         new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
     mFloatLayoutLP.gravity = Gravity.BOTTOM;
-    addView(mRoot, mFloatLayoutLP);
+    addView(mControllerRoot, mFloatLayoutLP);
   }
 
   @Override public boolean onTouchEvent(MotionEvent event) {
@@ -121,7 +121,7 @@ public class FloatPlayerController extends FrameLayout {
       VideoPlayerService.wmParams.height = getResources().getDimensionPixelSize(R.dimen.float_window_root_height);
     }
     VideoPlayerService.wmParams.gravity = Gravity.LEFT | Gravity.TOP;
-    VideoPlayerService.mWindowManager.updateViewLayout(VideoPlayerService.mFloatPlayerUI, VideoPlayerService.wmParams);
+    VideoPlayerService.mWindowManager.updateViewLayout(VideoPlayerService.mFloatPlayerUI.mlayoutView, VideoPlayerService.wmParams);
   }
 
   private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -189,11 +189,7 @@ public class FloatPlayerController extends FrameLayout {
   }
 
   public void setPlayPauseButtonVisibility(boolean visible) {
-    if (visible) {
-      mPlayPauseBtn.setVisibility(View.VISIBLE);
-    } else {
-      mPlayPauseBtn.setVisibility(View.INVISIBLE);
-    }
+    mPlayPauseBtn.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
   }
 
   public void updatePlayPauseIcon() {
@@ -205,14 +201,6 @@ public class FloatPlayerController extends FrameLayout {
   }
 
   public void finishLoading() {
-    mLoadingLayout.setVisibility(View.GONE);
-  }
-
-  public void showBuffering() {
-    mLoadingLayout.setVisibility(View.VISIBLE);
-  }
-
-  public void bufferingEnd() {
     mLoadingLayout.setVisibility(View.GONE);
   }
 }

@@ -1,6 +1,7 @@
 package io.vov.vitamio.demo.floating;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.util.Log;
@@ -15,13 +16,17 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.demo.R;
 import java.io.IOException;
 
-public class FloatPlayerUI extends FrameLayout implements IMediaPlayer {
+public class FloatPlayerUI implements IMediaPlayer {
   public final String TAG = this.getClass().getSimpleName();
   private Activity mContext;
   private FloatPlayerController mController;
   private SurfaceView mSurfaceView;
   private MediaPlayer mMediaPlayer;
   private SurfaceHolder mSurfaceHolder;
+
+  public ViewGroup mlayoutView;
+  private FrameLayout mPlayerSurfaceFrame;
+
   private IServiceHelper mServiceHelper;
   private static String videoPath;
   private boolean mIsVideoReadyToBePlayed = false;
@@ -30,7 +35,6 @@ public class FloatPlayerUI extends FrameLayout implements IMediaPlayer {
   private boolean mIsVideoSizeKnown = false;
 
   public FloatPlayerUI(Activity context, IServiceHelper helper, String videoPaths) {
-    super(context);
     videoPath = videoPaths;
     mContext = context;
     mServiceHelper = helper;
@@ -41,17 +45,9 @@ public class FloatPlayerUI extends FrameLayout implements IMediaPlayer {
   }
 
   private void initSurfaceView() {
-    mSurfaceView = new SurfaceView(mContext);
-    //mSurfaceView.setBackgroundColor(getResources().getColor(R.color.black));
-    LayoutParams surfaceViewParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-    surfaceViewParams.gravity = Gravity.CENTER;
-    LayoutParams lp = new LayoutParams(getResources().getDimensionPixelSize(R.dimen.float_window_root_width),
-        getResources().getDimensionPixelSize(R.dimen.float_window_root_height), Gravity.CENTER);
-    mSurfaceView.setLayoutParams(lp);
-    if (mSurfaceView.getParent() == null) {
-      removeAllViews();
-      addView(mSurfaceView, surfaceViewParams);
-    }
+    mlayoutView = (ViewGroup) View.inflate(mContext, R.layout.layout_floatview, null);
+    mSurfaceView = (SurfaceView) mlayoutView.findViewById(R.id.player_surfaceview);
+    mPlayerSurfaceFrame = (FrameLayout) mlayoutView.findViewById(R.id.player_surface_frame);
 
     mSurfaceHolder = mSurfaceView.getHolder();
     mSurfaceHolder.addCallback(mCallback);
@@ -100,7 +96,7 @@ public class FloatPlayerUI extends FrameLayout implements IMediaPlayer {
         new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     controllParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
     if (mController.getParent() == null) {
-      addView(mController, controllParams);
+      mPlayerSurfaceFrame.addView(mController, controllParams);
     }
     mController.setVisibility(View.VISIBLE);
   }
@@ -167,7 +163,9 @@ public class FloatPlayerUI extends FrameLayout implements IMediaPlayer {
   }
 
   @Override public void closePlayer() {
-    mMediaPlayer.stop();
+    if(mMediaPlayer.isPlaying()) {
+      mMediaPlayer.stop();
+    }
     mServiceHelper.closeFloatWindow();
   }
 
@@ -183,12 +181,6 @@ public class FloatPlayerUI extends FrameLayout implements IMediaPlayer {
   }
 
   public void exitFloatWindow() {
-    releaseMediaPlayer();
-    doCleanUp();
-  }
-
-  @Override protected void onDetachedFromWindow() {
-    super.onDetachedFromWindow();
     releaseMediaPlayer();
     doCleanUp();
   }
