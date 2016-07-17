@@ -32,7 +32,7 @@ public class MediaPlayerDemo_Video extends AppActivity
   private int mVideoHeight;
   private MediaPlayer mMediaPlayer;
   private SurfaceView mPreview;
-  private SurfaceHolder holder;
+  private SurfaceHolder mSurfaceHolder;
   private static final String MEDIA = "media";
   public static final int LOCAL_AUDIO = MediaPlayerDemoList.LOCAL_AUDIO;
   public static final int STREAM_AUDIO = MediaPlayerDemoList.STREAM_AUDIO;
@@ -54,9 +54,9 @@ public class MediaPlayerDemo_Video extends AppActivity
     if (!LibsChecker.checkVitamioLibs(this)) return;
     setContentView(R.layout.mediaplayer_video);
     mPreview = (SurfaceView) findViewById(R.id.surface);
-    holder = mPreview.getHolder();
-    holder.addCallback(this);
-    holder.setFormat(PixelFormat.RGBA_8888);
+    mSurfaceHolder = mPreview.getHolder();
+    mSurfaceHolder.addCallback(this);
+    mSurfaceHolder.setFormat(PixelFormat.RGBA_8888);
   }
 
   public static Intent newIntent(Context context, String videoPath, String videoTitle, int mediaType) {
@@ -133,7 +133,7 @@ public class MediaPlayerDemo_Video extends AppActivity
       mMediaPlayer = new MediaPlayer(this);
       Log.w("hanjh", "mVideoPath: " + mVideoPath);//"/storage/emulated/0/JQuery实战视频教程[王兴魁]/02.[jQuery]第1章 jQuery入门[下].avi"
       mMediaPlayer.setDataSource(mVideoPath);
-      mMediaPlayer.setDisplay(holder);
+      mMediaPlayer.setDisplay(mSurfaceHolder);
       mMediaPlayer.prepareAsync();
       mMediaPlayer.setOnBufferingUpdateListener(this);
       mMediaPlayer.setOnCompletionListener(this);
@@ -236,7 +236,7 @@ public class MediaPlayerDemo_Video extends AppActivity
 
   private void startVideoPlayback() {
     Log.v(TAG, "startVideoPlayback");
-    holder.setFixedSize(mVideoWidth, mVideoHeight);
+    mSurfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
     mMediaPlayer.start();
   }
 }

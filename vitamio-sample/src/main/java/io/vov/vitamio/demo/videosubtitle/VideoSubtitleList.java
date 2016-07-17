@@ -66,12 +66,10 @@ public class VideoSubtitleList extends ListActivity {
 
     Intent intent0 = new Intent(this, FileExplorerActivity.class);
     intent0.putExtra(FileExplorerActivity.ActionFileExplore, FileExplorerActivity.MediaPlayerSubtitles);
-    startActivity(intent0);
     addItem(myData, "MediaPlayerSubtitleLocal", intent0);
 
     Intent intent1 = new Intent(this, FileExplorerActivity.class);
     intent1.putExtra(FileExplorerActivity.ActionFileExplore, FileExplorerActivity.VideoViewSubtitles);
-    startActivity(intent1);
     addItem(myData, "VideoViewSubtitleLocal",intent1);
 
     Intent intent2 = new Intent(this, VideoViewSubtitle.class);
