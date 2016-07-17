@@ -44,7 +44,7 @@ public class FloatPlayerController extends FrameLayout {
     setFocusableInTouchMode(true);
     setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
     requestFocus();
-    setBackgroundColor(getResources().getColor(R.color.black));
+    setBackgroundColor(getResources().getColor(R.color.green));
 
     initFloatView();
   }
@@ -69,6 +69,7 @@ public class FloatPlayerController extends FrameLayout {
     if (event.getPointerCount() < 2) {
       mTouchX = event.getRawX();
       mTouchY = event.getRawY();
+      Log.i("Hanjh","onTouch 0=down 2=move 1=up "+event.getAction());
       switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
           mIsMultiTouchMode = false;
@@ -103,25 +104,23 @@ public class FloatPlayerController extends FrameLayout {
 
   private void updateFloatWindow() {
     Log.d(TAG, "video updateFloatWindow mTouchY:" + mTouchY + " mDownY: " + mDownY);
-    Log.d(TAG, "video updateFloatWindow  wmParams.y:" + VideoPlayerService.wmParams.y);
+    Log.d(TAG, "video updateFloatWindow  wmParams.y:" + VideoPlayerService.mFloatPlayerUI.wmParams.y);
     if (!mIsScaling) {
-      VideoPlayerService.wmParams.x = (int) (mTouchX - mDownX);
-      VideoPlayerService.wmParams.y = (int) (mTouchY - mDownY);
-      if (VideoPlayerService.wmParams.y < 150 - getResources().getDimensionPixelSize(R.dimen.float_window_root_height)) {
-        VideoPlayerService.wmParams.y = 150 - getResources().getDimensionPixelSize(R.dimen.float_window_root_height);
-      } else if (VideoPlayerService.wmParams.y > getResources().getDisplayMetrics().heightPixels - 150) {
-        VideoPlayerService.wmParams.y = getResources().getDisplayMetrics().heightPixels - 150;
+      VideoPlayerService.mFloatPlayerUI.wmParams.x = (int) (mTouchX - mDownX);
+      VideoPlayerService.mFloatPlayerUI.wmParams.y = (int) (mTouchY - mDownY);
+      if (VideoPlayerService.mFloatPlayerUI.wmParams.y < 150 - getResources().getDimensionPixelSize(R.dimen.float_window_root_height)) {
+        VideoPlayerService.mFloatPlayerUI.wmParams.y = 150 - getResources().getDimensionPixelSize(R.dimen.float_window_root_height);
+      } else if (VideoPlayerService.mFloatPlayerUI.wmParams.y > getResources().getDisplayMetrics().heightPixels - 150) {
+        VideoPlayerService.mFloatPlayerUI.wmParams.y = getResources().getDisplayMetrics().heightPixels - 150;
       }
-      if (VideoPlayerService.wmParams.x < 150 - getResources().getDimensionPixelSize(R.dimen.float_window_root_width)) {
-        VideoPlayerService.wmParams.x = 150 - getResources().getDimensionPixelSize(R.dimen.float_window_root_width);
-      } else if (VideoPlayerService.wmParams.x > getResources().getDisplayMetrics().widthPixels - 150) {
-        VideoPlayerService.wmParams.x = getResources().getDisplayMetrics().widthPixels - 150;
+      if (VideoPlayerService.mFloatPlayerUI.wmParams.x < 150 - getResources().getDimensionPixelSize(R.dimen.float_window_root_width)) {
+        VideoPlayerService.mFloatPlayerUI.wmParams.x = 150 - getResources().getDimensionPixelSize(R.dimen.float_window_root_width);
+      } else if (VideoPlayerService.mFloatPlayerUI.wmParams.x > getResources().getDisplayMetrics().widthPixels - 150) {
+        VideoPlayerService.mFloatPlayerUI.wmParams.x = getResources().getDisplayMetrics().widthPixels - 150;
       }
-      VideoPlayerService.wmParams.width = getResources().getDimensionPixelSize(R.dimen.float_window_root_width);
-      VideoPlayerService.wmParams.height = getResources().getDimensionPixelSize(R.dimen.float_window_root_height);
     }
-    VideoPlayerService.wmParams.gravity = Gravity.LEFT | Gravity.TOP;
-    VideoPlayerService.mWindowManager.updateViewLayout(VideoPlayerService.mFloatPlayerUI.mlayoutView, VideoPlayerService.wmParams);
+    VideoPlayerService.mFloatPlayerUI.wmParams.gravity = Gravity.LEFT | Gravity.TOP;
+    VideoPlayerService.mFloatPlayerUI.mWindowManager.updateViewLayout(VideoPlayerService.mFloatPlayerUI.mlayoutView, VideoPlayerService.mFloatPlayerUI.wmParams);
   }
 
   private View.OnClickListener mOnClickListener = new View.OnClickListener() {

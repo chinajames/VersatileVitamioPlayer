@@ -13,7 +13,7 @@
       android:layout_marginTop="2dp"
       android:padding="5dp"
       android:src="@drawable/video_btn_float_back"
-      tools:background="#5AFF0000"
+      android:background="#5AFF0000"
       />
 
   <RelativeLayout
