@@ -75,7 +75,7 @@ public class FloatPlayerController extends FrameLayout {
     }
   }
 
-  public void setmPlayer(MediaPlayer iMediaPlayer){
+  public void setmPlayer(MediaPlayer iMediaPlayer) {
     mMediaPlayer = iMediaPlayer;
   }
 
@@ -87,12 +87,10 @@ public class FloatPlayerController extends FrameLayout {
     }
 
     @Override public void handleMessage(Message msg) {
-      Log.w("hanjh", "updateSecond 1");
       FloatPlayerController playerUiController = this.playerUiControllerWeakReference.get();
-      if (playerUiController == null || playerUiController.mContext == null || playerUiController.mMediaPlayer == null) {
+      if (playerUiController == null || playerUiController.mContext == null || playerUiController.mMediaPlayer == null || !playerUiController.mMediaPlayer.isPlaying()) {
         return;
       }
-      Log.w("hanjh", "updateSecond 2");
       switch (msg.what) {
         case UPDATE_VIEW:
           playerUiController.currentTime.setText(StringUtils.stringForTime((int) playerUiController.mMediaPlayer.getCurrentPosition()));
@@ -244,6 +242,11 @@ public class FloatPlayerController extends FrameLayout {
   };
 
   private void closeFloatWindowClick() {
+    showSecond.removeMessages(UPDATE_VIEW);
+    if (null != mMediaPlayer && mMediaPlayer.isPlaying()) {
+      mMediaPlayer.stop();
+    }
+    mMediaPlayer = null;
     mPlayer.closePlayer();
   }
 
@@ -311,6 +314,10 @@ public class FloatPlayerController extends FrameLayout {
 
   @Override protected void onDetachedFromWindow() {
     showSecond.removeMessages(UPDATE_VIEW);
+    if (null != mMediaPlayer && mMediaPlayer.isPlaying()) {
+      mMediaPlayer.stop();
+    }
+    mMediaPlayer = null;
     super.onDetachedFromWindow();
   }
 }

@@ -245,7 +245,7 @@ public class FloatPlayerUI implements IMediaPlayer {
   }
 
   @Override public void closePlayer() {
-    if (mMediaPlayer.isPlaying()) {
+    if (null != mMediaPlayer && mMediaPlayer.isPlaying()) {
       mMediaPlayer.stop();
     }
     mServiceHelper.closeFloatWindow();

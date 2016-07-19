@@ -26,7 +26,9 @@ compile 'com.charonchui.vitamio:vitamio:4.2.2'
 </dependency>
 ```
 
-## 目的  
+## 联系方式
+  QQ:1196681436
+  Weibo:http://www.weibo.com/u/1693069642
 
 [Vitamio](https://www.vitamio.org/)的例子，欢迎提出意见，提交代码。
 
