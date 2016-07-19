@@ -44,8 +44,6 @@ public class VideoPlayerService extends Service implements IServiceHelper {
         new RelativeLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.float_window_root_width),
             getResources().getDimensionPixelSize(R.dimen.float_window_root_height));
     mFloatPlayerUI = new FloatPlayerUI(mActivity, this, videoPath);
-    //mFloatPlayerUI.setLayoutParams(params);
-    //mFloatPlayerUI.setBackgroundColor(Color.BLACK);
     mFloatPlayerUI.mlayoutView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
   }
 

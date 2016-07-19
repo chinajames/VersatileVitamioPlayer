@@ -106,13 +106,14 @@ public class FloatPlayerUI implements IMediaPlayer {
       mMediaPlayer.setOnVideoSizeChangedListener(mOnVideoSizeChangedListener);
       //mMediaPlayer.setOnInfoListener(mOnInfoListener);
       mContext.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+      mController.setmPlayer(mMediaPlayer);
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   private void initController() {
-    mController = new FloatPlayerController(mContext, this);
+    mController = new FloatPlayerController(mContext, this, mMediaPlayer);
     RelativeLayout.LayoutParams controllParams =
         new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     controllParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -121,9 +122,23 @@ public class FloatPlayerUI implements IMediaPlayer {
     }
     mController.setVisibility(View.VISIBLE);
     mScaleGestureDetector = new ScaleGestureDetector(mContext, new ScaleGestureListener());
+    mPlayerSurfaceFrame.setOnTouchListener(new View.OnTouchListener() {
+      @Override public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
+        Log.v("Hanjh", "onTouch ");
+        if (mController.getVisibility() != View.VISIBLE) {
+          mController.setVisibility(View.VISIBLE);
+        }
+        mScaleGestureDetector.onTouchEvent(paramMotionEvent);
+        mController.onTouchEvent(paramMotionEvent);
+        return false;
+      }
+    });
     mController.setOnTouchListener(new View.OnTouchListener() {
       @Override public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
         Log.v("Hanjh", "onTouch ");
+        if (mController.getVisibility() != View.VISIBLE) {
+          mController.setVisibility(View.VISIBLE);
+        }
         mScaleGestureDetector.onTouchEvent(paramMotionEvent);
         mController.onTouchEvent(paramMotionEvent);
         return false;
@@ -167,6 +182,7 @@ public class FloatPlayerUI implements IMediaPlayer {
   private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
     @Override public void onCompletion(MediaPlayer mediaPlayer) {
       Log.e(TAG, "onCompletion");
+      mController.showEnd();
     }
   };
 
@@ -214,6 +230,9 @@ public class FloatPlayerUI implements IMediaPlayer {
   private MediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
     @Override public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
       Log.e(TAG, "onBufferingUpdate i = " + i);
+      if (i >= 99) {
+        mController.updateSecond();
+      }
     }
   };
 
@@ -269,6 +288,11 @@ public class FloatPlayerUI implements IMediaPlayer {
     ViewGroup.LayoutParams lp = mSurfaceView.getLayoutParams();
     lp.height = videoHeight;
     lp.width = videoWidth;
+    wmParams.width = videoWidth;
+    wmParams.height = videoHeight;
+    mLastWidth = wmParams.width;
+    mLastHeight = wmParams.height;
+    mWindowManager.updateViewLayout(mlayoutView, wmParams);
     mSurfaceView.requestLayout();
   }
 
@@ -319,6 +343,7 @@ public class FloatPlayerUI implements IMediaPlayer {
     }
     // 宽度小于屏幕宽
     Log.w("Hanjh", "宽度小于屏幕宽 mLastWidth" + mLastWidth + " mLastHeight " + mLastHeight + " widthHeightRatio " + widthHeightRatio);
+    if (mLastWidth * scale < 600) return;
     wmParams.width = (int) (mLastWidth * scale);
     wmParams.height = (int) ((float) wmParams.width / widthHeightRatio);
     mLastWidth = wmParams.width;

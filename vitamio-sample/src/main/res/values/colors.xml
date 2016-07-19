@@ -5,4 +5,7 @@
     <color name="green">#ff00aa00</color>
     <color name="red">#ffaa0000</color>
     <color name="blue">#ff0000aa</color>
+    <color name="grey">#9B9B9B</color>
+    <color name="player_progress_bg">#000000</color>
+    <color name="player_progress_buffered">#828282</color>
 </resources>

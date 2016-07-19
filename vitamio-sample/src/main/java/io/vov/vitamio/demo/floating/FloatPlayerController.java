@@ -1,6 +1,8 @@
 package io.vov.vitamio.demo.floating;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,13 +12,19 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import com.app.StringUtils;
+import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.demo.R;
+import java.lang.ref.WeakReference;
 
 public class FloatPlayerController extends FrameLayout {
   private static final String TAG = "FloatPlayerController";
   private Context mContext;
   private LayoutInflater mInflater;
   private IMediaPlayer mPlayer;
+  private MediaPlayer mMediaPlayer;
 
   private RelativeLayout mControllerRoot;
   private RelativeLayout mLoadingLayout;
@@ -24,6 +32,14 @@ public class FloatPlayerController extends FrameLayout {
   private ImageView mCloseFloatWindowBtn;
   private ImageView mPlayPauseBtn;
   private ImageView mFloatToFullScreenBtn;
+
+  public static final int UPDATE_VIEW = 0x20003;
+  private ShowSecond showSecond;
+  private SeekBar play_progress;
+  private TextView currentTime;
+  private TextView durationTime;
+  public RelativeLayout playControlMainLayout;
+  private int intervalTime = 100;
 
   private boolean mIsScaling = false;
   private boolean mIsTouchUp = true;
@@ -34,11 +50,13 @@ public class FloatPlayerController extends FrameLayout {
   private float mTouchX = 0;
   private float mTouchY = 0;
 
-  public FloatPlayerController(Context context, IMediaPlayer iPlayer) {
+  public FloatPlayerController(Context context, IMediaPlayer iPlayer, MediaPlayer iMediaPlayer) {
     super(context);
     mContext = context;
     mPlayer = iPlayer;
+    mMediaPlayer = iMediaPlayer;
     mInflater = LayoutInflater.from(context);
+    showSecond = new ShowSecond(this);
 
     setFocusable(true);
     setFocusableInTouchMode(true);
@@ -49,9 +67,65 @@ public class FloatPlayerController extends FrameLayout {
     initFloatView();
   }
 
+  public void updateSecond() {
+    Log.w("hanjh", "updateSecond");
+    if (showSecond != null) {
+      showSecond.removeMessages(UPDATE_VIEW);
+      showSecond.sendMessageDelayed(showSecond.obtainMessage(UPDATE_VIEW), 100);
+    }
+  }
+
+  public void setmPlayer(MediaPlayer iMediaPlayer){
+    mMediaPlayer = iMediaPlayer;
+  }
+
+  private static class ShowSecond extends Handler {
+    WeakReference<FloatPlayerController> playerUiControllerWeakReference;
+
+    public ShowSecond(FloatPlayerController playerUiController) {
+      playerUiControllerWeakReference = new WeakReference<>(playerUiController);
+    }
+
+    @Override public void handleMessage(Message msg) {
+      Log.w("hanjh", "updateSecond 1");
+      FloatPlayerController playerUiController = this.playerUiControllerWeakReference.get();
+      if (playerUiController == null || playerUiController.mContext == null || playerUiController.mMediaPlayer == null) {
+        return;
+      }
+      Log.w("hanjh", "updateSecond 2");
+      switch (msg.what) {
+        case UPDATE_VIEW:
+          playerUiController.currentTime.setText(StringUtils.stringForTime((int) playerUiController.mMediaPlayer.getCurrentPosition()));
+          playerUiController.durationTime.setText(StringUtils.stringForTime((int) playerUiController.mMediaPlayer.getDuration()));
+          if (playerUiController.mMediaPlayer.getDuration() / 200 > 100) {
+            playerUiController.intervalTime = (int) playerUiController.mMediaPlayer.getDuration() / 200;
+            if (playerUiController.intervalTime > 1000) {
+              playerUiController.intervalTime = 1000;
+            }
+          }
+
+          playerUiController.play_progress.setMax((int) playerUiController.mMediaPlayer.getDuration());
+          playerUiController.play_progress.setProgress((int) playerUiController.mMediaPlayer.getCurrentPosition());
+          playerUiController.showSecond.removeMessages(UPDATE_VIEW);
+          if (null != playerUiController.playControlMainLayout
+              && playerUiController.playControlMainLayout.getVisibility() == View.VISIBLE) {
+            playerUiController.showSecond.sendMessageDelayed(playerUiController.showSecond.obtainMessage(UPDATE_VIEW),
+                playerUiController.intervalTime);
+          }
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   private void initFloatView() {
     mControllerRoot = (RelativeLayout) mInflater.inflate(R.layout.floatwindow_controller, null);
     mFloatWindowBtnControllLayout = (RelativeLayout) mControllerRoot.findViewById(R.id.float_window_btn_controll_layout);
+    play_progress = (SeekBar) mControllerRoot.findViewById(R.id.play_progress);
+    currentTime = (TextView) mControllerRoot.findViewById(R.id.currentTime);
+    durationTime = (TextView) mControllerRoot.findViewById(R.id.durationTime);
+    playControlMainLayout = (RelativeLayout) mControllerRoot.findViewById(R.id.playControlMainLayout);
     mLoadingLayout = (RelativeLayout) mControllerRoot.findViewById(R.id.float_loading_layout);
     mCloseFloatWindowBtn = (ImageView) mControllerRoot.findViewById(R.id.close_float_window);
     mCloseFloatWindowBtn.setOnClickListener(mOnClickListener);
@@ -63,13 +137,37 @@ public class FloatPlayerController extends FrameLayout {
         new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
     mFloatLayoutLP.gravity = Gravity.BOTTOM;
     addView(mControllerRoot, mFloatLayoutLP);
+    play_progress.setOnSeekBarChangeListener(new MySeekBarListener());
+  }
+
+  class MySeekBarListener implements SeekBar.OnSeekBarChangeListener {
+
+    @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    }
+
+    @Override public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override public void onStopTrackingTouch(SeekBar seekBar) {
+      mMediaPlayer.seekTo(seekBar.getProgress());
+      play_progress.setProgress(seekBar.getProgress());
+      currentTime.setText(StringUtils.stringForTime(seekBar.getProgress()));
+      durationTime.setText(StringUtils.stringForTime((int) mMediaPlayer.getDuration()));
+      if (mMediaPlayer.getDuration() / 200 > 100) {
+        intervalTime = (int) mMediaPlayer.getDuration() / 200;
+        if (intervalTime > 1000) {
+          intervalTime = 1000;
+        }
+      }
+    }
   }
 
   @Override public boolean onTouchEvent(MotionEvent event) {
     if (event.getPointerCount() < 2) {
       mTouchX = event.getRawX();
       mTouchY = event.getRawY();
-      Log.i("Hanjh","onTouch 0=down 2=move 1=up "+event.getAction());
+      Log.i("Hanjh", "onTouch 0=down 2=move 1=up " + event.getAction());
       switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
           mIsMultiTouchMode = false;
@@ -120,7 +218,8 @@ public class FloatPlayerController extends FrameLayout {
       }
     }
     VideoPlayerService.mFloatPlayerUI.wmParams.gravity = Gravity.LEFT | Gravity.TOP;
-    VideoPlayerService.mFloatPlayerUI.mWindowManager.updateViewLayout(VideoPlayerService.mFloatPlayerUI.mlayoutView, VideoPlayerService.mFloatPlayerUI.wmParams);
+    VideoPlayerService.mFloatPlayerUI.mWindowManager.updateViewLayout(VideoPlayerService.mFloatPlayerUI.mlayoutView,
+        VideoPlayerService.mFloatPlayerUI.wmParams);
   }
 
   private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -177,6 +276,13 @@ public class FloatPlayerController extends FrameLayout {
     mFloatWindowBtnControllLayout.setVisibility(View.VISIBLE);
   }
 
+  public void showEnd() {
+    mPlayPauseBtn.setImageDrawable(getResources().getDrawable(R.drawable.video_btn_float_play));
+    mFloatWindowBtnControllLayout.setVisibility(View.VISIBLE);
+    play_progress.setProgress(1);
+    mMediaPlayer.seekTo(1);
+  }
+
   public void showPlaying() {
     mPlayPauseBtn.setImageDrawable(getResources().getDrawable(R.drawable.video_btn_float_pause));
   }
@@ -201,5 +307,10 @@ public class FloatPlayerController extends FrameLayout {
 
   public void finishLoading() {
     mLoadingLayout.setVisibility(View.GONE);
+  }
+
+  @Override protected void onDetachedFromWindow() {
+    showSecond.removeMessages(UPDATE_VIEW);
+    super.onDetachedFromWindow();
   }
 }

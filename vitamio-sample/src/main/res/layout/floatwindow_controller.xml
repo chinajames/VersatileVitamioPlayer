@@ -1,63 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-  <ImageView
-      android:id="@+id/close_float_window"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:layout_marginTop="2dp"
-      android:padding="5dp"
-      android:src="@drawable/video_btn_float_back"
-      android:background="#5AFF0000"
-      />
-
   <RelativeLayout
-      android:id="@+id/float_window_btn_controll_layout"
+      android:id="@+id/playControlMainLayout"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/float_window_btn_controll_layout_height"
-      android:layout_alignParentBottom="true"
-      android:background="#9A000000"
+      android:layout_height="match_parent"
       >
 
     <ImageView
-        android:id="@+id/float_play_pause"
-        android:layout_width="@dimen/float_window_btn_controll_layout_height"
-        android:layout_height="@dimen/float_window_btn_controll_layout_height"
-        android:layout_marginLeft="4dp"
-        android:scaleType="center"
-        android:src="@drawable/video_btn_float_pause"
+        android:id="@+id/close_float_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="2dp"
+        android:background="#5AFF0000"
+        android:padding="5dp"
+        android:src="@drawable/video_btn_float_back"
         />
 
-    <ImageView
-        android:id="@+id/float_to_fullscreen"
-        android:layout_width="@dimen/float_window_btn_controll_layout_height"
-        android:layout_height="@dimen/float_window_btn_controll_layout_height"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="4dp"
-        android:scaleType="center"
-        android:src="@drawable/video_btn_float_switch_fullscreen"
-        />
-  </RelativeLayout>
-
-
-  <RelativeLayout
-      android:id="@+id/float_loading_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:visibility="gone"
-      >
-
-    <ProgressBar
+    <RelativeLayout
+        android:id="@+id/float_window_btn_controll_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/media_progress_container_loading_radius"
-        style="?android:attr/progressBarStyleLarge"
-        />
+        android:layout_height="@dimen/float_window_btn_controll_layout_height"
+        android:layout_alignParentBottom="true"
+        android:background="#9A000000"
+        >
+
+      <ImageView
+          android:id="@+id/float_play_pause"
+          android:layout_width="@dimen/float_window_btn_controll_layout_height"
+          android:layout_height="@dimen/float_window_btn_controll_layout_height"
+          android:layout_marginLeft="4dp"
+          android:scaleType="center"
+          android:src="@drawable/video_btn_float_pause"
+          />
+
+      <ImageView
+          android:id="@+id/float_to_fullscreen"
+          android:layout_width="@dimen/float_window_btn_controll_layout_height"
+          android:layout_height="@dimen/float_window_btn_controll_layout_height"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="4dp"
+          android:scaleType="center"
+          android:src="@drawable/video_btn_float_switch_fullscreen"
+          />
+
+      <TextView
+          android:id="@+id/currentTime"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="5dp"
+          android:layout_marginTop="10dp"
+          android:layout_toLeftOf="@+id/timeGang"
+          android:gravity="left|center_vertical"
+          android:text="00:00"
+          android:textColor="#FFFFFF"
+          android:textSize="12dp"
+          />
+
+      <TextView
+          android:id="@+id/timeGang"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginTop="10dp"
+          android:layout_toLeftOf="@+id/durationTime"
+          android:gravity="right|center_vertical"
+          android:text="/"
+          android:textColor="@color/grey"
+          android:textSize="12dp"
+          />
+
+
+      <TextView
+          android:id="@+id/durationTime"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="5dp"
+          android:layout_marginTop="10dp"
+          android:layout_toLeftOf="@+id/float_to_fullscreen"
+          android:gravity="right|center_vertical"
+          android:text="00:00"
+          android:textColor="@color/grey"
+          android:textSize="12dp"
+          />
+
+      <SeekBar
+          android:id="@+id/play_progress"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignWithParentIfMissing="true"
+          android:layout_centerVertical="true"
+          android:layout_toLeftOf="@id/currentTime"
+          android:layout_toRightOf="@id/float_play_pause"
+          android:maxHeight="3dip"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          android:progress="0"
+          android:progressDrawable="@drawable/player_seekbar_bg"
+          android:thumb="@drawable/player_seekbar_ball"
+          android:thumbOffset="5dp"
+          />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/float_loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        >
+
+      <ProgressBar
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/media_progress_container_loading_radius"
+          style="?android:attr/progressBarStyleLarge"
+          />
+    </RelativeLayout>
   </RelativeLayout>
 </RelativeLayout>
