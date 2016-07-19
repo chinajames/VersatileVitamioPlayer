@@ -1,10 +1,15 @@
 VersatileVitamioPlayer
 ---
 
+## 用处
+
 该仓库是[Vitamio](https://www.vitamio.org/)的例子，此播放器具有全格式的解码能力，现在实现了播放本地视频功能和播放线上视频功能。
 
 
-## 用处
+<img src="screenshots/Screenshot_1.png" width="50%" height="40%" alt="Screenshot_1">
+<img src="screenshots/Screenshot_2.png" width="50%" height="40%" alt="Screenshot_2">
+<img src="screenshots/Screenshot_3.png" width="50%" height="40%" alt="Screenshot_3">
+
 
 ### Gradle配置
 
